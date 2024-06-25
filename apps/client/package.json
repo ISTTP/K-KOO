@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "webpack server --env devrlopment",
+    "dev": "webpack server --env development",
     "start": "next start"
   },
   "dependencies": {
+    "@sentry/react": "^8.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zustand": "^4.5.2"
@@ -17,6 +18,7 @@
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@playwright/test": "^1.44.1",
     "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
