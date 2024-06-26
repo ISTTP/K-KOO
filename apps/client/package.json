@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "webpack server --env development",
     "dev": "webpack server --env development",
     "start": "next start"
   },
