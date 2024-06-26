@@ -20,6 +20,7 @@ RUN pnpm install turbo --global
 COPY . .
 RUN turbo prune client --docker
 
+
 #추가한 독립적인 workspace의 lockfile과 package.json 을 추가하고
 FROM base AS installer
 RUN apk update
@@ -35,14 +36,23 @@ RUN pnpm install
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
+
 RUN pnpm turbo run build --filter=client...
 
 FROM base AS runner
 WORKDIR /app
 
 COPY --from=installer /app .
+#COPY --from=installer /app/apps/client/package.json .
+#COPY --from=installer /app/apps/client/webpack.config.js .
 
-CMD ["pnpm", "run", "build"]
+#COPY --from=installer /app/apps/client/dist ./apps/client/dist
+
+RUN pnpm install -g serve
+
+EXPOSE 3000
+
+CMD ["pnpm", "run", "start"]
 
 
 

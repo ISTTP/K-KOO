@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack server --env development",
-    "dev": "webpack server --env development",
-    "start": "next start"
+    "build": "webpack --mode=development",
+    "dev": "webpack server --mode=development",
+    "start": "serve dist"
   },
   "dependencies": {
     "@sentry/react": "^8.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "serve": "^14.2.3",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
