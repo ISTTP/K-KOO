@@ -39,6 +39,15 @@ module.exports = {
               "@babel/preset-react",
               "@babel/preset-typescript",
             ],
+            plugins: [
+              [
+                "@babel/plugin-transform-runtime",
+                {
+                  "corejs": 3,
+                  "regenerator": true,
+                }
+              ]
+            ]
           },
         },
       },

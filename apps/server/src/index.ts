@@ -5,7 +5,6 @@ import { add } from "@repo/utils";
 
 const prisma = new PrismaClient();
 
-
 const port = process.env.PORT || 3001;
 const server = createServer();
 

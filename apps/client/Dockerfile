@@ -52,7 +52,7 @@ RUN pnpm install -g serve
 
 EXPOSE 3000
 
-CMD ["pnpm", "run", "start"]
+CMD serve apps/client/dist/
 
 
 

@@ -8,8 +8,7 @@
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
-    "test": "turbo run test",
-    "start": "serve apps/client/dist/"
+    "test": "turbo run test"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
