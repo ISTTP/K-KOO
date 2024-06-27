@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     main: path.resolve(__dirname, "src", "index.tsx"),
   },
@@ -10,12 +10,6 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
     clean: true
-  },
-  devServer: { // 개발 서버 설정
-    static: path.resolve(__dirname, "dist"),
-    port: 80,
-    open: true, // 기본 브라우저에서 실행
-    historyApiFallback: true, // connect-history-api-fallback error 방지?
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx", ".jsx"],

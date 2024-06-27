@@ -46,6 +46,7 @@ RUN pnpm turbo run build --filter=server...
 FROM base AS runner
 WORKDIR /app
 
+
 # Don't run production as root
 RUN addgroup --system --gid 1001 expressjs
 RUN adduser --system --uid 1001 expressjs

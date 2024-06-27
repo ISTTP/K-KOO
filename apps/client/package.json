@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --mode=production",
-    "dev": "webpack server --mode=development",
+    "build": "webpack --config webpack.config.prod.js",
+    "dev": "webpack server --config webpack.config.dev.js",
     "start": "serve dist"
   },
   "dependencies": {
