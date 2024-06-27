@@ -13,7 +13,7 @@ module.exports = {
   },
   devServer: { // 개발 서버 설정
     static: path.resolve(__dirname, "dist"),
-    port: 3000,
+    port: 80,
     open: true, // 기본 브라우저에서 실행
     historyApiFallback: true, // connect-history-api-fallback error 방지?
   },
