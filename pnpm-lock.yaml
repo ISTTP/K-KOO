@@ -26,9 +26,15 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
+      react-router-dom:
+        specifier: ^6.24.0
+        version: 6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       serve:
         specifier: ^14.2.3
         version: 14.2.3
+      styled-components:
+        specifier: ^6.1.11
+        version: 6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       zustand:
         specifier: ^4.5.2
         version: 4.5.2(@types/react@18.3.3)(react@18.3.1)
@@ -173,12 +179,12 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       prisma:
         specifier: ^5.10.2
         version: 5.15.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.2
 
   packages/eslint-config:
     devDependencies:
@@ -211,7 +217,7 @@ importers:
     dependencies:
       ts-jest:
         specifier: ^29.1.1
-        version: 29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(jest@29.7.0(@types/node@20.14.9))(typescript@5.5.2)
+        version: 29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(jest@29.7.0(@types/node@20.14.8))(typescript@5.5.2)
 
   packages/logger:
     devDependencies:
@@ -931,6 +937,15 @@ packages:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
 
+  '@emotion/is-prop-valid@1.2.2':
+    resolution: {integrity: sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==}
+
+  '@emotion/memoize@0.8.1':
+    resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
+
+  '@emotion/unitless@0.8.1':
+    resolution: {integrity: sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==}
+
   '@esbuild/aix-ppc64@0.20.2':
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
     engines: {node: '>=12'}
@@ -1284,6 +1299,10 @@ packages:
   '@prisma/get-platform@5.15.1':
     resolution: {integrity: sha512-oFccp7bYys+ZYkmtYzjR+0cRrGKvSuF+h5QhSkyEsYQ9kzJzQRvuWt2SiHRPt8xOQ4MTmujM+bP5uOexnnAHdQ==}
 
+  '@remix-run/router@1.17.0':
+    resolution: {integrity: sha512-2D6XaHEVvkCn682XBnipbJjgZUU7xjLtA4dGJRBVUKpEaDYOZMENZoZjAOSb7qirxt5RupjzZxz4fK2FO+EFPw==}
+    engines: {node: '>=14.0.0'}
+
   '@rushstack/eslint-patch@1.10.3':
     resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
 
@@ -1436,9 +1455,6 @@ packages:
   '@types/node@20.14.8':
     resolution: {integrity: sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==}
 
-  '@types/node@20.14.9':
-    resolution: {integrity: sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==}
-
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
@@ -1477,6 +1493,9 @@ packages:
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
+
+  '@types/stylis@4.2.5':
+    resolution: {integrity: sha512-1Xve+NMN7FWjY14vLoY5tL3BVEQ/n42YLwaqJIPYhotZ9uBHt87VceMwWQpzmdEt2TNXIorIFG+YeCUUW7RInw==}
 
   '@types/superagent@8.1.7':
     resolution: {integrity: sha512-NmIsd0Yj4DDhftfWvvAku482PZum4DBW7U51OvS8gvOkDDY0WT1jsVyDV3hK+vplrsYw8oDwi9QxOM7U68iwww==}
@@ -2045,6 +2064,9 @@ packages:
     resolution: {integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==}
     engines: {node: '>=14.16'}
 
+  camelize@1.0.1:
+    resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
+
   caniuse-lite@1.0.30001636:
     resolution: {integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==}
 
@@ -2213,6 +2235,10 @@ packages:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
 
+  css-color-keywords@1.0.0:
+    resolution: {integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==}
+    engines: {node: '>=4'}
+
   css-loader@7.1.2:
     resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
     engines: {node: '>= 18.12.0'}
@@ -2227,6 +2253,9 @@ packages:
 
   css-select@4.3.0:
     resolution: {integrity: sha512-wPpOYtnsVontu2mODhA19JrqWxNsfdatRKd64kmpRbQgh1KtItko5sTnEpPdpSaJszTOhEMlF/RPz28qj4HqhQ==}
+
+  css-to-react-native@3.2.0:
+    resolution: {integrity: sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ==}
 
   css-what@6.1.0:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
@@ -4058,6 +4087,19 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
+  react-router-dom@6.24.0:
+    resolution: {integrity: sha512-960sKuau6/yEwS8e+NVEidYQb1hNjAYM327gjEyXlc6r3Skf2vtwuJ2l7lssdegD2YjoKG5l8MsVyeTDlVeY8g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  react-router@6.24.0:
+    resolution: {integrity: sha512-sQrgJ5bXk7vbcC4BxQxeNa5UmboFm35we1AFK0VvQaz9g0LzxEIuLOhHIoZ8rnu9BO21ishGeL9no1WB76W/eg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
@@ -4291,6 +4333,9 @@ packages:
     resolution: {integrity: sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==}
     engines: {node: '>=8'}
 
+  shallowequal@1.1.0:
+    resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
+
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
     engines: {node: '>=8'}
@@ -4468,6 +4513,16 @@ packages:
     peerDependencies:
       webpack: ^5.27.0
 
+  styled-components@6.1.11:
+    resolution: {integrity: sha512-Ui0jXPzbp1phYij90h12ksljKGqF8ncGx+pjrNPsSPhbUUjWT2tD1FwGo2LF6USCnbrsIhNngDfodhxbegfEOA==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+
+  stylis@4.3.2:
+    resolution: {integrity: sha512-bhtUjWd/z6ltJiQwg0dUfxEJ+W+jdqQd8TbWLWyeIJHlnsqmGLRFFd8e5mA0AZi/zx90smXRlN66YMTcaSFifg==}
+
   superagent@8.1.2:
     resolution: {integrity: sha512-6WTxW1EB6yCxV5VFOIPQruWGHqc3yI7hEmZK6h+pyk69Lk/Ut7rLUY6W/ONF2MjBuGjvmMiIpsrVJ2vjrHlslA==}
     engines: {node: '>=6.4.0 <13 || >=14'}
@@ -4619,6 +4674,9 @@ packages:
 
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+
+  tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
@@ -5845,6 +5903,14 @@ snapshots:
 
   '@discoveryjs/json-ext@0.5.7': {}
 
+  '@emotion/is-prop-valid@1.2.2':
+    dependencies:
+      '@emotion/memoize': 0.8.1
+
+  '@emotion/memoize@0.8.1': {}
+
+  '@emotion/unitless@0.8.1': {}
+
   '@esbuild/aix-ppc64@0.20.2':
     optional: true
 
@@ -6239,6 +6305,8 @@ snapshots:
     dependencies:
       '@prisma/debug': 5.15.1
 
+  '@remix-run/router@1.17.0': {}
+
   '@rushstack/eslint-patch@1.10.3': {}
 
   '@sentry-internal/browser-utils@8.11.0':
@@ -6433,11 +6501,6 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.14.9':
-    dependencies:
-      undici-types: 5.26.5
-    optional: true
-
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/prop-types@15.7.12': {}
@@ -6479,6 +6542,8 @@ snapshots:
       '@types/node': 20.14.8
 
   '@types/stack-utils@2.0.3': {}
+
+  '@types/stylis@4.2.5': {}
 
   '@types/superagent@8.1.7':
     dependencies:
@@ -7223,6 +7288,8 @@ snapshots:
 
   camelcase@7.0.1: {}
 
+  camelize@1.0.1: {}
+
   caniuse-lite@1.0.30001636: {}
 
   chalk-template@0.4.0:
@@ -7369,7 +7436,7 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  create-jest@29.7.0(@types/node@20.14.8):
+  create-jest@29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2)):
     dependencies:
       '@jest/types': 29.6.3
       chalk: 4.1.2
@@ -7384,11 +7451,15 @@ snapshots:
       - supports-color
       - ts-node
 
+  create-require@1.1.1: {}
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  css-color-keywords@1.0.0: {}
 
   css-loader@7.1.2(webpack@5.92.1(webpack-cli@5.1.4)):
     dependencies:
@@ -7410,6 +7481,12 @@ snapshots:
       domhandler: 4.3.1
       domutils: 2.8.0
       nth-check: 2.1.1
+
+  css-to-react-native@3.2.0:
+    dependencies:
+      camelize: 1.0.1
+      css-color-keywords: 1.0.0
+      postcss-value-parser: 4.2.0
 
   css-what@6.1.0: {}
 
@@ -7849,7 +7926,7 @@ snapshots:
       eslint: 8.57.0
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 7.13.1(@typescript-eslint/parser@7.13.1(eslint@8.57.0)(typescript@5.5.2))(eslint@8.57.0)(typescript@5.5.2)
-      jest: 29.7.0(@types/node@20.14.8)
+      jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -8712,7 +8789,7 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@29.7.0(@types/node@20.14.8):
+  jest-cli@29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2)):
     dependencies:
       '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))
       '@jest/test-result': 29.7.0
@@ -8731,7 +8808,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@29.7.0(@types/node@20.14.8):
+  jest-config@29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2)):
     dependencies:
       '@babel/core': 7.24.7
       '@jest/test-sequencer': 29.7.0
@@ -8758,36 +8835,6 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.14.8
       ts-node: 10.9.2(@types/node@20.14.8)(typescript@5.5.2)
-    transitivePeerDependencies:
-      - babel-plugin-macros
-      - supports-color
-
-  jest-config@29.7.0(@types/node@20.14.9):
-    dependencies:
-      '@babel/core': 7.24.7
-      '@jest/test-sequencer': 29.7.0
-      '@jest/types': 29.6.3
-      babel-jest: 29.7.0(@babel/core@7.24.7)
-      chalk: 4.1.2
-      ci-info: 3.9.0
-      deepmerge: 4.3.1
-      glob: 7.2.3
-      graceful-fs: 4.2.11
-      jest-circus: 29.7.0
-      jest-environment-node: 29.7.0
-      jest-get-type: 29.6.3
-      jest-regex-util: 29.6.3
-      jest-resolve: 29.7.0
-      jest-runner: 29.7.0
-      jest-util: 29.7.0
-      jest-validate: 29.7.0
-      micromatch: 4.0.7
-      parse-json: 5.2.0
-      pretty-format: 29.7.0
-      slash: 3.0.0
-      strip-json-comments: 3.1.1
-    optionalDependencies:
-      '@types/node': 20.14.9
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -9013,24 +9060,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@29.7.0(@types/node@20.14.8):
+  jest@29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2)):
     dependencies:
       '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))
       '@jest/types': 29.6.3
       import-local: 3.1.0
       jest-cli: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))
-    transitivePeerDependencies:
-      - '@types/node'
-      - babel-plugin-macros
-      - supports-color
-      - ts-node
-
-  jest@29.7.0(@types/node@20.14.9):
-    dependencies:
-      '@jest/core': 29.7.0
-      '@jest/types': 29.6.3
-      import-local: 3.1.0
-      jest-cli: 29.7.0(@types/node@20.14.9)
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -9600,6 +9635,18 @@ snapshots:
 
   react-is@18.3.1: {}
 
+  react-router-dom@6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.17.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router: 6.24.0(react@18.3.1)
+
+  react-router@6.24.0(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.17.0
+      react: 18.3.1
+
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
@@ -9904,6 +9951,8 @@ snapshots:
     dependencies:
       kind-of: 6.0.3
 
+  shallowequal@1.1.0: {}
+
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
@@ -10107,6 +10156,22 @@ snapshots:
     dependencies:
       webpack: 5.92.1(webpack-cli@5.1.4)
 
+  styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@emotion/is-prop-valid': 1.2.2
+      '@emotion/unitless': 0.8.1
+      '@types/stylis': 4.2.5
+      css-to-react-native: 3.2.0
+      csstype: 3.1.3
+      postcss: 8.4.38
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      shallowequal: 1.1.0
+      stylis: 4.3.2
+      tslib: 2.6.2
+
+  stylis@4.3.2: {}
+
   superagent@8.1.2:
     dependencies:
       component-emitter: 1.3.1
@@ -10200,11 +10265,11 @@ snapshots:
     dependencies:
       typescript: 5.5.2
 
-  ts-jest@29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(jest@29.7.0(@types/node@20.14.9))(typescript@5.5.2):
+  ts-jest@29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(jest@29.7.0(@types/node@20.14.8))(typescript@5.5.2):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
-      jest: 29.7.0(@types/node@20.14.8)
+      jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))
       jest-util: 29.7.0
       json5: 2.2.3
       lodash.memoize: 4.1.2
@@ -10254,6 +10319,8 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@1.14.1: {}
+
+  tslib@2.6.2: {}
 
   tslib@2.6.3: {}
 

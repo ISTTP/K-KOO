@@ -1,25 +1,18 @@
 import React from "react";
-import "./App.css";
 import useTestStore from "./store/useTestStore";
-import Test from "./Test";
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
+import "./App.css";
 
 const App = () => {
-  const { id }= useTestStore();
-  
+  const { id } = useTestStore();
+
   return (
-    <>
-      <p>아래는 zustand 설정 테스트를 위한 것</p>
-      <div>{id}</div>
-      <Test/>
-      <button
-        type="button"
-        onClick={() => {
-          throw new Error("Sentry Test Error");
-        }}
-      >
-        Sentry test 위한 버튼
-      </button>;
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
   );
 };
 
