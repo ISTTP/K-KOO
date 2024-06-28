@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES5", 
+    "target": "ES5",
     "jsx": "react",
     "allowJs": true,
     "checkJs": true,
     "removeComments": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true, 
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "outDir": "./build" 
+    "outDir": "./build",
   },
   "include": [
     "src/**/**/*"

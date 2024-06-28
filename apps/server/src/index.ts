@@ -2,6 +2,7 @@ import { createServer } from "./server";
 import { PrismaClient } from "@repo/db";
 import { User } from "@repo/types"
 import { add } from "@repo/utils";
+import { log } from "@repo/logger";
 
 const prisma = new PrismaClient();
 
@@ -16,12 +17,12 @@ const user: User = {
 
 async function getUsers() {
   let users = await prisma.user.findMany();
-  console.log(users);
-  console.log(add(1, 2));
-  console.log(user);
+  log(users);
+  log(add(1, 2));
+  log(user);
 }
 
 server.listen(port, () => {
-  console.log(`api running on ${port}`);
+  log(`api running on ${port}`);
   getUsers();
 });
