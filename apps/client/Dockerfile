@@ -39,21 +39,29 @@ COPY turbo.json turbo.json
 
 RUN pnpm turbo run build --filter=client...
 
-FROM base AS runner
+#FROM base AS runner
+FROM nginx:alpine AS runner
+
 WORKDIR /app
 
-COPY --from=installer /app .
-#COPY --from=installer /app/apps/client/package.json .
-#COPY --from=installer /app/apps/client/webpack.config.js .
+#COPY --from=installer /app .
 
-#COPY --from=installer /app/apps/client/dist ./apps/client/dist
+#RUN pnpm install -g serve
 
-RUN pnpm install -g serve
+#EXPOSE 3000
 
-EXPOSE 3000
+#CMD serve apps/client/dist/
 
-CMD serve apps/client/dist/
+# 빌드된 파일 복사
+COPY --from=installer /app/apps/client/dist /usr/share/nginx/html
 
+# Nginx 설정 파일 복사
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
+# Nginx 포트 설정
+EXPOSE 80
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
 
 

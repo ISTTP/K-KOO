@@ -46,11 +46,11 @@ RUN pnpm turbo run build --filter=server...
 FROM base AS runner
 WORKDIR /app
 
+
 # Don't run production as root
 RUN addgroup --system --gid 1001 expressjs
 RUN adduser --system --uid 1001 expressjs
 USER expressjs
 COPY --from=installer /app .
 
-CMD pnpm exec ts-node ./src/index.ts
-
+CMD node apps/server/dist/index.js
