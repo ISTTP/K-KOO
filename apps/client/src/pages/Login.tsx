@@ -8,11 +8,9 @@ function handleKakaoLogin() {
 }
 
 function handleGoogleLogin() {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:8080/&response_type=token&scope=email profile`
-  console.log(url)
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&response_type=token&scope=email profile`
   window.location.href = url
 }
-
 
 function Login() {
   return (
