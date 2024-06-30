@@ -19,3 +19,7 @@ const App = () => {
 };
 
 export default App;
+
+const StyledButton = styled.button`
+  background-color: red;
+`
