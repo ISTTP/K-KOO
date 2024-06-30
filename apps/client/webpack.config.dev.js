@@ -59,4 +59,14 @@ module.exports = {
             path: './.env'
         }),
     ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "public", "index.html"),
+    }),
+    // https://webpack.kr/plugins/environment-plugin/
+    new Dotenv({
+      path: './.env'
+    })
+  ],
 }

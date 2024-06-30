@@ -1,19 +1,20 @@
 import React from "react";
-import "./App.css";
 import useTestStore from "./store/useTestStore";
-import styled from "styled-components"
-
-
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
+import GoogleLogin from "./pages/GoogleLogin";
+import "./App.css";
 
 const App = () => {
   const { id } = useTestStore();
 
   return (
-    <>
-      <p>아래는 zustand 설정 테스트를 위한 것</p>
-      <div>{id}</div>
-      <StyledButton>버튼</StyledButton>
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/oauth/google" element={<GoogleLogin />} />
+    </Routes>
   );
 };
 

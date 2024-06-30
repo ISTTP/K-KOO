@@ -3,15 +3,19 @@
   "compilerOptions": {
     "target": "ES6",
     "jsx": "react",
-    "removeComments": true,
     "allowJs": true,
-    "outDir": "./build",
-    "rootDir": "./src"
+    "removeComments": true,
+    "esModuleInterop": true,
+    "preserveSymlinks": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "outDir": "./build"
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "node_modules",
-  ],
-  "include": [
-    "src"
-  ],
+    "dist",
+  ]
 }
