@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
     mode: "development",
@@ -11,16 +12,15 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         clean: true
     },
-    devServer: { // 개발 서버 설정
+    devServer: {
         static: path.resolve(__dirname, "dist"),
-        port: 80,
-        open: true, // 기본 브라우저에서 실행
-        historyApiFallback: true, // connect-history-api-fallback error 방지?
+        port: 8080,
+        open: true,
+        historyApiFallback: true,
     },
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".jsx"],
     },
-    target: "web",
     module: {
         rules: [
             {
@@ -37,16 +37,6 @@ module.exports = {
                         presets: [
                             "@babel/preset-env",
                             "@babel/preset-react",
-                            "@babel/preset-typescript",
-                        ],
-                        plugins: [
-                            [
-                                "@babel/plugin-transform-runtime",
-                                {
-                                    "corejs": 3,
-                                    "regenerator": true,
-                                }
-                            ]
                         ]
                     },
                 },
@@ -64,6 +54,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "public", "index.html"),
+        }),
+        new Dotenv({
+            path: './.env'
         }),
     ],
 }
