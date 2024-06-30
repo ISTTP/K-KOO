@@ -26,5 +26,3 @@ server.listen(port, () => {
   log(`api running on ${port}`);
   getUsers();
 });
-
-
