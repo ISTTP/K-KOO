@@ -12,6 +12,8 @@ function handleGoogleLogin() {
   window.location.href = url
 }
 
+console.log(process.env.SERVER_URL);
+
 function Login() {
   return (
     <Wrapper>
