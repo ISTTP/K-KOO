@@ -4,9 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./apps/client/Dockerfile
-    restart: always
     volumes:
-      - ./client-build:/app/apps/client/dist
+      - ./clientbuild:/app/apps/client/dist
     networks:
       - app_network
   server:
