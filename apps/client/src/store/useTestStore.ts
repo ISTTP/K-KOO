@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface ID {
   id: string;
@@ -6,11 +6,10 @@ interface ID {
 }
 
 const useTestStore = create<ID>((set) => ({
-  id: "init", //초기값
+  id: "init",
   setId: (by) => {
-    set((state) => ({ id: by }));
-  }, 
-
+    set(() => ({ id: by }));
+  },
 }));
 
 export default useTestStore;

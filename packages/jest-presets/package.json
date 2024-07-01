@@ -8,5 +8,8 @@
   ],
   "dependencies": {
     "ts-jest": "^29.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9"
   }
 }
