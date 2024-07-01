@@ -58,8 +58,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            ls -al
-            # docker compose pull
-            # docker compose -f docker-compose.yml up -d --build
-            # docker image prune -f
-            # sudo systemctl restart nginx
+            cd ./kkoo
+            docker compose pull
+            docker compose -f docker-compose.yml up -d --build
+            docker image prune -f
+            sudo systemctl restart nginx
