@@ -7,25 +7,15 @@
         ".env*"
       ],
       "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "public/dist/**"
+        "dist/**"
       ],
       "dependsOn": [
         "^db:generate",
         "^build"
-      ],
-      "env": [
-        "NEXT_PUBLIC_API_HOST"
       ]
     },
-    "test": {
-      "outputs": [
-        "coverage/**"
-      ],
-      "dependsOn": []
-    },
+    "test": {},
+    "test:e2e": {},
     "lint": {
       "dependsOn": [
         "^build"
@@ -42,9 +32,6 @@
       "dependsOn": [
         "^db:generate",
         "^build"
-      ],
-      "env": [
-        "NODE_ENV"
       ]
     },
     "clean": {
