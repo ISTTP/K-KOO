@@ -59,6 +59,7 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             cd ./kkoo
+            docker compose down
             docker compose pull
             docker compose up
             docker image prune -f
