@@ -4,8 +4,9 @@ services:
     build:
       context: .
       dockerfile: ./apps/client/Dockerfile
+    image: yerinss/client
     volumes:
-      - ./clientbuild:/app/apps/client/dist
+      - /home/ubuntu/clientbuild:/app/apps/client/dist
     networks:
       - app_network
   server:
@@ -13,6 +14,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
+    image: yerinss/server
     restart: always
     ports:
       - 3001:3001
