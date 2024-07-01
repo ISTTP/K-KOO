@@ -1,5 +1,5 @@
 {
-  "name": "with-docker",
+  "name": "k-koo",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
     "prettier": "^3.2.5",
     "turbo": "^2.0.4"
   },
