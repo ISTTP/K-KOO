@@ -60,6 +60,6 @@ jobs:
           script: |
             cd ./kkoo
             docker compose pull
-            docker compose -f docker-compose.yml up -d --build
+            docker compose up
             docker image prune -f
             sudo systemctl restart nginx
