@@ -1,29 +1,26 @@
-version: "3"
-
 services:
-  web:
-    container_name: web
+  client:
+    container_name: client
     build:
       context: .
-      dockerfile: ./apps/web/Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
+      dockerfile: ./apps/client/Dockerfile
+      image: yerinss/client
+    volumes:
+      - ./clientbuild:/app/apps/client/dist
     networks:
       - app_network
-  api:
-    container_name: api
+  server:
+    container_name: server
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
+      dockerfile: ./apps/server/Dockerfile
+      image: yerinss/server
     restart: always
     ports:
       - 3001:3001
     networks:
       - app_network
 
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
 networks:
   app_network:
     external: true

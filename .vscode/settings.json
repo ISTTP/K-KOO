@@ -1,11 +1,13 @@
+// https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 {
+  "eslint.enable": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "eslint.workingDirectories": [
     {
       "mode": "auto",
     }
   ],
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
 }
