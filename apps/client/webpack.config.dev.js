@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -10,7 +11,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
-    clean: true
+    clean: true,
   },
   devServer: {
     static: path.resolve(__dirname, "dist"),
@@ -34,10 +35,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-            ]
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
@@ -56,7 +54,7 @@ module.exports = {
       template: path.resolve(__dirname, "public", "index.html"),
     }),
     new Dotenv({
-      path: './.env'
+      path: "./.env",
     }),
   ],
 };
