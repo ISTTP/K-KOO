@@ -6,7 +6,7 @@ services:
       dockerfile: ./apps/client/Dockerfile
       image: yerinss/client
     volumes:
-      - ./clientbuild:/app/apps/client/dist
+      - /home/ubuntu/clientbuild:/app/apps/client/dist
     networks:
       - app_network
   server:
