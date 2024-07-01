@@ -1,0 +1,11 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "target": "ES5",
+    "jsx": "react",
+    "allowJs": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "preserveSymlinks": true
+  }
+}
