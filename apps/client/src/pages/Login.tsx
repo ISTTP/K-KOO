@@ -4,7 +4,7 @@ import Wrapper from "../components/Wrapper";
 import Button from "../components/Button";
 
 function handleKakaoLogin() {
-  console.log("Kakao Login~!!!");
+  console.log("Kakao Login~~~~~!");
 }
 
 function handleGoogleLogin() {
