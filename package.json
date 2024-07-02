@@ -9,6 +9,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "test:integ": "turbo run test:integ",
     "start": "turbo run start",
     "prepare": "husky"
   },
