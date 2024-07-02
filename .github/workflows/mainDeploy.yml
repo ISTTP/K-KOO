@@ -35,6 +35,12 @@ jobs:
         working-directory: ./apps/client
         env: 
           SERVER_URL: ${{ secrets.SERVER_URL }}
+      
+      - name: Add Server Environment Variables File for Production
+        run: echo "PORT=$PORT" >> .env
+        working-directory: ./apps/server
+        env:
+          SERVER_URL: ${{ secrets.PORT }}
         
       - name: build
         run: pnpm turbo run build
