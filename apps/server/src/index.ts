@@ -30,6 +30,6 @@ server.listen(port, () => {
   getUsers();
 });
 
-server.get("api/test", function (req, res) {
+server.get("/api/test", function (req, res) {
   res.send("하이");
 });
