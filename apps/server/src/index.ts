@@ -4,9 +4,12 @@ import { User } from "@repo/types";
 import { add } from "@repo/utils";
 import { log } from "@repo/logger";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const prisma = new PrismaClient();
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 const server = createServer();
 
 const user: User = {
@@ -25,4 +28,8 @@ async function getUsers() {
 server.listen(port, () => {
   log(`api running on ${port}`);
   getUsers();
+});
+
+server.get("/test", function (req, res) {
+  res.send("하이");
 });
