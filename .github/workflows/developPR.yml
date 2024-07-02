@@ -31,6 +31,9 @@ jobs:
       - name: run unit tests
         run: pnpm turbo run test
 
+      - name: run integration tests
+        run: pnpm turbo run test:integ
+
       - name: download playwright browsers
         run: pnpm exec playwright install
         working-directory: ./apps/client
