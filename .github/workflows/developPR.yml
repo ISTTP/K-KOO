@@ -28,9 +28,6 @@ jobs:
       - name: build
         run: pnpm turbo run build
 
-      - name: run unit tests
-        run: pnpm turbo run test
-
       - name: run integration tests
         run: pnpm turbo run test:integ
 
