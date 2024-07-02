@@ -29,6 +29,12 @@ jobs:
         working-directory: ./packages/database
         env: 
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Add Environment Variables File for Production
+        run: echo "SERVER_URL=$SERVER_URL" >> .env
+        working-directory: ./apps/client
+        env: 
+          SERVER_URL: ${{ secrets.SERVER_URL }}
         
       - name: build
         run: pnpm turbo run build
