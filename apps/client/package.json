@@ -6,11 +6,9 @@
     "build": "webpack --config webpack.config.prod.js",
     "dev": "webpack server --config webpack.config.dev.js",
     "start": "serve dist",
-    "test": "jest",
+    "test": "jest --preset @repo/jest-presets/react-unit",
+    "test:integ": "jest --preset @repo/jest-presets/react-integ",
     "test:e2e": "playwright test"
-  },
-  "jest": {
-    "preset": "@repo/jest-presets/react"
   },
   "dependencies": {
     "@sentry/react": "^8.11.0",
