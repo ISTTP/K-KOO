@@ -14,6 +14,12 @@ function handleGoogleLogin() {
 
 console.log(process.env.SERVER_URL);
 
+async function fetchTest() {
+  const res = await fetch(`${process.env.SERVER_URL}/test`);
+  const data = await res.text();
+  console.log(data);
+}
+
 function Login() {
   return (
     <Wrapper>
@@ -29,6 +35,7 @@ function Login() {
         label="Google로 시작하기"
         onClick={handleGoogleLogin}
       />
+      <button onClick={fetchTest}>fetch test</button>
     </Wrapper>
   );
 }

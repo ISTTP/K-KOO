@@ -5,7 +5,8 @@
   "license": "MIT",
   "files": [
     "node/jest-preset.js",
-    "react/jest-preset.js"
+    "react-unit/jest-preset.js",
+    "react-integ/jest-preset.js"
   ],
   "devDependencies": {
     "@types/node": "^20.14.9",
