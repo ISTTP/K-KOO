@@ -40,7 +40,7 @@ jobs:
         run: echo "PORT=$PORT" >> .env
         working-directory: ./apps/server
         env:
-          SERVER_URL: ${{ secrets.PORT }}
+          PORT: ${{ secrets.PORT }}
         
       - name: build
         run: pnpm turbo run build
