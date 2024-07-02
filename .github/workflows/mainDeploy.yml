@@ -24,11 +24,26 @@ jobs:
       - name: install dependencies
         run: pnpm install
 
+      - name: Generate Environment Variables File for Production
+        run: echo "DATABASE_URL=$DATABASE_URL" >> .env
+        working-directory: ./packages/database
+        env: 
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Add Environment Variables File for Production
+        run: echo "SERVER_URL=$SERVER_URL" >> .env
+        working-directory: ./apps/client
+        env: 
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+        
       - name: build
         run: pnpm turbo run build
 
       - name: run unit tests
         run: pnpm turbo run test
+
+      - name: run integration test
+        run: pnpm turbo run test:integ
 
       - name: download playwright browsers
         run: pnpm exec playwright install
@@ -61,6 +76,6 @@ jobs:
             cd ./kkoo
             docker compose down
             docker compose pull
-            docker compose up
+            docker compose up -d
             docker image prune -f
             sudo systemctl restart nginx
