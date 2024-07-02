@@ -37,9 +37,8 @@ jobs:
           SERVER_URL: ${{ secrets.SERVER_URL }}
       
       - name: Generate Environment Variables File for Server
-        run: |
-          echo "PORT=${{ secrets.PORT }}" > ./apps/server/.env
-          cat ./apps/server/.env
+        run: echo "PORT=${{ secrets.PORT }}" >> .env
+        working-directory: ./apps/server
         env:
           PORT: ${{ secrets.PORT }}
         
