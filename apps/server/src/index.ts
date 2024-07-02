@@ -9,7 +9,7 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 
-const port = process.env.PORT;
+const port = 3001;
 const server = createServer();
 
 const user: User = {
