@@ -4,12 +4,11 @@ import { User } from "@repo/types";
 import { add } from "@repo/utils";
 import { log } from "@repo/logger";
 
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 const prisma = new PrismaClient();
 
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3001;
 const server = createServer();
 
 const user: User = {
@@ -20,9 +19,10 @@ const user: User = {
 
 async function getUsers() {
   const users = await prisma.user.findMany();
-  log(users);
   log(add(1, 2));
   log(user);
+  log(users);
+  return users;
 }
 
 server.listen(port, () => {
@@ -30,6 +30,7 @@ server.listen(port, () => {
   getUsers();
 });
 
-server.get("/api/test", function (req, res) {
-  res.send("하이");
+server.get("/api/test", async function (req, res) {
+  const users = await getUsers();
+  res.json(users);
 });
