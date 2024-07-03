@@ -82,6 +82,6 @@ jobs:
             cd ./kkoo
             docker compose down
             docker compose pull
-            docker compose --env-file ./apps/server/.env up -d
+            docker compose up -d
             docker image prune -f
             sudo systemctl restart nginx
