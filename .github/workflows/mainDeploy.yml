@@ -55,7 +55,7 @@ jobs:
         run: pnpm exec playwright install
         working-directory: ./apps/client
 
-      - name: run E2E test
+      - name: run E2E tests
         run: pnpm turbo run test:e2e
 
       - name: Login to Docker Hub
