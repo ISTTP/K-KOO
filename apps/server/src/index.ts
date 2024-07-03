@@ -9,7 +9,7 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 const server = createServer();
 
 const user: User = {
@@ -30,6 +30,6 @@ server.listen(port, () => {
   getUsers();
 });
 
-server.get("/test", function (req, res) {
+server.get("/api/test", function (req, res) {
   res.send("하이");
 });
