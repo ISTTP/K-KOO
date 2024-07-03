@@ -34,11 +34,8 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 expressjs
 RUN adduser --system --uid 1001 expressjs
 USER expressjs
-#COPY --from=installer /app .
+COPY --from=installer /app .
+CMD node apps/server/dist/index.js
 
-#CMD node apps/server/dist/index.js
 
-COPY --from=installer /app/apps/server/dist /app/apps/server/dist
-COPY --from=installer /app/apps/server/.env /app/tmp/server/.env
-CMD sh -c "cp -r /app/tmp/server/.env /app/apps/server/.env; node apps/server/dist/index.js"
 
