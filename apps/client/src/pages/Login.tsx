@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import Button from "../components/Button";
+import axiosInstance from "../apis/axios";
 
 function handleKakaoLogin() {
-  console.log("Kakao Login~&&~!");
+  const url = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&response_type=code`;
+  window.location.href = url;
 }
 
 function handleGoogleLogin() {
@@ -12,12 +14,9 @@ function handleGoogleLogin() {
   window.location.href = url;
 }
 
-console.log(process.env.SERVER_URL);
-
-async function fetchTest() {
-  const res = await fetch(`${process.env.SERVER_URL}/test`);
-  const data = await res.text();
-  console.log(data);
+async function fetch() {
+  const res = await axiosInstance.get(`/test`);
+  console.log(res);
 }
 
 function Login() {
@@ -35,7 +34,7 @@ function Login() {
         label="Google로 시작하기"
         onClick={handleGoogleLogin}
       />
-      <button onClick={fetchTest}>fetch test</button>
+      <button onClick={fetch}>fetch test</button>
     </Wrapper>
   );
 }
