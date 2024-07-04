@@ -1,69 +1,38 @@
-# Turborepo Docker starter
+# 🎂 케이꾸
 
-This is an official Docker starter Turborepo.
+- 배포 URL : https://k-koo.kro.kr
 
-## Using this example
 
-Run the following command:
+<br>
 
-```sh
-npx create-turbo@latest -e with-docker
-```
+## 프로젝트 소개
 
-## What's inside?
+- 케이꾸는 생일날 생일편지가 오픈되는 롤링페이퍼 서비스입니다.
+- 생일자는 자신만의 케이크를 만들어 SNS에 링크를 공유할 수 있습니다.
+- 링크에 접속하면 자신만의 스타일로 꾸며낸 편지지에 축하 글을 작성할 수 있습니다.
+- 축하글이 작성되면 생일자의 케이크에 추가되고, 생일 당일 날 공개됩니다. 
+- 연도 별 편지함이 있어 매년 받은 편지를 보관 및 열람할 수 있습니다.
+- 편지가 생성되면 사랑이나 우정과 같은 편지 내용을 암시하는 키워드가 같이 전송되어 궁금증을 유발합니다.
 
-This Turborepo includes the following:
+<br>
 
-### Apps and Packages
+## 팀원 구성
 
-- `web`: a [Next.js](https://nextjs.org/) app
-- `api`: an [Express](https://expressjs.com/) server
-- `@repo/ui`: a React component library
-- `@repo/logger`: Isomorphic logger (a small wrapper around console.log)
-- `@repo/eslint-config`: ESLint presets
-- `@repo/typescript-config`: tsconfig.json's used throughout the monorepo
-- `@repo/jest-presets`: Jest configurations
+<div align="center">
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+| **이은영** | **김예린** |
+| :------: |  :------: | 
+| [<img src="https://github.com/ieun32.png" height=150 width=150> <br/> @ieun32](https://github.com/ieun32) | [<img src="https://github.com/kyr4601.png" height=150 width=150> <br/> @kyr4601](https://github.com/kyr4601) | 
+</div>
 
-### Docker
+<br>
 
-This repo is configured to be built with Docker, and Docker compose. To build all apps in this repo:
+## 1. 개발 환경
 
-```
-# Create a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-docker network create app_network
+- Front-end : React, Typescript, webpack, babel, eslint, prettier, styled-components, Zustand, React-query, jest, playwright, 
+- Back-end : Express.js, Typescript, postgreSQL, Prisma 
+- 프로젝트 관리 : Turborepo, Pnpm, Github
+- 협업 툴 : Discord, Notion
+- CI/CD : AWS, Docker, Nginx, Github actions
+- 디자인 : [Figma](https://www.figma.com/design/ZIoL1JZF2ahOIKbEXzEx85/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0-1&t=mrUdaeOgzkk8kRbB-0)
 
-# Build prod using new BuildKit engine
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
-
-# Start prod in detached mode
-docker-compose -f docker-compose.yml up -d
-```
-
-Open http://localhost:3000.
-
-To shutdown all running containers:
-
-```
-# Stop all running containers
-docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
-```
-
-### Remote Caching
-
-This example includes optional remote caching. In the Dockerfiles of the apps, uncomment the build arguments for `TURBO_TEAM` and `TURBO_TOKEN`. Then, pass these build arguments to your Docker build.
-
-You can test this behavior using a command like:
-
-`docker build -f apps/web/Dockerfile . --build-arg TURBO_TEAM=“your-team-name” --build-arg TURBO_TOKEN=“your-token“ --no-cache`
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Jest](https://jestjs.io) test runner for all things JavaScript
-- [Prettier](https://prettier.io) for code formatting
