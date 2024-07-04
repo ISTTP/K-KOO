@@ -10,7 +10,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/oauth/google" element={<GoogleLogin />} />
+      <Route path="/auth/google" element={<GoogleLogin />} />
     </Routes>
   );
 };
