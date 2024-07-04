@@ -34,3 +34,8 @@ server.get("/api/test", async function (req, res) {
   const users = await getUsers();
   res.json(users);
 });
+
+server.get("/api/kakao/url", (_, res) => {
+  const url = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&response_type=code`;
+  res.status(200).json({ url });
+});
