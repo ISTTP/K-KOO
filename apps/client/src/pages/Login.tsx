@@ -2,23 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import Button from "../components/Button";
+import axios from "axios";
 
 function handleKakaoLogin() {
   console.log("Kakao Login~~!");
 }
 
-function handleGoogleLogin() {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&response_type=token&scope=email profile`;
-  window.location.href = url;
+async function handleGoogleLogin() {
+  const res = await axios.post(`${process.env.SERVER_URL}/auth/google`);
+  window.location.href = res.data.GoogleAuthUrl;
 }
 
 console.log(process.env.SERVER_URL);
-
-async function fetchTest() {
-  const res = await fetch(`${process.env.SERVER_URL}/test`);
-  const data = await res.text();
-  console.log(data);
-}
 
 function Login() {
   return (
@@ -35,7 +30,6 @@ function Login() {
         label="Google로 시작하기"
         onClick={handleGoogleLogin}
       />
-      <button onClick={fetchTest}>fetch test</button>
     </Wrapper>
   );
 }
