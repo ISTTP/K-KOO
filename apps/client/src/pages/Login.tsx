@@ -9,11 +9,10 @@ function handleKakaoLogin() {
 }
 
 async function handleGoogleLogin() {
-  const res = await axios.post(`${process.env.SERVER_URL}/auth/google`);
+  const url = `${process.env.SERVER_URL}/auth/google`;
+  const res = await axios.post(url);
   window.location.href = res.data.GoogleAuthUrl;
 }
-
-console.log(process.env.SERVER_URL);
 
 function Login() {
   return (
