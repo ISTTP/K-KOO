@@ -1,8 +1,6 @@
 import { createServer } from "./server";
 import { log } from "@repo/logger";
-
 import auth from "./routes/auth";
-
 import "dotenv/config";
 
 const port = process.env.SERVER_PORT;

@@ -2,18 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import Button from "../components/Button";
-import axios from "axios";
+import axiosInstance from "../apis/axios";
 
-function handleKakaoLogin() {
-  console.log("Kakao Login~~!");
+async function handleKakaoLogin() {
+  const res = await axiosInstance.get(`/kakao/url`);
+  window.location.href = res.data.url;
 }
 
 async function handleGoogleLogin() {
-  const res = await axios.post(`${process.env.SERVER_URL}/auth/google`);
+  const res = await axiosInstance.post(`/auth/google`);
   window.location.href = res.data.GoogleAuthUrl;
 }
-
-console.log(process.env.SERVER_URL);
 
 function Login() {
   return (
