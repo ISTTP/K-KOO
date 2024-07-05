@@ -20,6 +20,8 @@ services:
       - 3001:3001
     networks:
       - app_network
+    env_file:
+      - ./apps/server/.env
 
 networks:
   app_network:

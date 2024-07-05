@@ -48,7 +48,7 @@ jobs:
       - name: run unit tests
         run: pnpm turbo run test
 
-      - name: run integration test
+      - name: run integration tests
         run: pnpm turbo run test:integ
 
       - name: download playwright browsers
@@ -80,6 +80,7 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             cd ./kkoo
+            echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> ./apps/server/.env
             docker compose down
             docker compose pull
             docker compose up -d
