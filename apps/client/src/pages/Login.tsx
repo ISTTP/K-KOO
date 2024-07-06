@@ -1,20 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Wrapper from "../components/Wrapper";
-import Button from "../components/Button";
-import axiosInstance from "../apis/axios";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Wrapper from '../components/Wrapper';
+import Button from '../components/Button';
+import axiosInstance from '../apis/axios';
 
 async function handleKakaoLogin() {
-  const res = await axiosInstance.get(`/auth/kakao/url`);
+  const res = await axiosInstance.get('/auth/kakao/url');
   window.location.href = res.data.url;
 }
 
 async function handleGoogleLogin() {
-  const res = await axiosInstance.post(`/auth/google/url`);
+  const res = await axiosInstance.post('/auth/google/url');
   window.location.href = res.data.url;
 }
 
-function Login() {
+const Login = () => {
   return (
     <Wrapper>
       <h1>Login</h1>
@@ -31,6 +31,6 @@ function Login() {
       />
     </Wrapper>
   );
-}
+};
 
 export default Login;

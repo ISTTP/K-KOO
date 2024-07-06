@@ -1,5 +1,5 @@
-import { add } from "../math";
+import { add } from '../math';
 
-test("add", () => {
+test('add', () => {
   expect(add(1, 2)).toBe(3);
 });

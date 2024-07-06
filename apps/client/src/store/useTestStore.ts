@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface ID {
   id: string;
@@ -6,7 +6,7 @@ interface ID {
 }
 
 const useTestStore = create<ID>((set) => ({
-  id: "init",
+  id: 'init',
   setId: (by) => {
     set(() => ({ id: by }));
   },
