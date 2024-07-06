@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import GoogleLogin from "./pages/GoogleLogin";
 import KakaoLogin from "./pages/KakaoLogin";
+import Cake from "./pages/Cake";
 import "./App.css";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<KakaoLogin />} />
       <Route path="/auth/google" element={<GoogleLogin />} />
+      <Route path="/cake" element={<Cake />} />
     </Routes>
   );
 };

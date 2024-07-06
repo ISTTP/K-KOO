@@ -15,14 +15,15 @@ datasource db {
 
 model User {
   user_id          Int      @id @default(autoincrement()) // 유저 아이디 (기본키)
-  id               String?  @unique // 아이디 (선택적)
+  id               String // 아이디
   password         String? // 비밀번호 (선택적)
   nickname         String // 닉네임
   birthday         DateTime // 생일
   point            Int      @default(0) // 포인트, 기본값으로 0 설정
   login_type       String // 로그인 타입
-  sheet_color      String // 시트 색깔
-  cream_color      String // 크림 색깔
+  sheet_color      String? // 시트 색깔 (선택적)
+  cream_color      String? // 크림 색깔 (선택적)
+  refresh_token    String? // 리프레시 토큰 (선택적)
   created_at       DateTime @default(now()) // 생성 날짜
   updated_at       DateTime @updatedAt // 수정 날짜
   sent_letters     Letter[] @relation("SentLetters") // 발신 편지들과의 관계

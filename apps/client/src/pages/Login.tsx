@@ -5,13 +5,13 @@ import Button from "../components/Button";
 import axiosInstance from "../apis/axios";
 
 async function handleKakaoLogin() {
-  const res = await axiosInstance.get(`/kakao/url`);
+  const res = await axiosInstance.get(`/auth/kakao/url`);
   window.location.href = res.data.url;
 }
 
 async function handleGoogleLogin() {
-  const res = await axiosInstance.post(`/auth/google`);
-  window.location.href = res.data.GoogleAuthUrl;
+  const res = await axiosInstance.post(`/auth/google/url`);
+  window.location.href = res.data.url;
 }
 
 function Login() {
