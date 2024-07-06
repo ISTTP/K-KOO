@@ -153,6 +153,12 @@ importers:
 
   apps/server:
     dependencies:
+      '@types/qs':
+        specifier: ^6.9.15
+        version: 6.9.15
+      axios:
+        specifier: ^1.7.2
+        version: 1.7.2
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -168,6 +174,9 @@ importers:
       morgan:
         specifier: ^1.10.0
         version: 1.10.0
+      qs:
+        specifier: ^6.12.2
+        version: 6.12.2
     devDependencies:
       '@repo/db':
         specifier: workspace:*
@@ -4120,8 +4129,8 @@ packages:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
     engines: {node: '>=0.6'}
 
-  qs@6.12.1:
-    resolution: {integrity: sha512-zWmv4RSuB9r2mYQw3zxQuHWeU+42aKi1wWig/j4ele4ygELZ7PEO6MM7rim9oAQH2A5MWfsAVf/jPvTPgCbvUQ==}
+  qs@6.12.2:
+    resolution: {integrity: sha512-x+NLUpx9SYrcwXtX7ob1gnkSems4i/mGZX5SlYxwIau6RrUSODO89TR/XDGGpn5RPWSYIB+aSfuSlV5+CmbTBg==}
     engines: {node: '>=0.6'}
 
   querystringify@2.2.0:
@@ -8159,7 +8168,7 @@ snapshots:
       dezalgo: 1.0.4
       hexoid: 1.0.0
       once: 1.4.0
-      qs: 6.12.1
+      qs: 6.12.2
 
   forwarded@0.2.0: {}
 
@@ -9573,7 +9582,7 @@ snapshots:
     dependencies:
       side-channel: 1.0.6
 
-  qs@6.12.1:
+  qs@6.12.2:
     dependencies:
       side-channel: 1.0.6
 
@@ -10130,7 +10139,7 @@ snapshots:
       formidable: 2.1.2
       methods: 1.1.2
       mime: 2.6.0
-      qs: 6.12.1
+      qs: 6.12.2
       semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
