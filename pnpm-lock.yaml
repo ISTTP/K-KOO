@@ -66,24 +66,21 @@ importers:
       '@babel/runtime-corejs3':
         specifier: ^7.24.7
         version: 7.24.7
+      '@isttp/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@isttp/jest-presets':
+        specifier: workspace:*
+        version: link:../../packages/jest-presets
+      '@isttp/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@isttp/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@playwright/test':
         specifier: ^1.44.1
         version: 1.45.0
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/jest-presets':
-        specifier: workspace:*
-        version: link:../../packages/jest-presets
-      '@repo/logger':
-        specifier: workspace:*
-        version: link:../../packages/logger
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      '@repo/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@testing-library/dom':
         specifier: ^10.2.0
         version: 10.2.0
@@ -181,25 +178,22 @@ importers:
         specifier: ^6.12.2
         version: 6.12.2
     devDependencies:
-      '@repo/db':
+      '@isttp/db':
         specifier: workspace:*
         version: link:../../packages/database
-      '@repo/eslint-config':
+      '@isttp/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@repo/jest-presets':
+      '@isttp/jest-presets':
         specifier: workspace:*
         version: link:../../packages/jest-presets
-      '@repo/logger':
-        specifier: workspace:*
-        version: link:../../packages/logger
-      '@repo/types':
+      '@isttp/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@repo/typescript-config':
+      '@isttp/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@repo/utils':
+      '@isttp/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       '@types/body-parser':
@@ -257,10 +251,10 @@ importers:
         specifier: ^5.10.2
         version: 5.16.1(prisma@5.16.1)
     devDependencies:
-      '@repo/eslint-config':
+      '@isttp/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@repo/typescript-config':
+      '@isttp/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       prisma:
@@ -315,42 +309,12 @@ importers:
         specifier: ^29.1.5
         version: 29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(esbuild@0.20.2)(jest@29.7.0(@types/node@20.14.9)(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.2)))(typescript@5.5.2)
 
-  packages/logger:
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/jest-presets':
-        specifier: workspace:*
-        version: link:../jest-presets
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^20.11.24
-        version: 20.14.9
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.14.9)(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.2))
-      ts-jest:
-        specifier: ^29.1.5
-        version: 29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(esbuild@0.20.2)(jest@29.7.0(@types/node@20.14.9)(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.2)))(typescript@5.5.2)
-      typescript:
-        specifier: ^5.3.3
-        version: 5.5.2
-
   packages/types:
     devDependencies:
-      '@repo/eslint-config':
+      '@isttp/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@repo/typescript-config':
+      '@isttp/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       eslint:
@@ -371,10 +335,10 @@ importers:
         specifier: ^9.0.2
         version: 9.0.2
     devDependencies:
-      '@repo/jest-presets':
+      '@isttp/jest-presets':
         specifier: workspace:*
         version: link:../jest-presets
-      '@repo/typescript-config':
+      '@isttp/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@types/jest':

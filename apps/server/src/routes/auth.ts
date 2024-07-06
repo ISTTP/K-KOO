@@ -1,11 +1,11 @@
 import 'dotenv/config';
-import { PrismaClient } from '@repo/db';
-import { GoogleTokenType, KakaoTokenType } from '@repo/types';
+import { PrismaClient } from '@isttp/db/all';
+import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
 import {
   generateAccessToken,
   generateRefreshToken,
   reissueToken,
-} from '@repo/utils';
+} from '@isttp/utils/all';
 import { Router } from 'express';
 import axios from 'axios';
 import qs from 'qs';
@@ -14,6 +14,7 @@ const router: Router = Router();
 const prisma = new PrismaClient();
 
 /* 회원 여부 확인 */
+
 async function isExistUser(loginType: string, id: string) {
   const user = await prisma.user.findFirst({
     where: {

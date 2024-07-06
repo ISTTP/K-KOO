@@ -11,6 +11,6 @@ test('카카오 버튼 렌더링', () => {
       onClick={() => console.log('카카오')}
     />,
   );
-  const buttonElement = screen.getByText(/Kakao로 시작하기/i);
+  const buttonElement = screen.getByText(/Kakao로 시작하기/);
   expect(buttonElement).toBeInTheDocument();
 });

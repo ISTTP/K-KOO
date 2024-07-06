@@ -11,7 +11,7 @@ type ResponseType = {
   loginType?: string;
 } | null;
 
-function KakaoLogin() {
+const KakaoLogin = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
   const [response, setResponse] = useState<ResponseType>(null);
@@ -36,7 +36,7 @@ function KakaoLogin() {
         navigate('/cake');
         break;
       case false:
-        navigate('/signup', {
+        navigate("/signup", {
           state: { loginType: response.loginType, id: response.id },
         });
         break;
