@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../apis/axios";
-import Wrapper from "../components/Wrapper";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../apis/axios';
+import Wrapper from '../components/Wrapper';
 
 type ResponseType = {
   success: boolean;
-  access_token?: string;
-  refresh_token?: string;
+  accessToken?: string;
+  refreshToken?: string;
   id?: string;
-  login_type?: string;
+  loginType?: string;
 } | null;
 
-function GoogleLogin() {
-  const code = new URL(window.location.href).searchParams.get("code");
+const GoogleLogin = () => {
+  const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
   const [response, setResponse] = useState<ResponseType>(null);
 
   async function transferCodeToServer(code: string) {
-    const res = await axiosInstance.post("/auth/google/login", {
+    const res = await axiosInstance.post('/auth/google/login', {
       code,
     });
     return res.data;
@@ -33,11 +33,11 @@ function GoogleLogin() {
     if (!response) return;
     switch (response.success) {
       case true:
-        navigate("/cake");
+        navigate('/cake');
         break;
       case false:
-        navigate("/signup", {
-          state: { login_type: response.login_type, id: response.id },
+        navigate('/signup', {
+          state: { loginType: response.loginType, id: response.id },
         });
         break;
     }
@@ -49,6 +49,6 @@ function GoogleLogin() {
       <p>로딩중...</p>
     </Wrapper>
   );
-}
+};
 
 export default GoogleLogin;

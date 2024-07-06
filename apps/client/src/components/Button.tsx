@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import GoogleIcon from "../assets/icons/GoogleIcon";
-import KakaoIcon from "../assets/icons/KakaoIcon";
+import React from 'react';
+import styled from 'styled-components';
+import GoogleIcon from '../assets/icons/GoogleIcon';
+import KakaoIcon from '../assets/icons/KakaoIcon';
 
-type ButtonType = "google" | "kakao" | "default";
+type ButtonType = 'google' | 'kakao' | 'default';
 
 const StyledButton = styled.button<{
   $type: ButtonType;
@@ -18,7 +18,7 @@ const StyledButton = styled.button<{
   background-color: ${(props) => `var(${props.$bgColor})`};
   color: ${(props) => props.$textColor};
   border: ${(props) =>
-    props.$type === "google" ? "1px solid var(--dark-gray-color)" : "none"};
+    props.$type === 'google' ? '1px solid var(--dark-gray-color)' : 'none'};
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
@@ -37,18 +37,18 @@ interface ButtonProps {
 
 const buttonStyles = {
   google: {
-    bgColor: "--white-color",
-    textColor: "--black-color",
-    icon: <GoogleIcon height={"1.2rem"} width={"1.2rem"} />,
+    bgColor: '--white-color',
+    textColor: '--black-color',
+    icon: <GoogleIcon height={'1.2rem'} width={'1.2rem'} />,
   },
   kakao: {
-    bgColor: "--yellow-color",
-    textColor: "--black-color",
-    icon: <KakaoIcon height={"1.4rem"} width={"1.4rem"} />,
+    bgColor: '--yellow-color',
+    textColor: '--black-color',
+    icon: <KakaoIcon height={'1.4rem'} width={'1.4rem'} />,
   },
   default: {
-    bgColor: "--orange-color",
-    textColor: "--white-color",
+    bgColor: '--orange-color',
+    textColor: '--white-color',
     icon: null,
   },
 };
