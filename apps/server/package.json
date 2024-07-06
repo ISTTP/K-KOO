@@ -11,7 +11,7 @@
     "test": "jest --detectOpenHandles"
   },
   "jest": {
-    "preset": "@repo/jest-presets/node"
+    "preset": "@isttp/jest-presets/node"
   },
   "dependencies": {
     "@types/qs": "^6.9.15",
@@ -25,13 +25,12 @@
     "qs": "^6.12.2"
   },
   "devDependencies": {
-    "@repo/db": "workspace:*",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/jest-presets": "workspace:*",
-    "@repo/logger": "workspace:*",
-    "@repo/types": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/utils": "workspace:*",
+    "@isttp/db": "workspace:*",
+    "@isttp/eslint-config": "workspace:*",
+    "@isttp/jest-presets": "workspace:*",
+    "@isttp/types": "workspace:*",
+    "@isttp/typescript-config": "workspace:*",
+    "@isttp/utils": "workspace:*",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

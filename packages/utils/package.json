@@ -1,28 +1,25 @@
 {
-  "name": "@repo/utils",
+  "name": "@isttp/utils",
   "version": "0.0.0",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "exports": {
+    "./all": "./src/index.ts"
+  },
   "scripts": {
-    "build": "tsc",
     "clean": "rm -rf dist",
-    "dev": "tsc -w",
+    "check-types": "tsc -w",
     "test": "jest"
   },
   "jest": {
-    "preset": "@repo/jest-presets/node"
+    "preset": "@isttp/jest-presets/node"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "@repo/jest-presets": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@isttp/jest-presets": "workspace:*",
+    "@isttp/typescript-config": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.9",

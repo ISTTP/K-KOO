@@ -1,16 +1,13 @@
 {
-  "name": "@repo/db",
+  "name": "@isttp/db",
   "version": "0.0.0",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "exports": {
+    "./all": "./src/index.ts"
+  },
   "scripts": {
-    "build": "tsc",
     "clean": "rm -rf dist",
-    "dev": "tsc -w",
+    "check-types": "tsc -w",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate"
   },
@@ -20,7 +17,7 @@
   "devDependencies": {
     "prisma": "^5.10.2",
     "typescript": "^5.3.3",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@isttp/eslint-config": "workspace:*",
+    "@isttp/typescript-config": "workspace:*"
   }
 }

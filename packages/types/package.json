@@ -1,21 +1,18 @@
 {
-  "name": "@repo/types",
+  "name": "@isttp/types",
   "version": "0.0.0",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "exports": {
+    "./all": "./src/index.ts"
+  },
   "scripts": {
-    "build": "tsc",
     "clean": "rm -rf dist",
-    "dev": "tsc -w"
+    "check-types": "tsc -w"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@isttp/eslint-config": "workspace:*",
+    "@isttp/typescript-config": "workspace:*",
     "typescript": "^5.3.3"
   }
 }
