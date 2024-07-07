@@ -35,6 +35,7 @@ jobs:
           echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> .env
           echo "CLIENT_URL=$CLIENT_URL" >> .env
           echo "DATABASE_URL=$DATABASE_URL" >> .env
+          echo "JWT_SECRET=$JWT_SECRET" >> .env
         working-directory: .
         env:
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
@@ -46,6 +47,7 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         
       - name: build
         run: pnpm turbo run build
@@ -85,7 +87,6 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             cd ./kkoo
-            echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> ./apps/server/.env
             docker compose down
             docker compose pull
             docker compose up -d
