@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./all": "./src/index.ts"
+    "./all": {
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
+    }
   },
   "scripts": {
     "clean": "rm -rf dist",
