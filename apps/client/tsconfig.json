@@ -1,10 +1,15 @@
 {
-  "extends": "@repo/typescript-config/react.json",
+  "extends": "@isttp/typescript-config/react.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
   "include": [
     "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "config"
   ]
 }

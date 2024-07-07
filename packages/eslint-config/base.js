@@ -6,7 +6,42 @@ module.exports = {
   ],
   parser: "@typescript-eslint/parser",
   rules: {
-    "prettier/prettier": ["error", { endOfLine: "auto" }],
+    "quotes": ["error", "single"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+        singleQuote: true
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "typeAlias",  // 타입선언
+        format: ["PascalCase"],
+      },
+      {
+        selector: "memberLike",  // Property 멤버
+        format: ["camelCase"],
+      },
+      {
+        selector: "function",  // function
+        format: ["camelCase"],
+      },
+      {
+        selector: "variable",  // 변수
+        format: ["camelCase", "PascalCase", "UPPER_CASE"],
+      },
+      {
+        selector: "parameter",  // 파라미터
+        format: ["camelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "enumMember",  // enum
+        format: ["UPPER_CASE"],
+      },
+    ],
   },
   env: {
     node: true,

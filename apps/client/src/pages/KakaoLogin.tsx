@@ -11,13 +11,13 @@ type ResponseType = {
   loginType?: string;
 } | null;
 
-const GoogleLogin = () => {
+const KakaoLogin = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
   const [response, setResponse] = useState<ResponseType>(null);
 
   async function transferCodeToServer(code: string) {
-    const res = await axiosInstance.post('/auth/google/login', {
+    const res = await axiosInstance.post('/auth/kakao/login', {
       code,
     });
     return res.data;
@@ -36,7 +36,7 @@ const GoogleLogin = () => {
         navigate('/cake');
         break;
       case false:
-        navigate('/signup', {
+        navigate("/signup", {
           state: { loginType: response.loginType, id: response.id },
         });
         break;
@@ -45,10 +45,9 @@ const GoogleLogin = () => {
 
   return (
     <Wrapper>
-      <h1>구글 로그인</h1>
-      <p>로딩중...</p>
+      <h1>카카오로그인</h1>;
     </Wrapper>
   );
-};
+}
 
-export default GoogleLogin;
+export default KakaoLogin;

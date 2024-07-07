@@ -11,6 +11,8 @@
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
     "test:integ": "turbo run test:integ",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
     "start": "turbo run start",
     "prepare": "husky"
   },

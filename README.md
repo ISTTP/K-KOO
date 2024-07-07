@@ -32,7 +32,3 @@
 - Front-end : React, Typescript, webpack, babel, eslint, prettier, styled-components, Zustand, React-query, jest, playwright, 
 - Back-end : Express.js, Typescript, postgreSQL, Prisma 
 - 프로젝트 관리 : Turborepo, Pnpm, Github
-- 협업 툴 : Discord, Notion
-- CI/CD : AWS, Docker, Nginx, Github actions
-- 디자인 : [Figma](https://www.figma.com/design/ZIoL1JZF2ahOIKbEXzEx85/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0-1&t=mrUdaeOgzkk8kRbB-0)
-
