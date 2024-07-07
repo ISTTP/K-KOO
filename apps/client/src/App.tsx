@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
-import SignUp from './pages/Signup';
-import GoogleLogin from './pages/GoogleLogin';
-import KakaoLogin from './pages/KakaoLogin';
-import Cake from './pages/Cake';
+import Login from '#pages/Login.tsx';
+import SignUp from '#pages/Signup.tsx';
+import GoogleLogin from '#pages/GoogleLogin.tsx';
+import KakaoLogin from '#pages/KakaoLogin.tsx';
+import Cake from '#pages/Cake.tsx';
 import './App.css';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<KakaoLogin />} />
+      <Route path="/auth/kakao" element={<KakaoLogin />} />
       <Route path="/auth/google" element={<GoogleLogin />} />
       <Route path="/cake" element={<Cake />} />
     </Routes>

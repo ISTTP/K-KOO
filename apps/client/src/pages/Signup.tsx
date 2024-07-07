@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import Wrapper from '../components/Wrapper';
-import Button from '../components/Button';
-import axiosInstance from '../apis/axios';
+import Wrapper from '#components/Wrapper.tsx';
+import Button from '#components/Button.tsx';
+import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 
 interface SignUpProps {
