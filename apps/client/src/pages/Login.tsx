@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Wrapper from '../components/Wrapper';
-import Button from '../components/Button';
-import axiosInstance from '../apis/axios';
+import Wrapper from '#components/Wrapper.tsx';
+import Button from '#components/Button.tsx';
+import axiosInstance from '#apis/axios.ts';
 
 async function handleKakaoLogin() {
   const res = await axiosInstance.get('/auth/kakao/url');
