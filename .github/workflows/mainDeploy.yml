@@ -23,32 +23,7 @@ jobs:
 
       - name: install dependencies
         run: pnpm install
-      
-      - name: Generate Environment Variables File
-        run: |
-          echo "SERVER_PORT=$SERVER_PORT" >> .env
-          echo "SERVER_URL=$SERVER_URL" >> .env
-          echo "KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID" >> .env
-          echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> .env
-          echo "KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI" >> .env
-          echo "GOOGLE_REDIRECT_URI=$GOOGLE_REDIRECT_URI" >> .env
-          echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> .env
-          echo "CLIENT_URL=$CLIENT_URL" >> .env
-          echo "DATABASE_URL=$DATABASE_URL" >> .env
-          echo "JWT_SECRET=$JWT_SECRET" >> .env
-        working-directory: .
-        env:
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_URL: ${{ secrets.SERVER_URL }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID}}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
-          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          CLIENT_URL: ${{ secrets.CLIENT_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        
+              
       - name: build
         run: pnpm turbo run build
 
@@ -87,6 +62,17 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             cd ./kkoo
+            sudo rm .env 
+            echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" > .env
+            echo "SERVER_URL=${{ secrets.SERVER_URL }}" >> .env
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID}}" >> .env
+            echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+            echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env
+            echo "GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}" >> .env
+            echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+            echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
             docker compose down
             docker compose pull
             docker compose up -d
