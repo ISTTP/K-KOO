@@ -7,13 +7,13 @@ interface ToggleBtnProps {
 }
 
 interface Proptype {
-  isToggle: boolean;
+  $istoggle: boolean;
 }
 
 const Toggle: React.FC<ToggleBtnProps> = ({ toggle, onClick }) => (
   <Container>
-    <ToggleBtn onClick={onClick} isToggle={toggle}>
-      <Circle isToggle={toggle} />
+    <ToggleBtn onClick={onClick} $istoggle={toggle}>
+      <Circle $istoggle={toggle} />
     </ToggleBtn>
     <button>케이크 수정</button>
   </Container>
@@ -34,7 +34,7 @@ const ToggleBtn = styled.button<Proptype>`
   border: none;
   cursor: pointer;
   background-color: ${(props) =>
-    !props.isToggle ? 'none' : 'var(--light-gray-color)'};
+    !props.$istoggle ? 'none' : 'var(--light-gray-color)'};
   position: relative;
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@ const Circle = styled.div<Proptype>`
   left: 0;
   transition: all 0.5s ease-in-out;
   ${(props) =>
-    props.isToggle &&
+    props.$istoggle &&
     css`
       transform: translate(24px, 0);
       transition: all 0.5s ease-in-out;
