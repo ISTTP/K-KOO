@@ -29,7 +29,7 @@ export function generateRefreshToken() {
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET as string);
+    return jwt.verify(token, `${process.env.JWT_SECRET}`);
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       throw new Error('EXPIRED');
@@ -66,6 +66,7 @@ export async function checkValidation({
 }) {
   try {
     verifyToken(accessToken);
+
     return { message: 'ACCESS_VALID' };
   } catch (error) {
     if (error instanceof Error) {
