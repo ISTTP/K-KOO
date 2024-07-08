@@ -46,7 +46,7 @@ router.post('/auth/signup', async (req, res) => {
       },
     });
 
-    const accessToken = generateAccessToken(String(user.userId));
+    const accessToken = generateAccessToken(user.userId);
     const refreshToken = generateRefreshToken();
 
     await prisma.user.update({
@@ -60,9 +60,11 @@ router.post('/auth/signup', async (req, res) => {
 
     res
       .status(200)
+      .clearCookie('ACT')
+      .clearCookie('RFT')
       .setHeader('Set-Cookie', [
-        `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-        `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
+        `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax`,
+        `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax`,
       ])
       .json({ success: true, message: '회원가입 성공' });
   } catch (error) {
@@ -118,7 +120,7 @@ router.post('/auth/google/login', async (req, res) => {
 
     // 회원일 경우 토큰 재발급, 토큰 반환
     if (userId) {
-      const tokens = reissueToken(String(userId));
+      const tokens = reissueToken(userId);
       const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
@@ -132,9 +134,11 @@ router.post('/auth/google/login', async (req, res) => {
       });
 
       res
+        .clearCookie('ACT')
+        .clearCookie('RFT')
         .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-          `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
+          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
+          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
         ])
         .status(200)
         .json({
@@ -197,7 +201,7 @@ router.post('/auth/kakao/login', async (req, res) => {
 
     if (userId) {
       //토큰 재발급
-      const tokens = reissueToken(String(userId));
+      const tokens = reissueToken(userId);
       const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
@@ -211,9 +215,11 @@ router.post('/auth/kakao/login', async (req, res) => {
       });
 
       res
+        .clearCookie('ACT')
+        .clearCookie('RFT')
         .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-          `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
+          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
+          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
         ])
         .status(200)
         .json({

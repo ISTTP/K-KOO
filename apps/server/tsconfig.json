@@ -15,10 +15,10 @@
   ],
   "references": [
     {
-      "path": "../../packages/utils"
+      "path": "../../packages/database"
     },
     {
-      "path": "../../packages/database"
+      "path": "../../packages/utils"
     },
   ]
 }
