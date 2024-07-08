@@ -27,10 +27,12 @@ router.get('/user/:userId', async (req, res) => {
       break;
     case 'REFRESH_VALID':
       res
+        .clearCookie('ACT')
+        .clearCookie('RFT')
         .status(200)
         .setHeader('Set-Cookie', [
-          `ACT=${result.accessToken}; HttpOnly; SameSite=Lax`,
-          `RFT=${result.refreshToken}; HttpOnly; SameSite=Lax`,
+          `ACT=${result.accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
+          `RFT=${result.refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
         ])
         .json({ user });
       break;
