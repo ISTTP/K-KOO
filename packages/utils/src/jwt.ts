@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 
 export function generateAccessToken(userId: number) {
   const accessToken = jwt.sign({ userId }, `${process.env.JWT_SECRET}`, {
-    expiresIn: 1,
+    expiresIn: 60 * 60,
     algorithm: 'HS256',
   });
 
