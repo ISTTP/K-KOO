@@ -46,7 +46,7 @@ router.post('/auth/signup', async (req, res) => {
       },
     });
 
-    const accessToken = generateAccessToken(String(user.userId));
+    const accessToken = generateAccessToken(user.userId);
     const refreshToken = generateRefreshToken();
 
     await prisma.user.update({
@@ -118,7 +118,7 @@ router.post('/auth/google/login', async (req, res) => {
 
     // 회원일 경우 토큰 재발급, 토큰 반환
     if (userId) {
-      const tokens = reissueToken(String(userId));
+      const tokens = reissueToken(userId);
       const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
@@ -197,7 +197,7 @@ router.post('/auth/kakao/login', async (req, res) => {
 
     if (userId) {
       //토큰 재발급
-      const tokens = reissueToken(String(userId));
+      const tokens = reissueToken(userId);
       const accessToken = tokens.accessToken;
       const refreshToken = tokens.refreshToken;
 
