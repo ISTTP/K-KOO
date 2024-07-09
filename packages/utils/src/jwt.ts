@@ -8,8 +8,8 @@ import {
 } from 'jsonwebtoken';
 
 const JWT_SECRET = `${process.env.JWT_SECRET}`;
-const ACT_EXPIRES_IN = 60 * 30;
-const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
+export const ACT_EXPIRES_IN = 60 * 30;
+export const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
 const JWT_ALGORITHM = 'HS256';
 
 export function generateAccessToken(userId: number) {
