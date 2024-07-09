@@ -23,6 +23,7 @@
   "devDependencies": {
     "@isttp/jest-presets": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
+    "@isttp/types": "workspace:*",
     "@isttp/db": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",

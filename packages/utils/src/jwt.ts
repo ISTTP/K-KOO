@@ -1,17 +1,15 @@
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@isttp/db/all';
+import 'dotenv/config';
+import { MyJwtPayload } from '@isttp/types/all';
 import {
   JsonWebTokenError,
   TokenExpiredError,
   NotBeforeError,
 } from 'jsonwebtoken';
-import 'dotenv/config';
 
-const prisma = new PrismaClient();
-
-const JWT_SECRET = process.env.JWT_SECRET;
-const ACT_EXPIRES_IN = 60 * 30;
-const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
+const JWT_SECRET = `${process.env.JWT_SECRET}`;
+export const ACT_EXPIRES_IN = 60 * 30;
+export const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
 const JWT_ALGORITHM = 'HS256';
 
 export function generateAccessToken(userId: number) {
@@ -55,54 +53,10 @@ export function reissueToken(userId: number) {
   return { accessToken, refreshToken };
 }
 
-// 액세스 토큰이 유효하면 true
-// 액세스 토큰이 만료되면 리프레시 토큰 검증
-// 리프레시 토큰이 유효하면 새로운 액세스 토큰, 리프레시 토큰 발급, true, 리프레시 토큰 업뎃, set쿠키
-// 리프레시 토큰도 만료되었으면 false -> 로그인페이지로 ㄱㄱ
-
-export async function checkValidation({
-  userId,
-  accessToken,
-  refreshToken,
-}: {
-  userId: number;
-  accessToken: string;
-  refreshToken: string;
-}) {
-  try {
-    verifyToken(accessToken);
-
-    return { message: 'ACCESS_VALID' };
-  } catch (error) {
-    if (error instanceof Error) {
-      switch (error.message) {
-        case 'EXPIRED': {
-          const decoded = verifyToken(refreshToken);
-          if (decoded instanceof Error) {
-            return { message: 'EXPIRED' };
-          }
-          const tokens = reissueToken(userId);
-          const newAccessToken = tokens.accessToken;
-          const newRefreshToken = tokens.refreshToken;
-
-          await prisma.user.update({
-            where: {
-              userId,
-            },
-            data: {
-              refreshToken: newRefreshToken,
-            },
-          });
-          return {
-            message: 'REFRESH_VALID',
-            accessToken: newAccessToken,
-            refreshToken: newRefreshToken,
-          };
-        }
-
-        default:
-          return { message: 'EXPIRED' };
-      }
-    }
+export function decodeToken(token: string) {
+  const payload = jwt.decode(token);
+  if (payload && typeof payload === 'object' && 'userId' in payload) {
+    return payload as MyJwtPayload;
   }
+  return null;
 }
