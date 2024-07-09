@@ -36,6 +36,3 @@ RUN adduser --system --uid 1001 expressjs
 USER expressjs
 COPY --from=installer /app .
 CMD node apps/server/dist/index.js
-
-
-

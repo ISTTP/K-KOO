@@ -9,19 +9,24 @@ import 'dotenv/config';
 
 const prisma = new PrismaClient();
 
+const JWT_SECRET = process.env.JWT_SECRET;
+const ACT_EXPIRES_IN = 60 * 30;
+const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
+const JWT_ALGORITHM = 'HS256';
+
 export function generateAccessToken(userId: number) {
-  const accessToken = jwt.sign({ userId }, `${process.env.JWT_SECRET}`, {
-    expiresIn: 60 * 60,
-    algorithm: 'HS256',
+  const accessToken = jwt.sign({ userId }, JWT_SECRET, {
+    expiresIn: ACT_EXPIRES_IN,
+    algorithm: JWT_ALGORITHM,
   });
 
   return accessToken;
 }
 
 export function generateRefreshToken() {
-  const refreshToken = jwt.sign({}, `${process.env.JWT_SECRET}`, {
-    expiresIn: '14d',
-    algorithm: 'HS256',
+  const refreshToken = jwt.sign({}, JWT_SECRET, {
+    expiresIn: RFT_EXPIRES_IN,
+    algorithm: JWT_ALGORITHM,
   });
 
   return refreshToken;
@@ -29,7 +34,7 @@ export function generateRefreshToken() {
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, `${process.env.JWT_SECRET}`);
+    return jwt.verify(token, JWT_SECRET);
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       throw new Error('EXPIRED');
