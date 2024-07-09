@@ -7,16 +7,16 @@ const router: Router = Router();
 const prisma = new PrismaClient();
 
 router.get('/user/:userId', async (req, res) => {
-  const { userId } = req.params;
+  const userId = Number(req.params.userId);
 
   const user = await prisma.user.findFirst({
     where: {
-      userId: Number(userId),
+      userId: userId,
     },
   });
 
   const result = await checkValidation({
-    userId: Number(userId),
+    userId: userId,
     accessToken: req.cookies.ACT,
     refreshToken: req.cookies.RFT,
   });

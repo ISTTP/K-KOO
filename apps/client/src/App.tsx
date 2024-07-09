@@ -7,7 +7,7 @@ import KakaoLogin from '#pages/KakaoLogin.tsx';
 import Cake from '#pages/Cake.tsx';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -17,6 +17,6 @@ function App() {
       <Route path="/cake" element={<Cake />} />
     </Routes>
   );
-}
+};
 
 export default App;

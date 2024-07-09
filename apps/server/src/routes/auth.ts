@@ -60,11 +60,9 @@ router.post('/auth/signup', async (req, res) => {
 
     res
       .status(200)
-      .clearCookie('ACT')
-      .clearCookie('RFT')
       .setHeader('Set-Cookie', [
-        `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax`,
-        `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax`,
+        `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax overwrite: true;`,
+        `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax overwrite: true;`,
       ])
       .json({ success: true, message: '회원가입 성공' });
   } catch (error) {
@@ -134,11 +132,9 @@ router.post('/auth/google/login', async (req, res) => {
       });
 
       res
-        .clearCookie('ACT')
-        .clearCookie('RFT')
         .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
-          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
+          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax; overwrite: true;`,
+          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax; overwrite: true;`,
         ])
         .status(200)
         .json({
@@ -215,11 +211,9 @@ router.post('/auth/kakao/login', async (req, res) => {
       });
 
       res
-        .clearCookie('ACT')
-        .clearCookie('RFT')
         .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
-          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
+          `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax; overwrite: true;`,
+          `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax; overwrite: true;`,
         ])
         .status(200)
         .json({
