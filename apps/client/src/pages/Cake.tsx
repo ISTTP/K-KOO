@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import Wrapper from '#components/Wrapper.tsx';
 import Toggle from '#components/Toggle.tsx';
+import axiosInstance from '#apis/axios.ts';
 
 const Cake = () => {
   const [toggle, setToggle] = useState(false);
   const clickedToggle = () => {
     setToggle((prev) => !prev);
   };
+
+  async function test() {
+    const res = await axiosInstance.get('/cake/1/2025?keyword=true&page=1');
+    console.log(res.data);
+  }
   return (
     <Wrapper>
       <h3>김예린 님의 케이크</h3>
@@ -15,6 +21,7 @@ const Cake = () => {
       <Toggle toggle={toggle} onClick={clickedToggle} />
       {/* toggle에 따라 다른 컴포넌트 렌더링 */}
       {toggle ? '그리드' : '케이크'}
+      <button onClick={test}>test</button>
     </Wrapper>
   );
 };
