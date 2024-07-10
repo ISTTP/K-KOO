@@ -19,7 +19,7 @@ export function generateAccessToken(userId: number) {
 }
 
 export function generateRefreshToken() {
-  const refreshToken = jwt.sign({}, `${process.env.JWT_SECRET}`, {
+  const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
     expiresIn: '14d',
     algorithm: 'HS256',
   });
