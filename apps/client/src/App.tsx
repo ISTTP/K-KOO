@@ -5,9 +5,10 @@ import SignUp from '#pages/Signup.tsx';
 import GoogleLogin from '#pages/GoogleLogin.tsx';
 import KakaoLogin from '#pages/KakaoLogin.tsx';
 import Cake from '#pages/Cake.tsx';
+import CreateCake from '#pages/CreateCake.tsx';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -15,8 +16,9 @@ function App() {
       <Route path="/auth/kakao" element={<KakaoLogin />} />
       <Route path="/auth/google" element={<GoogleLogin />} />
       <Route path="/cake" element={<Cake />} />
+      <Route path="/cake/create" element={<CreateCake />} />
     </Routes>
   );
-}
+};
 
 export default App;
