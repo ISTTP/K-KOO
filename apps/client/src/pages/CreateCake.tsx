@@ -4,6 +4,11 @@ import ColorSelector from '#components/ColorSelector.tsx';
 import RenderCake from '#components/RenderCake.tsx';
 
 import { CakeColorType } from '@isttp/types/all';
+import Button from '#components/Button.tsx';
+
+function handleCreateCake() {
+  console.log('케이크 만들기!');
+}
 
 const CreateCake = () => {
   const [sheetColor, setSheetColor] = useState<CakeColorType>('white');
@@ -19,6 +24,7 @@ const CreateCake = () => {
         selectedCream={creamColor}
         setSelectedCream={setCreamColor}
       />
+      <Button type="default" label="케이크 만들기" onClick={handleCreateCake} />
     </Wrapper>
   );
 };
