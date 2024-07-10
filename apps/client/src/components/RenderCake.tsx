@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { CakeColorType } from '@isttp/types/all';
 
-import { BlueberrySheet, BlueberryCream, StrawberryCream } from '#images';
+import * as Svg from '#images';
 
 const SvgContainer = styled.div`
   margin-top: 20px;
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   position: relative;
 `;
 
@@ -28,24 +28,24 @@ const SheetSVG: Record<
   CakeColorType,
   (props: React.SVGProps<SVGSVGElement>) => JSX.Element
 > = {
-  white: () => <></>,
-  chocolate: () => <></>,
-  strawberry: () => <></>,
-  banana: () => <></>,
-  mint: () => <></>,
-  blueberry: BlueberrySheet,
+  white: Svg.WhiteSheet,
+  chocolate: Svg.ChocoSheet,
+  strawberry: Svg.StrawberrySheet,
+  banana: Svg.BananaSheet,
+  mint: Svg.MintSheet,
+  blueberry: Svg.BlueberrySheet,
 };
 
 const CreamSVG: Record<
   CakeColorType,
   (props: React.SVGProps<SVGSVGElement>) => JSX.Element
 > = {
-  white: () => <></>,
-  chocolate: () => <></>,
-  strawberry: StrawberryCream,
-  banana: () => <></>,
-  mint: () => <></>,
-  blueberry: BlueberryCream,
+  white: Svg.WhiteCream,
+  chocolate: Svg.ChocoCream,
+  strawberry: Svg.StrawberryCream,
+  banana: Svg.BananaCream,
+  mint: Svg.MintCream,
+  blueberry: Svg.BlueberryCream,
 };
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
@@ -54,8 +54,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   return (
     <SvgContainer>
-      <SvgElement viewBox="0 0 200 200">{SheetSVG[sheetColor]({})}</SvgElement>
-      <SvgElement viewBox="0 0 200 200">{CreamSVG[creamColor]({})}</SvgElement>
+      <SvgElement>{SheetSVG[sheetColor]({})}</SvgElement>
+      <SvgElement>{CreamSVG[creamColor]({})}</SvgElement>
     </SvgContainer>
   );
 };
