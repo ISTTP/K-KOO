@@ -38,6 +38,7 @@
     "@isttp/jest-presets": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
     "@isttp/utils": "workspace:*",
+    "@isttp/types": "workspace:*",
     "@testing-library/dom": "^10.2.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
