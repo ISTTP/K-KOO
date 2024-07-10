@@ -7,7 +7,7 @@ const router: Router = Router();
 const prisma = new PrismaClient();
 
 router.get('/cake/:userId/:year/', async (req, res) => {
-  const userId = Number(req.params.userId);
+  const userId = String(req.params.userId);
   const year = Number(req.params.year);
   const keyword = String(req.query.keyword);
   const page = Number(req.query.page);
@@ -48,8 +48,7 @@ router.get('/cake/:userId/:year/', async (req, res) => {
 
     res.json({
       data: responseData,
-      totalCount,
-      totalPages: Math.ceil(totalCount / pageSize),
+      totalPage: Math.ceil(totalCount / pageSize),
       currentPage: pageNumber,
     });
   } catch (error) {

@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '#apis/axios.ts';
-import { CakeTypeResponse } from '@isttp/types/all';
+import { CakeTypeResponse, PageTypeResponse } from '@isttp/types/all';
+import Pagenation from './Pagenation';
+
 const CakeInfo = () => {
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  /*이때 year는 해당 페이지를 보고있는 시점 기준 케이크 주인의 올해 생일이 지났다면 내년, 안 지났다면 올해 연도 요청
-  page는 pagenation 버튼 선택에 따라 요청*/
-  async function getLetters() {
-    const res = await axiosInstance.get('/cake/1/2025?keyword=false&page=1');
+  const [pageData, setPageData] = useState<PageTypeResponse>({
+    currentPage: 1,
+    totalPage: 1,
+  });
+  /*이때 year는 해당 페이지를 보고있는 시점 기준 케이크 주인의 올해 생일이 지났다면 내년, 안 지났다면 올해 연도 요청*/
+  async function getLetters(page: number) {
+    const res = await axiosInstance.get(
+      `/cake/ynswmsub2m/2025?keyword=false&page=${page}`,
+    );
     setCakeData(res.data.data);
+    setPageData({
+      currentPage: res.data.currentPage,
+      totalPage: res.data.totalPage,
+    });
   }
   useEffect(() => {
-    getLetters();
+    getLetters(1);
   }, []);
+
+  function changePage(page: number) {
+    getLetters(page);
+  }
 
   return (
     <>
@@ -28,7 +43,11 @@ const CakeInfo = () => {
           </div>
         ))}
       </div>
-      <p>페이지네이션</p>
+      <Pagenation
+        currentPage={pageData.currentPage}
+        totalPage={pageData.totalPage}
+        changePage={changePage}
+      />
     </>
   );
 };

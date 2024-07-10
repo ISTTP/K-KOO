@@ -3,3 +3,8 @@ export type CakeTypeResponse = {
   candleImageUrl: string;
   keyword?: string;
 };
+
+export type PageTypeResponse = {
+  currentPage: number;
+  totalPage: number;
+}
