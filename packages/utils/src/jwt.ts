@@ -12,7 +12,7 @@ export const ACT_EXPIRES_IN = 60 * 30;
 export const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
 const JWT_ALGORITHM = 'HS256';
 
-export function generateAccessToken(userId: number) {
+export function generateAccessToken(userId: string) {
   const accessToken = jwt.sign({ userId }, JWT_SECRET, {
     expiresIn: ACT_EXPIRES_IN,
     algorithm: JWT_ALGORITHM,
@@ -46,7 +46,7 @@ export function verifyToken(token: string) {
   }
 }
 
-export function reissueToken(userId: number) {
+export function reissueToken(userId: string) {
   const accessToken = generateAccessToken(userId);
   const refreshToken = generateRefreshToken();
 

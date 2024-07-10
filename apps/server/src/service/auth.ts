@@ -5,11 +5,12 @@ import { PrismaClient } from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
 import { Request, Response } from 'express';
+import { getUser } from '../models/user';
 
 const prisma = new PrismaClient();
 
 export async function updateRefreshToken(
-  userId: number,
+  userId: string,
   newRefreshToken: string,
 ) {
   try {
@@ -26,6 +27,19 @@ export async function updateRefreshToken(
   }
 }
 
+export async function createUuid() {
+  let isExist = true;
+  while (isExist) {
+    const userId = Math.random().toString(36).slice(2);
+    const user = await getUser(userId);
+
+    if (!user) {
+      isExist = false;
+      return userId;
+    }
+  }
+}
+
 export function setAuthCookies(
   res: Response,
   accessToken: string,
@@ -38,7 +52,7 @@ export function setAuthCookies(
 }
 
 export function handleLogin(
-  userId: number | null,
+  userId: string | null,
   res: Response,
   loginType: string,
   id: string,
@@ -163,7 +177,7 @@ export async function checkValidation({
   accessToken,
   refreshToken,
 }: {
-  userId: number;
+  userId: string;
   accessToken: string;
   refreshToken: string;
 }) {
@@ -220,7 +234,7 @@ export async function checkValidation({
 export async function authorize(
   req: Request,
   res: Response,
-  callback: (userId: number) => Promise<object | null>,
+  callback: (userId: string) => Promise<object | null>,
 ) {
   const accessToken = req.cookies.ACT;
   const refreshToken = req.cookies.RFT;
