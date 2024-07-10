@@ -9,7 +9,7 @@ const CakeInfo = () => {
     currentPage: 1,
     totalPage: 1,
   });
-  /*이때 year는 해당 페이지를 보고있는 시점 기준 케이크 주인의 올해 생일이 지났다면 내년, 안 지났다면 올해 연도 요청*/
+
   async function getLetters(page: number) {
     const res = await axiosInstance.get(
       `/cake/ynswmsub2m/2025?keyword=false&page=${page}`,
