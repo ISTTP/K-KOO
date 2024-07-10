@@ -1,5 +1,5 @@
 export type CakeTypeResponse = {
-    nickname: string;
-    candleImageUrl: string;
-    keyword?: string;
+  nickname: string;
+  candleImageUrl: string;
+  keyword?: string;
 };
