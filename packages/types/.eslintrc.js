@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ["@isttp/eslint-config/default.js"],
-}
+  extends: ['@isttp/eslint-config/base.js'],
+};
