@@ -72,6 +72,9 @@ importers:
       '@isttp/jest-presets':
         specifier: workspace:*
         version: link:../../packages/jest-presets
+      '@isttp/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@isttp/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
