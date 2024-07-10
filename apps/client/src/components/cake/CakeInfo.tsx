@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import { CakeTypeResponse, PageTypeResponse } from '@isttp/types/all';
 import Pagenation from './Pagenation';
+import { useParams } from 'react-router-dom';
 
-const CakeInfo = () => {
+interface yearProp {
+  year: string;
+}
+
+const CakeInfo: React.FC<yearProp> = ({ year }) => {
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
   const [pageData, setPageData] = useState<PageTypeResponse>({
     currentPage: 1,
     totalPage: 1,
   });
+  const { cakeUserId } = useParams();
 
   async function getLetters(page: number) {
     const res = await axiosInstance.get(
-      `/cake/ynswmsub2m/2025?keyword=false&page=${page}`,
+      `/cake/${cakeUserId}/${year}?keyword=false&page=${page}`,
     );
     setCakeData(res.data.data);
     setPageData({
       currentPage: res.data.currentPage,
-      totalPage: res.data.totalPage,
+      totalPage:
+        res.data.totalPage === 0 ? res.data.totalPage + 1 : res.data.totalPage,
     });
   }
   useEffect(() => {

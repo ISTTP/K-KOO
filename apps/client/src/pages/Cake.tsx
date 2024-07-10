@@ -4,15 +4,19 @@ import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
 import { CakeUserTypeResponse } from '@isttp/types/all';
+import { useParams } from 'react-router-dom';
 
 const Cake = () => {
+  const { cakeUserId } = useParams();
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
 
   async function chooseVersion() {
-    const res = await axiosInstance.get('cake/version?cakeUserId=ynswmsub2m');
+    const res = await axiosInstance.get(
+      `cake/version?cakeUserId=${cakeUserId}`,
+    );
     setCakeUserData(res.data.data);
-    if (res.data.userId.userId === 'ynswmsub2m') {
+    if (res.data.userId.userId === cakeUserId) {
       setIsMyCake(true);
     }
   }
