@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  userId          Int      @id @default(autoincrement()) // 유저 아이디 (기본키)
+  userId          String   @id // 유저 아이디 (기본키)
   id              String // 아이디
   password        String? // 비밀번호 (선택적)
   nickname        String // 닉네임
@@ -32,8 +32,8 @@ model User {
 
 model Letter {
   letterId    Int      @id @default(autoincrement()) // 편지 아이디 (기본키)
-  senderId    Int // 발신자 유저 아이디 (외래키)
-  recipientId Int // 수신자 유저 아이디 (외래키)
+  senderId    String // 발신자 유저 아이디 (외래키)
+  recipientId String // 수신자 유저 아이디 (외래키)
   candleId    Int // 촛불 타입 (외래키)
   nickname    String // 닉네임
   contents    String // 내용
