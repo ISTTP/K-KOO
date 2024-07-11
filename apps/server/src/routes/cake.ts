@@ -1,11 +1,8 @@
 import 'dotenv/config';
 import { PrismaClient } from '@isttp/db/all';
 import { CakeTypeResponse } from '@isttp/types/all';
-import {
-  getCakeColor,
-  setCakeColor,
-  checkCakeColorType,
-} from '../service/cake';
+import { getCakeColor, setCakeColor } from '../service/cake';
+import { checkCakeColorType } from '@isttp/utils/all';
 import { Router } from 'express';
 import { authorize } from '../service/auth';
 
