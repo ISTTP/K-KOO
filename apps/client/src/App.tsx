@@ -14,7 +14,7 @@ const App = () => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/auth/kakao" element={<KakaoLogin />} />
       <Route path="/auth/google" element={<GoogleLogin />} />
-      <Route path="/cake" element={<Cake />} />
+      <Route path="/cake/:cakeUserId" element={<Cake />} />
     </Routes>
   );
 };

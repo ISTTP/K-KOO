@@ -7,4 +7,9 @@ export type CakeTypeResponse = {
 export type PageTypeResponse = {
   currentPage: number;
   totalPage: number;
-}
+};
+
+export type CakeUserTypeResponse = {
+  nickname: string;
+  year: string;
+};

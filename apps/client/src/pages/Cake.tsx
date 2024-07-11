@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Wrapper from '#components/Wrapper.tsx';
-import Toggle from '#components/Toggle.tsx';
-import GridInfo from '#components/GridInfo.tsx';
-import CakeInfo from '#components/CakeInfo.tsx';
+import axiosInstance from '#apis/axios.ts';
+import MyCake from '#components/cake/MyCake.tsx';
+import SharedCake from '#components/cake/SharedCake.tsx';
+import { CakeUserTypeResponse } from '@isttp/types/all';
+import { useParams } from 'react-router-dom';
 
 const Cake = () => {
-  const [toggle, setToggle] = useState(false);
-  const clickedToggle = () => {
-    setToggle((prev) => !prev);
-  };
+  const { cakeUserId } = useParams();
+  const [isMyCake, setIsMyCake] = useState(false);
+  const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
+
+  async function chooseVersion() {
+    const res = await axiosInstance.get(
+      `cake/version?cakeUserId=${cakeUserId}`,
+    );
+    setCakeUserData(res.data.data);
+    if (res.data.userId.userId === cakeUserId) {
+      setIsMyCake(true);
+    }
+  }
+
+  useEffect(() => {
+    chooseVersion();
+  }, []);
+
+  if (!cakeUserData) {
+    return <div>에러처리 해주기</div>;
+  }
 
   return (
     <Wrapper>
-      <h3>김예린 님의 케이크</h3>
-      <p>장식초를 눌러 편지를 확인해보세요</p>
-      <button>my</button>
-      <Toggle toggle={toggle} onClick={clickedToggle} />
-      {/* toggle에 따라 다른 컴포넌트 렌더링 */}
-      {toggle ? <GridInfo /> : <CakeInfo />}
+      {isMyCake ? (
+        <MyCake data={cakeUserData} />
+      ) : (
+        <SharedCake data={cakeUserData} />
+      )}
     </Wrapper>
   );
 };

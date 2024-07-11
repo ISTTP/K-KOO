@@ -35,7 +35,7 @@ const SignUp = () => {
       );
       if (response.data.success) {
         alert('회원가입이 완료되었습니다.');
-        navigate('/cake');
+        navigate(`/cake/${response.data.userId}`);
       }
     } catch (error) {
       if (error instanceof AxiosError) {

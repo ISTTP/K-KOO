@@ -11,7 +11,6 @@ import {
   getGoogleAccessToken,
   getKakaoAccessToken,
   getSocialUid,
-  createUuid,
 } from '../service/auth';
 
 const router: Router = Router();
@@ -28,16 +27,8 @@ router.post('/auth/signup', async (req, res) => {
       throw new Error('이미 회원가입된 사용자입니다.');
     }
 
-    const userId = await createUuid();
-
-    if (!userId)
-      return res
-        .status(400)
-        .json({ success: false, message: '회원가입에 실패하였습니다.' });
-
     const user = await prisma.user.create({
       data: {
-        userId,
         id,
         nickname,
         birthday,
@@ -51,9 +42,11 @@ router.post('/auth/signup', async (req, res) => {
     updateRefreshToken(user.userId, refreshToken);
     setAuthCookies(res, accessToken, refreshToken);
 
-    res
-      .status(200)
-      .json({ success: true, message: '회원가입에 성공하였습니다.' });
+    res.status(200).json({
+      success: true,
+      message: '회원가입에 성공하였습니다.',
+      userId: user.userId,
+    });
   } catch (error) {
     console.error(error);
     res.status(400).json({ success: false, message: `${error}` });

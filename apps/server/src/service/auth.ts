@@ -65,6 +65,7 @@ export function handleLogin(
 
     res.status(200).json({
       success: true,
+      userId: userId,
       message: '로그인에 성공하였습니다.',
     });
   } else {
