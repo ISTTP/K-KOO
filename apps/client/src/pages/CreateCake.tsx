@@ -16,7 +16,6 @@ const CreateCake = () => {
 
   async function handleCreateCake() {
     try {
-      console.log(sheetColor, creamColor);
       const res = await axiosInstance.post('/cake/color', {
         sheetColor: sheetColor,
         creamColor: creamColor,
