@@ -5,15 +5,10 @@ import { Router } from 'express';
 
 const router: Router = Router();
 
-router.get('/user/me', async (req, res) => {
-  const { newRes, userId } = await authorize(req, res);
-  console.log(newRes);
-  if (newRes.statusCode === 200 && userId) {
-    const data = await getUser(userId);
-    newRes.json(data);
-  } else {
-    newRes.json(null);
-  }
+router.get('/user/me', authorize, async (req, res) => {
+  const userId = req.userId;
+  const data = await getUser(userId);
+  res.status(200).json(data);
 });
 
 export default router;

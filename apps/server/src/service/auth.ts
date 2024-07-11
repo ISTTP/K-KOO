@@ -4,7 +4,7 @@ import qs from 'qs';
 import { PrismaClient } from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getUser } from '../models/user';
 
 const prisma = new PrismaClient();
@@ -232,15 +232,18 @@ export async function checkValidation({
 }
 
 /*api마다 인가할때*/
-export async function authorize(req: Request, res: Response) {
+export async function authorize(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const accessToken = req.cookies.ACT;
     const refreshToken = req.cookies.RFT;
     const payload = decodeToken(accessToken);
 
     if (!payload) {
-      res.status(401);
-      return { newRes: res };
+      return res.status(401).json(null);
     }
 
     const { userId } = payload;
@@ -253,23 +256,22 @@ export async function authorize(req: Request, res: Response) {
 
     switch (result?.message) {
       case 'ACCESS_VALID':
-        res.status(200);
-        return { newRes: res, userId };
-
+        req.userId = userId;
+        next();
+        break;
       case 'REFRESH_VALID':
-        if (!result.accessToken || !result.refreshToken) return { newRes: res };
+        if (!result.accessToken || !result.refreshToken)
+          return res.status(500).json({ message: '서버 에러' });
         setAuthCookies(res, result.accessToken, result.refreshToken);
-        return { newRes: res, userId };
-
+        req.userId = userId;
+        next();
+        break;
       case 'EXPIRED':
-        res.status(401);
-        return { newRes: res };
+        return res.status(401).json(null);
       default:
-        res.status(500);
-        return { newRes: res };
+        return res.status(500).json({ message: '서버 에러' });
     }
   } catch (error) {
-    res.status(500);
-    return { newRes: res };
+    return res.status(500).json({ message: '서버 에러: ' + error });
   }
 }
