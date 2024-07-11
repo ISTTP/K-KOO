@@ -11,11 +11,6 @@ const Cake = () => {
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
 
-  async function test() {
-    const res = await axiosInstance.get('/user/me');
-    console.log(res.data);
-  }
-
   async function chooseVersion() {
     const res = await axiosInstance.get(
       `cake/version?cakeUserId=${cakeUserId}`,
@@ -41,7 +36,6 @@ const Cake = () => {
       ) : (
         <SharedCake data={cakeUserData} />
       )}
-      <button onClick={test}>test</button>
     </Wrapper>
   );
 };
