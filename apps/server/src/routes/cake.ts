@@ -47,13 +47,13 @@ router.get('/cake/:userId/:year/', async (req, res) => {
       return letterData;
     });
 
-    res.json({
+    res.status(200).json({
       data: responseData,
       totalPage: Math.ceil(totalCount / pageSize),
       currentPage: pageNumber,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: `케이크 편지 불러오기 실패 : ${error}` });
   }
 });
 
@@ -67,53 +67,57 @@ router.get('/cake/version', async (req, res) => {
   const accessToken = req.cookies.ACT;
   const cakeUserId = String(req.query.cakeUserId);
 
-  //케이크 주인의 생일과 닉네임 반환
-  const cakeUserData = await prisma.user.findFirst({
-    where: {
-      userId: cakeUserId,
-    },
-  });
-
-  if (!cakeUserData) {
-    return res.status(500).json({
-      message: '케이크의 주인이 없습니다.',
-    });
-  }
-  const today = new Date();
-  const birthday = new Date(cakeUserData.birthday);
-  const thisYearBirthday = new Date(
-    today.getFullYear(),
-    birthday.getMonth(),
-    birthday.getDate(),
-  );
-
-  const year =
-    today > thisYearBirthday ? today.getFullYear() + 1 : today.getFullYear();
-
-  const responseData: CakeUserTypeResponse = {
-    nickname: cakeUserData.nickname,
-    year: String(year),
-  };
-
-  //act 유효성 검증
-  let userId;
   try {
-    if (verifyToken(accessToken)) {
-      userId = decodeToken(accessToken);
+    //케이크 주인의 생일과 닉네임 반환
+    const cakeUserData = await prisma.user.findFirst({
+      where: {
+        userId: cakeUserId,
+      },
+    });
+
+    if (!cakeUserData) {
+      return res.status(500).json({
+        message: '케이크의 주인이 없습니다.',
+      });
+    }
+    const today = new Date();
+    const birthday = new Date(cakeUserData.birthday);
+    const thisYearBirthday = new Date(
+      today.getFullYear(),
+      birthday.getMonth(),
+      birthday.getDate(),
+    );
+
+    const year =
+      today > thisYearBirthday ? today.getFullYear() + 1 : today.getFullYear();
+
+    const responseData: CakeUserTypeResponse = {
+      nickname: cakeUserData.nickname,
+      year: String(year),
+    };
+
+    //act 유효성 검증
+    let userId;
+    try {
+      if (verifyToken(accessToken)) {
+        userId = decodeToken(accessToken);
+      }
+    } catch (error) {
+      userId = null;
+    }
+
+    if (userId) {
+      res.status(200).json({
+        userId: userId,
+        data: responseData,
+      });
+    } else {
+      res.status(200).json({
+        userId: null,
+        data: responseData,
+      });
     }
   } catch (error) {
-    userId = null;
-  }
-
-  if (userId) {
-    res.status(200).json({
-      userId: userId,
-      data: responseData,
-    });
-  } else {
-    res.status(200).json({
-      userId: null,
-      data: responseData,
-    });
+    res.status(500).json({ message: `케이크 버전 구분 실패 : ${error}` });
   }
 });
