@@ -232,40 +232,44 @@ export async function checkValidation({
 }
 
 /*api마다 인가할때*/
-export async function authorize(
-  req: Request,
-  res: Response,
-  callback: (userId: string) => Promise<object | null>,
-) {
-  const accessToken = req.cookies.ACT;
-  const refreshToken = req.cookies.RFT;
-  const payload = decodeToken(accessToken);
+export async function authorize(req: Request, res: Response) {
+  try {
+    const accessToken = req.cookies.ACT;
+    const refreshToken = req.cookies.RFT;
+    const payload = decodeToken(accessToken);
 
-  if (!payload)
-    return res.status(401).json({ message: '올바르지 않은 토큰입니다.' });
+    if (!payload) {
+      res.status(401);
+      return { newRes: res };
+    }
 
-  const { userId } = payload;
+    const { userId } = payload;
 
-  const data = await callback(userId);
+    const result = await checkValidation({
+      userId,
+      accessToken,
+      refreshToken,
+    });
 
-  const result = await checkValidation({
-    userId,
-    accessToken,
-    refreshToken,
-  });
+    switch (result?.message) {
+      case 'ACCESS_VALID':
+        res.status(200);
+        return { newRes: res, userId };
 
-  switch (result?.message) {
-    case 'ACCESS_VALID':
-      res.status(200).json(data);
-      break;
-    case 'REFRESH_VALID':
-      if (!result.accessToken || !result.refreshToken)
-        return res.status(500).json({ message: 'server error' });
-      setAuthCookies(res, result.accessToken, result.refreshToken);
-      res.status(200).json(data);
-      break;
-    case 'EXPIRED':
-      res.status(401).json(null);
-      break;
+      case 'REFRESH_VALID':
+        if (!result.accessToken || !result.refreshToken) return { newRes: res };
+        setAuthCookies(res, result.accessToken, result.refreshToken);
+        return { newRes: res, userId };
+
+      case 'EXPIRED':
+        res.status(401);
+        return { newRes: res };
+      default:
+        res.status(500);
+        return { newRes: res };
+    }
+  } catch (error) {
+    res.status(500);
+    return { newRes: res };
   }
 }
