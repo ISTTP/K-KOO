@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
-import { CakeTypeResponse, PageTypeResponse } from '@isttp/types/all';
-import Pagenation from './Pagenation';
+import {
+  CakeTypeResponse,
+  PageTypeResponse,
+  CakeColorType,
+} from '@isttp/types/all';
+import Pagenation from '#components/Pagenation.tsx';
+import RenderCake from '#components/RenderCake.tsx';
+
+type CakeColorState = {
+  sheetColor: CakeColorType;
+  creamColor: CakeColorType;
+};
 
 const CakeInfo = () => {
+  const navigate = useNavigate();
+  const [cakeColor, setCakeColor] = useState<CakeColorState>({
+    sheetColor: 'white',
+    creamColor: 'white',
+  });
+
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
   const [pageData, setPageData] = useState<PageTypeResponse>({
     currentPage: 1,
     totalPage: 1,
   });
+
   /*이때 year는 해당 페이지를 보고있는 시점 기준 케이크 주인의 올해 생일이 지났다면 내년, 안 지났다면 올해 연도 요청*/
   async function getLetters(page: number) {
     const res = await axiosInstance.get(
@@ -20,8 +38,30 @@ const CakeInfo = () => {
       totalPage: res.data.totalPage,
     });
   }
+
+  async function getColors() {
+    try {
+      const res = await axiosInstance.get('/cake/color');
+
+      if (!res.data.sheetColor || !res.data.creamColor) {
+        navigate('/cake/create');
+      }
+
+      setCakeColor({
+        sheetColor: res.data.sheetColor,
+        creamColor: res.data.creamColor,
+      });
+    } catch (error) {
+      console.log(error);
+      // 로그인이 필요합니다 모달, 확인버튼 누르면
+      // 로그아웃 시키고 (토큰 삭제)
+      // 홈으로 이동
+    }
+  }
+
   useEffect(() => {
     getLetters(1);
+    getColors();
   }, []);
 
   function changePage(page: number) {
@@ -31,6 +71,10 @@ const CakeInfo = () => {
   return (
     <>
       <div>케이크</div>
+      <RenderCake
+        sheetColor={cakeColor.sheetColor}
+        creamColor={cakeColor.creamColor}
+      />
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {cakeData.map((cake, index) => (
           <div key={index} style={{ margin: '10px', textAlign: 'center' }}>
