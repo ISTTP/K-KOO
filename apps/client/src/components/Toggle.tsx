@@ -18,7 +18,7 @@ const Toggle: React.FC<ToggleBtnProps> = ({ toggle, onClick }) => {
       <ToggleBtn onClick={onClick} $istoggle={toggle}>
         <Circle $istoggle={toggle} />
       </ToggleBtn>
-      <button onClick={() => navigate('/create')}>케이크 수정</button>
+      <button onClick={() => navigate('/cake/create')}>케이크 수정</button>
     </Container>
   );
 };
