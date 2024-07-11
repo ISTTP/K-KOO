@@ -87,12 +87,8 @@ router.get('/cake/version', async (req, res) => {
     birthday.getDate(),
   );
 
-  let year;
-  if (today > thisYearBirthday) {
-    year = today.getFullYear() + 1;
-  } else {
-    year = today.getFullYear();
-  }
+  const year =
+    today > thisYearBirthday ? today.getFullYear() + 1 : today.getFullYear();
 
   const responseData: CakeUserTypeResponse = {
     nickname: cakeUserData.nickname,
