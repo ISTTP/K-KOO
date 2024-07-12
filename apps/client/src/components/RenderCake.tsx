@@ -24,10 +24,7 @@ type RenderedCakeProps = {
   creamColor: CakeColorType;
 };
 
-const SheetSVG: Record<
-  CakeColorType,
-  (props: React.SVGProps<SVGSVGElement>) => JSX.Element
-> = {
+const SheetSVG = {
   white: Svg.WhiteSheet,
   chocolate: Svg.ChocoSheet,
   strawberry: Svg.StrawberrySheet,
@@ -36,10 +33,7 @@ const SheetSVG: Record<
   blueberry: Svg.BlueberrySheet,
 };
 
-const CreamSVG: Record<
-  CakeColorType,
-  (props: React.SVGProps<SVGSVGElement>) => JSX.Element
-> = {
+const CreamSVG = {
   white: Svg.WhiteCream,
   chocolate: Svg.ChocoCream,
   strawberry: Svg.StrawberryCream,
