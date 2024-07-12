@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
@@ -15,6 +16,23 @@ async function handleGoogleLogin() {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function handleTokenValidation() {
+      try {
+        const res = await axiosInstance.get('/user/me');
+        if (res.status === 200) {
+          navigate(`/cake/${res.data.userId}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    handleTokenValidation();
+  }, []);
+
   return (
     <Wrapper>
       <h1>Login</h1>

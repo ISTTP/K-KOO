@@ -1,2 +1,2 @@
-export * from './math';
 export * from './jwt';
+export * from './checkType';

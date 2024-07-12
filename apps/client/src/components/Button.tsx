@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import GoogleIcon from "#icons/GoogleIcon.tsx";
-import KakaoIcon from "#icons/KakaoIcon.tsx";
+import GoogleIcon from '#icons/GoogleIcon.tsx';
+import KakaoIcon from '#icons/KakaoIcon.tsx';
 
 type ButtonType = 'google' | 'kakao' | 'default';
 
@@ -12,16 +12,18 @@ const StyledButton = styled.button<{
 }>`
   width: 15rem;
   height: 3rem;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => `var(${props.$bgColor})`};
-  color: ${(props) => props.$textColor};
+  color: ${(props) => `var(${props.$textColor})`};
   border: ${(props) =>
     props.$type === 'google' ? '1px solid var(--dark-gray-color)' : 'none'};
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 700;
 
   svg {
     margin-right: 1rem;

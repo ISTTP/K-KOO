@@ -1,7 +1,14 @@
 import { json, urlencoded } from 'body-parser';
 import express, { type Express } from 'express';
+import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import 'dotenv/config';
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+};
 
 export const createServer = (): Express => {
   const app = express();
@@ -10,12 +17,8 @@ export const createServer = (): Express => {
     .use(morgan('dev'))
     .use(urlencoded({ extended: true }))
     .use(json())
-    .use(
-      cors({
-        origin: process.env.CLIENT_URL,
-        credentials: true,
-      }),
-    )
+    .use(cors(corsOptions))
+    .use(cookieParser())
     .get('/message/:name', (req, res) => {
       return res.json({ message: `hello ${req.params.name}` });
     })

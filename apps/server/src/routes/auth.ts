@@ -1,37 +1,27 @@
 import 'dotenv/config';
-import { PrismaClient } from '@isttp/db/all';
-import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
-import {
-  generateAccessToken,
-  generateRefreshToken,
-  reissueToken,
-} from '@isttp/utils/all';
-import { Router } from 'express';
-import axios from 'axios';
 import qs from 'qs';
+import { PrismaClient } from '@isttp/db/all';
+import { Router } from 'express';
+import { generateAccessToken, generateRefreshToken } from '@isttp/utils/all';
+import {
+  updateRefreshToken,
+  setAuthCookies,
+  checkUser,
+  handleLogin,
+  getGoogleAccessToken,
+  getKakaoAccessToken,
+  getSocialUid,
+} from '../service/auth';
 
 const router: Router = Router();
 const prisma = new PrismaClient();
-
-/* 회원 여부 확인 */
-
-async function isExistUser(loginType: string, id: string) {
-  const user = await prisma.user.findFirst({
-    where: {
-      id,
-      loginType,
-    },
-  });
-
-  return user?.userId ?? null;
-}
 
 /* 회원가입 API */
 router.post('/auth/signup', async (req, res) => {
   const { id, loginType, nickname, birthday } = req.body;
 
   try {
-    const isExist = await isExistUser(loginType, id);
+    const isExist = await checkUser(loginType, id);
 
     if (isExist) {
       throw new Error('이미 회원가입된 사용자입니다.');
@@ -46,191 +36,85 @@ router.post('/auth/signup', async (req, res) => {
       },
     });
 
-    const accessToken = generateAccessToken(String(user.userId));
+    const accessToken = generateAccessToken(user.userId);
     const refreshToken = generateRefreshToken();
 
-    await prisma.user.update({
-      where: {
-        userId: user.userId,
-      },
-      data: {
-        refreshToken,
-      },
-    });
+    updateRefreshToken(user.userId, refreshToken);
+    setAuthCookies(res, accessToken, refreshToken);
 
-    res
-      .status(200)
-      .setHeader('Set-Cookie', [
-        `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-        `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
-      ])
-      .json({ success: true, message: '회원가입 성공' });
+    res.status(200).json({
+      message: '회원가입에 성공하였습니다.',
+      userId: user.userId,
+    });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ success: false, message: `${error}` });
+    res.status(500).json({ message: `회원가입 실패 : ${error}` });
   }
 });
 
 /* 구글 로그인 redirect url */
+/* eslint-disable @typescript-eslint/naming-convention */
 router.post('/auth/google/url', async (req, res) => {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile`;
-  res.json({ url });
+  try {
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?${qs.stringify({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      response_type: 'code',
+      scope: 'email profile',
+    })}`;
+    res.status(200).json({ url });
+  } catch (error) {
+    res.status(500).json({ message: `구글 redirect uri 반환 실패 : ${error}` });
+  }
 });
+/* eslint-enable @typescript-eslint/naming-convention */
 
 /* 구글 로그인 token 발급 */
 router.post('/auth/google/login', async (req, res) => {
   const code = req.body.code; // 인가 코드
 
   try {
-    // 액세스 토큰 발급
-    /* eslint-disable @typescript-eslint/naming-convention */
-    const result = await axios.post(
-      'https://oauth2.googleapis.com/token',
-      qs.stringify({
-        code: code,
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-        grant_type: 'authorization_code',
-      }),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+    const googleId = await getSocialUid('google', code, getGoogleAccessToken);
+    const userId = await checkUser('google', googleId);
 
-    const tokens = result.data as GoogleTokenType;
-
-    // 유저 정보 요청
-    const googleProfile = await axios.get(
-      'https://www.googleapis.com/oauth2/v1/userinfo',
-      {
-        headers: {
-          Authorization: `Bearer ${tokens.access_token}`,
-        },
-      },
-    );
-    /* eslint-enable @typescript-eslint/naming-convention */
-
-    const googleId = googleProfile.data.id;
-    const userId = await isExistUser('google', googleId);
-
-    // 회원일 경우 토큰 재발급, 토큰 반환
-    if (userId) {
-      const tokens = reissueToken(String(userId));
-      const accessToken = tokens.accessToken;
-      const refreshToken = tokens.refreshToken;
-
-      await prisma.user.update({
-        where: {
-          userId,
-        },
-        data: {
-          refreshToken,
-        },
-      });
-
-      res
-        .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-          `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
-        ])
-        .status(200)
-        .json({
-          success: true,
-          message: '로그인 성공',
-        });
-    } else {
-      // 회원이 아닐 경우 회원가입 유도
-      res.json({
-        message: '로그인 실패',
-        success: false,
-        id: googleId,
-        loginType: 'google',
-      });
-    }
+    handleLogin(userId, res, 'google', googleId);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: '구글 로그인 과정 중 에러' });
+    res.status(500).json({ message: '구글 로그인 실패 : ' + error });
   }
 });
 
 /*카카오 로그인 redirect uri*/
+/* eslint-disable @typescript-eslint/naming-convention */
 router.get('/auth/kakao/url', (_, res) => {
-  const url = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&response_type=code`;
-  res.status(200).json({ url });
+  try {
+    const url = `https://kauth.kakao.com/oauth/authorize?${qs.stringify({
+      client_id: process.env.KAKAO_CLIENT_ID,
+      redirect_uri: process.env.KAKAO_REDIRECT_URI,
+      response_type: 'code',
+    })}`;
+
+    res.status(200).json({ url });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `카카오 redirect uri 반환 실패 : ${error}` });
+  }
 });
+/* eslint-enable @typescript-eslint/naming-convention */
 
 /*카카오 로그인 token 발급*/
 router.post('/auth/kakao/login', async (req, res) => {
   const code = req.body.code;
 
-  /* eslint-disable @typescript-eslint/naming-convention */
   try {
-    const result = await axios.post(
-      'https://kauth.kakao.com/oauth/token',
-      qs.stringify({
-        client_id: process.env.KAKAO_CLIENT_ID,
-        code: code,
-        grant_type: 'authorization_code',
-        redirect_uri: process.env.KAKAO_REDIRECT_ID,
-      }),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+    const kakaoId = await getSocialUid('kakao', code, getKakaoAccessToken);
+    const userId = await checkUser('kakao', kakaoId);
 
-    /*사용자 id 정보 불러오기*/
-    const tokenInfo = result.data as KakaoTokenType;
-    const userInfo = await axios.get('https://kapi.kakao.com/v2/user/me', {
-      headers: {
-        Authorization: `Bearer ${tokenInfo.access_token}`,
-      },
-    });
-    /* eslint-enable @typescript-eslint/naming-convention */
-
-    const id = userInfo.data.id.toString();
-    const userId = await isExistUser('kakao', id);
-
-    if (userId) {
-      //토큰 재발급
-      const tokens = reissueToken(String(userId));
-      const accessToken = tokens.accessToken;
-      const refreshToken = tokens.refreshToken;
-
-      await prisma.user.update({
-        where: {
-          userId,
-        },
-        data: {
-          refreshToken,
-        },
-      });
-
-      res
-        .setHeader('Set-Cookie', [
-          `ACT=${accessToken}; HttpOnly; SameSite=Lax`,
-          `RFT=${refreshToken}; HttpOnly; SameSite=Lax`,
-        ])
-        .status(200)
-        .json({
-          success: true,
-          message: '로그인 성공',
-        });
-    } else {
-      res.json({
-        message: '로그인 실패',
-        success: false,
-        id,
-        loginType: 'kakao',
-      });
-    }
+    handleLogin(userId, res, 'kakao', kakaoId);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ error: '카카오 로그인 과정 중 에러' });
+    res.status(500).json({ message: '카카오 로그인 실패 : ' + error });
   }
 });
 

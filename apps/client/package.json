@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "imports": {
+    "#images": "./src/assets/images/index.ts",
     "#icons/*.tsx": "./src/assets/icons/*.tsx",
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
@@ -38,6 +39,7 @@
     "@isttp/jest-presets": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
     "@isttp/utils": "workspace:*",
+    "@isttp/types": "workspace:*",
     "@testing-library/dom": "^10.2.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",

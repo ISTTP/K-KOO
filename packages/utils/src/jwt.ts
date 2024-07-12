@@ -1,24 +1,30 @@
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
+import { MyJwtPayload } from '@isttp/types/all';
 import {
   JsonWebTokenError,
   TokenExpiredError,
   NotBeforeError,
 } from 'jsonwebtoken';
-import 'dotenv/config';
 
-export function generateAccessToken(id: string) {
-  const accessToken = jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
-    expiresIn: 60 * 60,
-    algorithm: 'HS256',
+const JWT_SECRET = `${process.env.JWT_SECRET}`;
+export const ACT_EXPIRES_IN = 60 * 30;
+export const RFT_EXPIRES_IN = 60 * 60 * 24 * 14;
+const JWT_ALGORITHM = 'HS256';
+
+export function generateAccessToken(userId: string) {
+  const accessToken = jwt.sign({ userId }, JWT_SECRET, {
+    expiresIn: ACT_EXPIRES_IN,
+    algorithm: JWT_ALGORITHM,
   });
 
   return accessToken;
 }
 
 export function generateRefreshToken() {
-  const refreshToken = jwt.sign({}, `${process.env.JWT_SECRET}`, {
-    expiresIn: '14d',
-    algorithm: 'HS256',
+  const refreshToken = jwt.sign({}, JWT_SECRET, {
+    expiresIn: RFT_EXPIRES_IN,
+    algorithm: JWT_ALGORITHM,
   });
 
   return refreshToken;
@@ -26,23 +32,31 @@ export function generateRefreshToken() {
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET as string);
+    return jwt.verify(token, JWT_SECRET);
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      return new Error('EXPIRED');
+      throw new Error('EXPIRED');
     } else if (error instanceof JsonWebTokenError) {
-      return new Error('INVALID');
+      throw new Error('INVALID');
     } else if (error instanceof NotBeforeError) {
-      return new Error('NOTBEFORE');
+      throw new Error('NOTBEFORE');
     } else {
-      return new Error('UNKNOWN');
+      throw new Error('UNKNOWN');
     }
   }
 }
 
-export function reissueToken(id: string) {
-  const accessToken = generateAccessToken(id);
+export function reissueToken(userId: string) {
+  const accessToken = generateAccessToken(userId);
   const refreshToken = generateRefreshToken();
 
   return { accessToken, refreshToken };
+}
+
+export function decodeToken(token: string) {
+  const payload = jwt.decode(token);
+  if (payload && typeof payload === 'object' && 'userId' in payload) {
+    return payload as MyJwtPayload;
+  }
+  return null;
 }

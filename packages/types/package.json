@@ -10,9 +10,13 @@
     "check-types": "tsc -w"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
     "@isttp/eslint-config": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.6",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
   }
 }
