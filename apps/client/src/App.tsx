@@ -6,6 +6,7 @@ import GoogleLogin from '#pages/GoogleLogin.tsx';
 import KakaoLogin from '#pages/KakaoLogin.tsx';
 import Cake from '#pages/Cake.tsx';
 import CreateCake from '#pages/CreateCake.tsx';
+import CreateLetter from '#pages/CreateLetter.tsx';
 import './App.css';
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <Route path="/auth/google" element={<GoogleLogin />} />
       <Route path="/cake" element={<Cake />} />
       <Route path="/cake/create" element={<CreateCake />} />
+      <Route path="/letter/create" element={<CreateLetter />} />
     </Routes>
   );
 };
