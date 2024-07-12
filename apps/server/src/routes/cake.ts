@@ -15,7 +15,7 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
   const year = Number(req.params.year);
   const keyword = String(req.query.keyword);
   const page = Number(req.query.page);
-  const pageSize = 7;
+  const pageSize = keyword === 'true' ? 24 : 7;
   const pageNumber = page ? page : 1;
   const includeKeyword = keyword === 'true' ? true : false;
 

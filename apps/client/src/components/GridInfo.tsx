@@ -53,7 +53,7 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
 
   async function getLetters() {
     const res = await axiosInstance.get(
-      `/cake/letters/${ownerId}/${year}?keyword=true&page=all`,
+      `/cake/letters/${ownerId}/${year}?keyword=true&page=1`,
     );
     setCakeData(res.data.data);
   }
@@ -64,11 +64,12 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
   return (
     <>
       <Grid
+        style={{ scrollbarWidth: 'none' }}
         columnCount={3} //3xN의 3
-        columnWidth={100} //3개가 모두 포함되는 가로 사이즈
+        columnWidth={100} //한 아이템 가로 사이즈
         height={500} //렌더링되는 높이
         rowCount={Math.ceil(cakeData.length / 3)} //3xN의 N
-        rowHeight={150} //3개가 모두 포함되는 세로 사이즈
+        rowHeight={150} //한 아이템 세로 사이즈
         width={300} //렌더링되는 넓이
       >
         {Cell}
