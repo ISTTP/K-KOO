@@ -59,16 +59,11 @@ router.get('/cake/:userId/:year/', async (req, res) => {
 
 export default router;
 
-//해당 api에서는 접속자의 accesstoken 만 체크해본다.
-//체크시 유효하면 해당 요청을 보낸 접속자의 userid, 연도, 닉네임 반환
-//체크시 무효하면(만료, 알수없는값, 토큰 없는 경우 모두 expired메시지처리)  null, 연도, 닉네임을 반환
-
 router.get('/cake/version', async (req, res) => {
   const accessToken = req.cookies.ACT;
   const cakeUserId = String(req.query.cakeUserId);
 
   try {
-    //케이크 주인의 생일과 닉네임 반환
     const cakeUserData = await prisma.user.findFirst({
       where: {
         userId: cakeUserId,
