@@ -8,6 +8,7 @@ type ResponseType = {
   accessToken?: string;
   refreshToken?: string;
   id?: string;
+  userId?: string;
   loginType?: string;
 } | null;
 
@@ -33,7 +34,7 @@ const KakaoLogin = () => {
     if (!response) return;
     switch (response.success) {
       case true:
-        navigate('/cake');
+        navigate(`/cake/${response.userId}`);
         break;
       case false:
         navigate('/signup', {

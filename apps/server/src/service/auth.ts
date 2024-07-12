@@ -4,8 +4,7 @@ import qs from 'qs';
 import { PrismaClient } from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
-import { Request, Response } from 'express';
-import { getUser } from '../models/user';
+import { NextFunction, Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
@@ -27,19 +26,6 @@ export async function updateRefreshToken(
   }
 }
 
-export async function createUuid() {
-  let isExist = true;
-  while (isExist) {
-    const userId = Math.random().toString(36).slice(2);
-    const user = await getUser(userId);
-
-    if (!user) {
-      isExist = false;
-      return userId;
-    }
-  }
-}
-
 export function setAuthCookies(
   res: Response,
   accessToken: string,
@@ -57,23 +43,28 @@ export function handleLogin(
   loginType: string,
   id: string,
 ) {
-  if (userId) {
-    const { accessToken, refreshToken } = reissueToken(userId);
+  try {
+    if (userId) {
+      const { accessToken, refreshToken } = reissueToken(userId);
 
-    updateRefreshToken(userId, refreshToken);
-    setAuthCookies(res, accessToken, refreshToken);
+      updateRefreshToken(userId, refreshToken);
+      setAuthCookies(res, accessToken, refreshToken);
 
-    res.status(200).json({
-      success: true,
-      message: '로그인에 성공하였습니다.',
-    });
-  } else {
-    res.json({
-      success: false,
-      message: '회원가입이 필요합니다.',
-      id: id,
-      loginType: loginType,
-    });
+      res.status(200).json({
+        success: true,
+        userId: userId,
+        message: '로그인에 성공하였습니다.',
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        message: '회원가입이 필요합니다.',
+        id: id,
+        loginType: loginType,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: `SERVER_ERROR: ${error}` });
   }
 }
 
@@ -110,7 +101,7 @@ export async function getGoogleAccessToken(code: string) {
     const { access_token } = result.data as GoogleTokenType;
     return access_token;
   } catch (error) {
-    console.log(error);
+    console.log('구글 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -135,7 +126,7 @@ export async function getKakaoAccessToken(code: string) {
     const { access_token } = result.data as KakaoTokenType;
     return access_token;
   } catch (error) {
-    console.log(error);
+    console.log('카카오 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -166,7 +157,7 @@ export async function getSocialUid(
     const userId = userInfo.data.id.toString();
     return userId;
   } catch (error) {
-    console.log(error);
+    console.log('소셜 id 받아오기 실패 ', error);
     return null;
   }
 }
@@ -234,19 +225,18 @@ export async function checkValidation({
 export async function authorize(
   req: Request,
   res: Response,
-  callback: (userId: string) => Promise<object | null>,
+  next: NextFunction,
 ) {
   try {
     const accessToken = req.cookies.ACT;
     const refreshToken = req.cookies.RFT;
     const payload = decodeToken(accessToken);
 
-    if (!payload)
-      return res.status(401).json({ message: '올바르지 않은 토큰입니다.' });
+    if (!payload) {
+      return res.status(401).json({ message: '권한 없음' });
+    }
 
     const { userId } = payload;
-
-    const data = await callback(userId);
 
     const result = await checkValidation({
       userId,
@@ -256,20 +246,26 @@ export async function authorize(
 
     switch (result?.message) {
       case 'ACCESS_VALID':
-        res.status(200).json(data);
+        req.userId = userId;
+        next();
         break;
       case 'REFRESH_VALID':
         if (!result.accessToken || !result.refreshToken)
-          return res.status(500).json({ message: 'server error' });
+          return res
+            .status(500)
+            .json({ message: 'SERVER_ERROR: 검증 로직 에러' });
         setAuthCookies(res, result.accessToken, result.refreshToken);
-        res.status(200).json(data);
+        req.userId = userId;
+        next();
         break;
       case 'EXPIRED':
-        res.status(401).json(null);
-        break;
+        return res.status(401).json({ message: '권한 없음' });
+      default:
+        return res
+          .status(500)
+          .json({ message: 'SERVER_ERROR: 검증 로직 에러' });
     }
   } catch (error) {
-    if (error instanceof Error)
-      res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: `SERVER_ERROR: ${error}` });
   }
 }

@@ -5,8 +5,10 @@ import { Router } from 'express';
 
 const router: Router = Router();
 
-router.get('/user/me', async (req, res) => {
-  await authorize(req, res, getUser);
+router.get('/user/me', authorize, async (req, res) => {
+  const userId = req.userId;
+  const data = await getUser(userId);
+  res.status(200).json(data);
 });
 
 export default router;

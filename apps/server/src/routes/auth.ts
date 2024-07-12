@@ -11,7 +11,6 @@ import {
   getGoogleAccessToken,
   getKakaoAccessToken,
   getSocialUid,
-  createUuid,
 } from '../service/auth';
 
 const router: Router = Router();
@@ -28,16 +27,8 @@ router.post('/auth/signup', async (req, res) => {
       throw new Error('이미 회원가입된 사용자입니다.');
     }
 
-    const userId = await createUuid();
-
-    if (!userId)
-      return res
-        .status(400)
-        .json({ success: false, message: '회원가입에 실패하였습니다.' });
-
     const user = await prisma.user.create({
       data: {
-        userId,
         id,
         nickname,
         birthday,
@@ -51,25 +42,30 @@ router.post('/auth/signup', async (req, res) => {
     updateRefreshToken(user.userId, refreshToken);
     setAuthCookies(res, accessToken, refreshToken);
 
-    res
-      .status(200)
-      .json({ success: true, message: '회원가입에 성공하였습니다.' });
+    res.status(200).json({
+      message: '회원가입에 성공하였습니다.',
+      userId: user.userId,
+    });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ success: false, message: `${error}` });
+    res.status(500).json({ message: `회원가입 실패 : ${error}` });
   }
 });
 
 /* 구글 로그인 redirect url */
 /* eslint-disable @typescript-eslint/naming-convention */
 router.post('/auth/google/url', async (req, res) => {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?${qs.stringify({
-    client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-    response_type: 'code',
-    scope: 'email profile',
-  })}`;
-  res.json({ url });
+  try {
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?${qs.stringify({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      response_type: 'code',
+      scope: 'email profile',
+    })}`;
+    res.status(200).json({ url });
+  } catch (error) {
+    res.status(500).json({ message: `구글 redirect uri 반환 실패 : ${error}` });
+  }
 });
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -84,20 +80,26 @@ router.post('/auth/google/login', async (req, res) => {
     handleLogin(userId, res, 'google', googleId);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error with google login: ' + error });
+    res.status(500).json({ message: '구글 로그인 실패 : ' + error });
   }
 });
 
 /*카카오 로그인 redirect uri*/
 /* eslint-disable @typescript-eslint/naming-convention */
 router.get('/auth/kakao/url', (_, res) => {
-  const url = `https://kauth.kakao.com/oauth/authorize?${qs.stringify({
-    client_id: process.env.KAKAO_CLIENT_ID,
-    redirect_uri: process.env.KAKAO_REDIRECT_URI,
-    response_type: 'code',
-  })}`;
+  try {
+    const url = `https://kauth.kakao.com/oauth/authorize?${qs.stringify({
+      client_id: process.env.KAKAO_CLIENT_ID,
+      redirect_uri: process.env.KAKAO_REDIRECT_URI,
+      response_type: 'code',
+    })}`;
 
-  res.status(200).json({ url });
+    res.status(200).json({ url });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `카카오 redirect uri 반환 실패 : ${error}` });
+  }
 });
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -112,7 +114,7 @@ router.post('/auth/kakao/login', async (req, res) => {
     handleLogin(userId, res, 'kakao', kakaoId);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error with kakao login: ' + error });
+    res.status(500).json({ message: '카카오 로그인 실패 : ' + error });
   }
 });
 
