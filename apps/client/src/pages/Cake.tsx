@@ -7,23 +7,21 @@ import { CakeUserTypeResponse } from '@isttp/types/all';
 import { useParams } from 'react-router-dom';
 
 const Cake = () => {
-  const { cakeUserId } = useParams();
+  const { ownerId } = useParams();
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
 
-  async function chooseVersion() {
-    const res = await axiosInstance.get(
-      `cake/version?cakeUserId=${cakeUserId}`,
-    );
+  async function chooseVersion(ownerId: string) {
+    const res = await axiosInstance.get(`cake/version?cakeUserId=${ownerId}`);
     setCakeUserData(res.data.data);
-    if (res.data.userId.userId === cakeUserId) {
+    if (res.data.userId === ownerId) {
       setIsMyCake(true);
     }
   }
 
   useEffect(() => {
-    chooseVersion();
-  }, []);
+    chooseVersion(ownerId);
+  }, [ownerId]);
 
   if (!cakeUserData) {
     return <div>에러처리 해주기</div>;
@@ -32,9 +30,9 @@ const Cake = () => {
   return (
     <Wrapper>
       {isMyCake ? (
-        <MyCake data={cakeUserData} />
+        <MyCake ownerId={ownerId} data={cakeUserData} />
       ) : (
-        <SharedCake data={cakeUserData} />
+        <SharedCake ownerId={ownerId} data={cakeUserData} />
       )}
     </Wrapper>
   );

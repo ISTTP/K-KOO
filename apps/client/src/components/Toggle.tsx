@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 interface ToggleBtnProps {
+  ownerId: string;
   toggle: boolean;
   onClick: () => void;
 }
@@ -10,14 +12,20 @@ interface Proptype {
   $istoggle: boolean;
 }
 
-const Toggle: React.FC<ToggleBtnProps> = ({ toggle, onClick }) => (
-  <Container>
-    <ToggleBtn onClick={onClick} $istoggle={toggle}>
-      <Circle $istoggle={toggle} />
-    </ToggleBtn>
-    <button>케이크 수정</button>
-  </Container>
-);
+const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
+  const navigate = useNavigate();
+
+  return (
+    <Container>
+      <ToggleBtn onClick={onClick} $istoggle={toggle}>
+        <Circle $istoggle={toggle} />
+      </ToggleBtn>
+      <button onClick={() => navigate(`/cake/create/${ownerId}`)}>
+        케이크 수정
+      </button>
+    </Container>
+  );
+};
 
 export default Toggle;
 
