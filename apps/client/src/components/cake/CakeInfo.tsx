@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import {
   CakeTypeResponse,
@@ -9,32 +9,28 @@ import {
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';
 
-type CakeColorState = {
+interface CakeInfoProps {
+  year: string;
   sheetColor: CakeColorType;
   creamColor: CakeColorType;
-};
-
-interface yearProp {
-  year: string;
 }
 
-const CakeInfo: React.FC<yearProp> = ({ year }) => {
-  const navigate = useNavigate();
+const CakeInfo: React.FC<CakeInfoProps> = ({
+  year,
+  sheetColor,
+  creamColor,
+}) => {
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
   const [pageData, setPageData] = useState<PageTypeResponse>({
     currentPage: 1,
     totalPage: 1,
   });
-  const [cakeColor, setCakeColor] = useState<CakeColorState>({
-    sheetColor: 'chocolate',
-    creamColor: 'white',
-  });
 
-  const { cakeUserId } = useParams();
+  const { ownerId } = useParams();
 
   async function getLetters(page: number) {
     const res = await axiosInstance.get(
-      `/cake/${cakeUserId}/${year}?keyword=false&page=${page}`,
+      `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
     );
     setCakeData(res.data.data);
     setPageData({
@@ -44,30 +40,9 @@ const CakeInfo: React.FC<yearProp> = ({ year }) => {
     });
   }
 
-  async function getColors() {
-    try {
-      const res = await axiosInstance.get('/cake/color');
-
-      if (!res.data.sheetColor || !res.data.creamColor) {
-        navigate('/cake/create');
-      }
-
-      setCakeColor({
-        sheetColor: res.data.sheetColor,
-        creamColor: res.data.creamColor,
-      });
-    } catch (error) {
-      console.log(error);
-      // 로그인이 필요합니다 모달, 확인버튼 누르면
-      // 로그아웃 시키고 (토큰 삭제)
-      // 홈으로 이동
-    }
-  }
-
   useEffect(() => {
     getLetters(1);
-    getColors();
-  }, []);
+  }, [ownerId]);
 
   function changePage(page: number) {
     getLetters(page);
@@ -75,11 +50,7 @@ const CakeInfo: React.FC<yearProp> = ({ year }) => {
 
   return (
     <>
-      <div>케이크</div>
-      <RenderCake
-        sheetColor={cakeColor.sheetColor}
-        creamColor={cakeColor.creamColor}
-      />
+      <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {cakeData.map((cake, index) => (
           <div key={index} style={{ margin: '10px', textAlign: 'center' }}>
