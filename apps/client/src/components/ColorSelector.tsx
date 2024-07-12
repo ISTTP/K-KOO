@@ -9,12 +9,12 @@ const Title = styled.h2`
   font-size: 24px;
 `;
 
-const Button = styled.button<{ active: boolean }>`
+const Button = styled.button<{ $active: boolean }>`
   background: none;
   border: none;
   font-size: 24px;
   color: ${(props) =>
-    props.active ? 'var(--orange-color)' : 'var(--dark-gray-color)'};
+    props.$active ? 'var(--orange-color)' : 'var(--dark-gray-color)'};
   cursor: pointer;
   outline: none;
 
@@ -33,12 +33,12 @@ const ColorContainer = styled.div`
   margin-top: 20px;
 `;
 
-const ColorOption = styled.div<{ color: string; selected: boolean }>`
+const ColorOption = styled.div<{ $color: string; selected: boolean }>`
   width: 60px;
   height: 60px;
   margin: 10px;
   border-radius: 50%;
-  background-color: var(--${(props) => props.color}-color);
+  background-color: var(--${(props) => props.$color}-color);
   border: ${(props) =>
     props.selected ? '5px solid #FF7043' : '5px solid transparent'};
   cursor: pointer;
@@ -80,10 +80,10 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({
   return (
     <>
       <Title>
-        <Button active={mode === 'sheet'} onClick={() => setMode('sheet')}>
+        <Button $active={mode === 'sheet'} onClick={() => setMode('sheet')}>
           시트
         </Button>
-        <Button active={mode === 'cream'} onClick={() => setMode('cream')}>
+        <Button $active={mode === 'cream'} onClick={() => setMode('cream')}>
           크림
         </Button>
       </Title>
@@ -91,7 +91,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({
         {colors.map((color, index) => (
           <ColorOption
             key={index}
-            color={color}
+            $color={color}
             selected={selectedColor === color}
             onClick={() => setSelectedColor(color)}
           />
