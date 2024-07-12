@@ -10,7 +10,7 @@ import { authorize } from '../service/auth';
 const router: Router = Router();
 const prisma = new PrismaClient();
 
-router.get('/cake/:userId/:year/', async (req, res) => {
+router.get('/cake/letters/:userId/:year/', async (req, res) => {
   const userId = String(req.params.userId);
   const year = Number(req.params.year);
   const keyword = String(req.query.keyword);
@@ -101,7 +101,8 @@ router.get('/cake/version', async (req, res) => {
     let userId;
     try {
       if (verifyToken(accessToken)) {
-        userId = decodeToken(accessToken);
+        const payload = decodeToken(accessToken);
+        userId = payload?.userId;
       }
     } catch (error) {
       userId = null;
@@ -109,7 +110,7 @@ router.get('/cake/version', async (req, res) => {
 
     if (userId) {
       res.status(200).json({
-        userId: userId,
+        userId,
         data: responseData,
       });
     } else {
@@ -123,38 +124,38 @@ router.get('/cake/version', async (req, res) => {
   }
 });
 
-router.get('/cake/color', async (req, res) => {
+router.get('/cake/color/:userId', async (req, res) => {
   try {
-    authorize(req, res, getCakeColor);
+    const userId = req.params.userId;
+    const { sheetColor, creamColor } = await getCakeColor(userId);
+    res.status(200).json({ sheetColor, creamColor });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: '색상 정보를 불러오는데 실패했습니다.' });
+    res.status(500).json({ message: `색상 정보 조회 실패: ${error}` });
   }
 });
 
-router.post('/cake/color', async (req, res) => {
+router.post('/cake/color', authorize, async (req, res) => {
+  const userId = req.userId;
   const { sheetColor, creamColor } = req.body;
-  console.log(checkCakeColorType(sheetColor), checkCakeColorType(creamColor));
+
   const isValid =
     sheetColor ||
     creamColor ||
     checkCakeColorType(sheetColor) ||
     checkCakeColorType(creamColor);
 
-  if (!isValid) {
-    res.status(400).json({ message: '색상 정보가 올바르지 않습니다.' });
-    return;
-  }
-
-  function setCakeColorCloser(userId: string) {
-    return setCakeColor({ userId, sheetColor, creamColor });
-  }
+  if (!isValid)
+    return res
+      .status(400)
+      .json({ message: '잘못된 요청: 색상 정보가 올바르지 않습니다.' });
 
   try {
-    authorize(req, res, setCakeColorCloser);
+    const updated = await setCakeColor({ userId, sheetColor, creamColor });
+    res.status(200).json(updated);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: '색상 정보를 수정하는데 실패했습니다.' });
+    res.status(500).json({ message: `색상 정보 수정 실패: ${error}` });
   }
 });
 
