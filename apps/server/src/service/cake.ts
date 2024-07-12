@@ -26,7 +26,7 @@ export async function setCakeColor({
       creamColor,
     });
 
-    return { message: '색상 정보를 저장했습니다.' };
+    return { sheetColor, creamColor };
   } catch (error) {
     throw new Error('색상 정보를 저장하는데 실패했습니다.');
   }
