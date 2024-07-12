@@ -46,10 +46,13 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
   creamColor,
 }) => {
+  const SheetComponent = SheetSVG[sheetColor];
+  const CreamComponent = CreamSVG[creamColor];
+
   return (
     <SvgContainer>
-      <SvgElement>{SheetSVG[sheetColor]({})}</SvgElement>
-      <SvgElement>{CreamSVG[creamColor]({})}</SvgElement>
+      <SvgElement as={SheetComponent} />
+      <SvgElement as={CreamComponent} />
     </SvgContainer>
   );
 };
