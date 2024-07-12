@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
@@ -15,6 +15,11 @@ async function handleGoogleLogin() {
 }
 
 const Login = () => {
+  useEffect(() => {
+    // 로그인이 되어있는 경우 케이크 페이지로 이동 필요
+    // 토큰 유효성 검증 API 요청
+  }, []);
+
   return (
     <Wrapper>
       <h1>Login</h1>
