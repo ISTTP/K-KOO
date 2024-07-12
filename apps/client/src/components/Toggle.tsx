@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 interface ToggleBtnProps {
+  ownerId: string;
   toggle: boolean;
   onClick: () => void;
 }
@@ -11,14 +12,17 @@ interface Proptype {
   $istoggle: boolean;
 }
 
-const Toggle: React.FC<ToggleBtnProps> = ({ toggle, onClick }) => {
+const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
   const navigate = useNavigate();
+
   return (
     <Container>
       <ToggleBtn onClick={onClick} $istoggle={toggle}>
         <Circle $istoggle={toggle} />
       </ToggleBtn>
-      <button onClick={() => navigate('/cake/create')}>케이크 수정</button>
+      <button onClick={() => navigate(`/cake/create/${ownerId}`)}>
+        케이크 수정
+      </button>
     </Container>
   );
 };
