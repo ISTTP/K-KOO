@@ -49,11 +49,11 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
   };
 
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  const { cakeUserId } = useParams();
+  const { ownerId } = useParams();
 
   async function getLetters() {
     const res = await axiosInstance.get(
-      `/cake/${cakeUserId}/${year}?keyword=true&page=all`,
+      `/cake/letters/${ownerId}/${year}?keyword=true&page=all`,
     );
     setCakeData(res.data.data);
   }

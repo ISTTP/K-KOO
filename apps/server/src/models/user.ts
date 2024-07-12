@@ -8,3 +8,12 @@ export async function getUser(userId: string) {
     },
   });
 }
+
+export async function setUser(userId: string, data: object) {
+  return await prisma.user.update({
+    where: {
+      userId,
+    },
+    data,
+  });
+}
