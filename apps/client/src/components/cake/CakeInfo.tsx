@@ -21,16 +21,15 @@ interface yearProp {
 const CakeInfo: React.FC<yearProp> = ({ year }) => {
   const navigate = useNavigate();
   const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  const [cakeColor, setCakeColor] = useState<CakeColorState>({
-    sheetColor: 'white',
-    creamColor: 'white',
-  });
   const [pageData, setPageData] = useState<PageTypeResponse>({
     currentPage: 1,
     totalPage: 1,
   });
+  const [cakeColor, setCakeColor] = useState<CakeColorState>({
+    sheetColor: 'chocolate',
+    creamColor: 'white',
+  });
 
-  /*이때 year는 해당 페이지를 보고있는 시점 기준 케이크 주인의 올해 생일이 지났다면 내년, 안 지났다면 올해 연도 요청*/
   const { cakeUserId } = useParams();
 
   async function getLetters(page: number) {

@@ -60,78 +60,6 @@ router.get('/cake/:userId/:year/', async (req, res) => {
   }
 });
 
-router.get('/cake/color', async (req, res) => {
-  try {
-    authorize(req, res, getCakeColor);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: '색상 정보를 불러오는데 실패했습니다.' });
-  }
-});
-
-router.post('/cake/color', async (req, res) => {
-  const { sheetColor, creamColor } = req.body;
-  console.log(checkCakeColorType(sheetColor), checkCakeColorType(creamColor));
-  const isValid =
-    sheetColor ||
-    creamColor ||
-    checkCakeColorType(sheetColor) ||
-    checkCakeColorType(creamColor);
-
-  if (!isValid) {
-    res.status(400).json({ message: '색상 정보가 올바르지 않습니다.' });
-    return;
-  }
-
-  function setCakeColorCloser(userId: string) {
-    return setCakeColor({ userId, sheetColor, creamColor });
-  }
-
-  try {
-    authorize(req, res, setCakeColorCloser);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: '색상 정보를 수정하는데 실패했습니다.' });
-  }
-});
-
-router.get('/cake/color', async (req, res) => {
-  try {
-    authorize(req, res, getCakeColor);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: '색상 정보를 불러오는데 실패했습니다.' });
-  }
-});
-
-router.post('/cake/color', async (req, res) => {
-  const { sheetColor, creamColor } = req.body;
-  console.log(checkCakeColorType(sheetColor), checkCakeColorType(creamColor));
-  const isValid =
-    sheetColor ||
-    creamColor ||
-    checkCakeColorType(sheetColor) ||
-    checkCakeColorType(creamColor);
-
-  if (!isValid) {
-    res.status(400).json({ message: '색상 정보가 올바르지 않습니다.' });
-    return;
-  }
-
-  function setCakeColorCloser(userId: string) {
-    return setCakeColor({ userId, sheetColor, creamColor });
-  }
-
-  try {
-    authorize(req, res, setCakeColorCloser);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: '색상 정보를 수정하는데 실패했습니다.' });
-  }
-});
-
-export default router;
-
 //해당 api에서는 접속자의 accesstoken 만 체크해본다.
 //체크시 유효하면 해당 요청을 보낸 접속자의 userid, 연도, 닉네임 반환
 //체크시 무효하면(만료, 알수없는값, 토큰 없는 경우 모두 expired메시지처리)  null, 연도, 닉네임을 반환
@@ -194,3 +122,40 @@ router.get('/cake/version', async (req, res) => {
     res.status(500).json({ message: `케이크 버전 구분 실패 : ${error}` });
   }
 });
+
+router.get('/cake/color', async (req, res) => {
+  try {
+    authorize(req, res, getCakeColor);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: '색상 정보를 불러오는데 실패했습니다.' });
+  }
+});
+
+router.post('/cake/color', async (req, res) => {
+  const { sheetColor, creamColor } = req.body;
+  console.log(checkCakeColorType(sheetColor), checkCakeColorType(creamColor));
+  const isValid =
+    sheetColor ||
+    creamColor ||
+    checkCakeColorType(sheetColor) ||
+    checkCakeColorType(creamColor);
+
+  if (!isValid) {
+    res.status(400).json({ message: '색상 정보가 올바르지 않습니다.' });
+    return;
+  }
+
+  function setCakeColorCloser(userId: string) {
+    return setCakeColor({ userId, sheetColor, creamColor });
+  }
+
+  try {
+    authorize(req, res, setCakeColorCloser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: '색상 정보를 수정하는데 실패했습니다.' });
+  }
+});
+
+export default router;
