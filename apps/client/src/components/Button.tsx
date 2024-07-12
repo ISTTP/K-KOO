@@ -23,7 +23,7 @@ const StyledButton = styled.button<{
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
 
   svg {
     margin-right: 1rem;
