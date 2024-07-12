@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
@@ -15,9 +16,21 @@ async function handleGoogleLogin() {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // 로그인이 되어있는 경우 케이크 페이지로 이동 필요
-    // 토큰 유효성 검증 API 요청
+    async function handleTokenValidation() {
+      try {
+        const res = await axiosInstance.get('/user/me');
+        if (res.status === 200) {
+          navigate(`/cake/${res.data.userId}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    handleTokenValidation();
   }, []);
 
   return (
