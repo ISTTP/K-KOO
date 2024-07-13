@@ -1,5 +1,5 @@
 {
-  "name": "@isttp/db",
+  "name": "@isttp/schemas",
   "version": "0.0.0",
   "private": true,
   "exports": {
@@ -10,17 +10,15 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "check-types": "tsc -w",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "check-types": "tsc -w"
   },
   "devDependencies": {
     "@isttp/eslint-config": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
-    "prisma": "^5.10.2",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@prisma/client": "^5.10.2"
+    "zod": "^3.23.8"
   }
 }

@@ -37,6 +37,7 @@
     "@babel/runtime-corejs3": "^7.24.7",
     "@isttp/eslint-config": "workspace:*",
     "@isttp/jest-presets": "workspace:*",
+    "@isttp/schemas": "workspace:*",
     "@isttp/types": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
     "@isttp/utils": "workspace:*",
@@ -63,6 +64,7 @@
     "ts-loader": "^9.5.1",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.0.4",
+    "zod": "^3.23.8"
   }
 }

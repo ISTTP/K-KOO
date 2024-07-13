@@ -1,11 +1,12 @@
 import 'dotenv/config';
 import { PrismaClient } from '@isttp/db/all';
-import { CakeTypeResponse, CakeUserTypeResponse } from '@isttp/types/all';
+import { CakeTypeResponse } from '@isttp/types/all';
 import { getCakeColor, setCakeColor } from '../service/cake';
 import { checkCakeColorType } from '@isttp/utils/all';
 import { verifyToken, decodeToken } from '@isttp/utils/all';
 import { Router } from 'express';
 import { authorize } from '../service/auth';
+import { CakeUserTypeResponse } from '@isttp/schemas/all';
 
 const router: Router = Router();
 const prisma = new PrismaClient();

@@ -3,7 +3,7 @@ import Wrapper from '#components/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
-import { CakeUserTypeResponse } from '@isttp/types/all';
+import { CakeUserTypeResponse } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 
 const Cake = () => {
@@ -14,6 +14,7 @@ const Cake = () => {
   async function chooseVersion(ownerId: string) {
     const res = await axiosInstance.get(`cake/version?cakeUserId=${ownerId}`);
     setCakeUserData(res.data.data);
+    console.log(CakeUserTypeResponse.parse(res.data.data));
     if (res.data.userId === ownerId) {
       setIsMyCake(true);
     }
