@@ -14,13 +14,13 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate"
   },
+  "devDependencies": {
+    "@isttp/eslint-config": "workspace:*",
+    "@isttp/typescript-config": "workspace:*",
+    "prisma": "^5.10.2",
+    "typescript": "^5.3.3"
+  },
   "dependencies": {
     "@prisma/client": "^5.10.2"
-  },
-  "devDependencies": {
-    "prisma": "^5.10.2",
-    "typescript": "^5.3.3",
-    "@isttp/eslint-config": "workspace:*",
-    "@isttp/typescript-config": "workspace:*"
   }
 }
