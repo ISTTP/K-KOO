@@ -75,6 +75,9 @@ importers:
       '@isttp/jest-presets':
         specifier: workspace:*
         version: link:../../packages/jest-presets
+      '@isttp/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@isttp/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -156,6 +159,9 @@ importers:
       webpack-dev-server:
         specifier: ^5.0.4
         version: 5.0.4(webpack-cli@5.1.4)(webpack@5.92.1)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
 
   apps/server:
     dependencies:
@@ -199,6 +205,9 @@ importers:
       '@isttp/jest-presets':
         specifier: workspace:*
         version: link:../../packages/jest-presets
+      '@isttp/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@isttp/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -264,7 +273,7 @@ importers:
     dependencies:
       '@prisma/client':
         specifier: ^5.10.2
-        version: 5.16.1(prisma@5.16.1)
+        version: 5.16.2(prisma@5.16.1)
     devDependencies:
       '@isttp/eslint-config':
         specifier: workspace:*
@@ -323,6 +332,25 @@ importers:
       ts-jest:
         specifier: ^29.1.5
         version: 29.1.5(@babel/core@7.24.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.24.7))(esbuild@0.20.2)(jest@29.7.0(@types/node@20.14.9)(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.2)))(typescript@5.5.2)
+
+  packages/schemas:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@isttp/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@isttp/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.2
 
   packages/types:
     dependencies:
@@ -1379,8 +1407,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@prisma/client@5.16.1':
-    resolution: {integrity: sha512-wM9SKQjF0qLxdnOZIVAIMKiz6Hu7vDt4FFAih85K1dk/Rr2mdahy6d3QP41K62N9O0DJJA//gUDA3Mp49xsKIg==}
+  '@prisma/client@5.16.2':
+    resolution: {integrity: sha512-+1lmkhR9gHWcTC5oghm2ZKpWljyWdzfazCVlLKUWXVmwHSf52g81aZ8qb6Km5Bs025yBi7puLp3qSLEvktoUtw==}
     engines: {node: '>=16.13'}
     peerDependencies:
       prisma: '*'
@@ -5292,6 +5320,9 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
   zustand@4.5.4:
     resolution: {integrity: sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==}
     engines: {node: '>=12.7.0'}
@@ -6547,7 +6578,7 @@ snapshots:
     dependencies:
       playwright: 1.45.0
 
-  '@prisma/client@5.16.1(prisma@5.16.1)':
+  '@prisma/client@5.16.2(prisma@5.16.1)':
     optionalDependencies:
       prisma: 5.16.1
 
@@ -11125,6 +11156,8 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.0.0: {}
+
+  zod@3.23.8: {}
 
   zustand@4.5.4(@types/react@18.3.3)(react@18.3.1):
     dependencies:

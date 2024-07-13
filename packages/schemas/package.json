@@ -1,0 +1,24 @@
+{
+  "name": "@isttp/schemas",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./all": {
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "check-types": "tsc -w"
+  },
+  "devDependencies": {
+    "@isttp/eslint-config": "workspace:*",
+    "@isttp/typescript-config": "workspace:*",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
