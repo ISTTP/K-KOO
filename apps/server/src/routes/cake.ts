@@ -15,7 +15,7 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
   const year = Number(req.params.year);
   const keyword = String(req.query.keyword);
   const page = Number(req.query.page);
-  const pageSize = 7;
+  const pageSize = keyword === 'true' ? 24 : 7;
   const pageNumber = page ? page : 1;
   const includeKeyword = keyword === 'true' ? true : false;
 
@@ -60,16 +60,11 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
   }
 });
 
-//해당 api에서는 접속자의 accesstoken 만 체크해본다.
-//체크시 유효하면 해당 요청을 보낸 접속자의 userid, 연도, 닉네임 반환
-//체크시 무효하면(만료, 알수없는값, 토큰 없는 경우 모두 expired메시지처리)  null, 연도, 닉네임을 반환
-
 router.get('/cake/version', async (req, res) => {
   const accessToken = req.cookies.ACT;
   const cakeUserId = String(req.query.cakeUserId);
 
   try {
-    //케이크 주인의 생일과 닉네임 반환
     const cakeUserData = await prisma.user.findFirst({
       where: {
         userId: cakeUserId,
@@ -97,7 +92,6 @@ router.get('/cake/version', async (req, res) => {
       year: String(year),
     };
 
-    //act 유효성 검증
     let userId;
     try {
       if (verifyToken(accessToken)) {
