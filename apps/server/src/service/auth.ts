@@ -8,24 +8,6 @@ import { NextFunction, Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
-export async function updateRefreshToken(
-  userId: string,
-  newRefreshToken: string,
-) {
-  try {
-    await prisma.user.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        refreshToken: newRefreshToken,
-      },
-    });
-  } catch (error) {
-    console.log('리프레시 토큰 수정 실패: ', error);
-  }
-}
-
 export function setAuthCookies(
   res: Response,
   accessToken: string,
@@ -47,7 +29,6 @@ export function handleLogin(
     if (userId) {
       const { accessToken, refreshToken } = reissueToken(userId);
 
-      updateRefreshToken(userId, refreshToken);
       setAuthCookies(res, accessToken, refreshToken);
 
       res.status(200).json({
@@ -183,27 +164,12 @@ export async function checkValidation({
             return { message: 'EXPIRED' };
           }
 
-          const storedToken = await prisma.user.findFirst({
-            where: {
-              userId,
-            },
-            select: {
-              refreshToken: true,
-            },
-          });
-
-          if (storedToken?.refreshToken !== refreshToken) {
-            return { message: 'EXPIRED' };
-          }
-
           const decoded = verifyToken(refreshToken);
           if (decoded instanceof Error) {
             return { message: 'EXPIRED' };
           }
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
             reissueToken(userId);
-
-          updateRefreshToken(userId, newRefreshToken);
 
           return {
             message: 'REFRESH_VALID',
