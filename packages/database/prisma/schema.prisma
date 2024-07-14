@@ -23,7 +23,6 @@ model User {
   loginType       String // 로그인 타입
   sheetColor      String? // 시트 색깔 (선택적)
   creamColor      String? // 크림 색깔 (선택적)
-  refreshToken    String? // 리프레시 토큰 (선택적)
   createdAt       DateTime @default(now()) // 생성 날짜
   updatedAt       DateTime @updatedAt // 수정 날짜
   sentLetters     Letter[] @relation("SentLetters") // 발신 편지들과의 관계
