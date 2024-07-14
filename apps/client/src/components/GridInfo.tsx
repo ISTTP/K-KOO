@@ -4,12 +4,40 @@ import { CakeTypeResponse } from '@isttp/types/all';
 import { useParams } from 'react-router-dom';
 import * as G from '#components/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
 
 interface yearProp {
   year: string;
 }
 
 const GridInfo: React.FC<yearProp> = ({ year }) => {
+  const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const { ownerId } = useParams();
+
+  async function getLetters(page: number) {
+    const res = await axiosInstance.get(
+      `/cake/letters/${ownerId}/${year}?keyword=true&page=${page}`,
+    );
+    if (res.data.data.length < 24) {
+      setHasMore(false);
+    }
+    setCakeData((prev) => [...prev, ...res.data.data]);
+  }
+  useEffect(() => {
+    getLetters(1);
+  }, []);
+
+  const isItemLoaded = (index: number) => !hasMore || index < cakeData.length;
+
+  const loadMoreItems = () => {
+    if (hasMore) {
+      setPage(page + 1);
+      getLetters(page + 1);
+    }
+  };
+
   const Cell = ({
     columnIndex,
     rowIndex,
@@ -48,33 +76,53 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
     );
   };
 
-  const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  const { ownerId } = useParams();
-
-  async function getLetters() {
-    const res = await axiosInstance.get(
-      `/cake/letters/${ownerId}/${year}?keyword=true&page=1`,
-    );
-    setCakeData(res.data.data);
-  }
-  useEffect(() => {
-    getLetters();
-  }, []);
-
   return (
-    <>
-      <Grid
-        style={{ scrollbarWidth: 'none' }}
-        columnCount={3} //3xN의 3
-        columnWidth={100} //한 아이템 가로 사이즈
-        height={500} //렌더링되는 높이
-        rowCount={Math.ceil(cakeData.length / 3)} //3xN의 N
-        rowHeight={150} //한 아이템 세로 사이즈
-        width={300} //렌더링되는 넓이
-      >
-        {Cell}
-      </Grid>
-    </>
+    <InfiniteLoader
+      isItemLoaded={isItemLoaded}
+      itemCount={hasMore ? cakeData.length + 1 : cakeData.length}
+      loadMoreItems={loadMoreItems}
+    >
+      {({ onItemsRendered, ref }) => {
+        const newItemsRendered = (gridData: {
+          visibleRowStopIndex: number;
+          visibleRowStartIndex: number;
+          overscanRowStartIndex: number;
+          overscanRowStopIndex: number;
+        }) => {
+          const {
+            visibleRowStopIndex,
+            visibleRowStartIndex,
+            overscanRowStartIndex,
+            overscanRowStopIndex,
+          } = gridData;
+
+          if (visibleRowStopIndex >= cakeData.length / 3 - 1) {
+            onItemsRendered({
+              visibleStartIndex: visibleRowStartIndex * 3,
+              visibleStopIndex: visibleRowStopIndex * 3,
+              overscanStartIndex: overscanRowStartIndex * 3 + 2,
+              overscanStopIndex: overscanRowStopIndex * 3,
+            });
+          }
+        };
+
+        return (
+          <Grid
+            style={{ scrollbarWidth: 'none' }}
+            columnCount={3}
+            columnWidth={100}
+            height={500}
+            rowCount={Math.ceil(cakeData.length / 3)}
+            rowHeight={150}
+            width={300}
+            onItemsRendered={newItemsRendered}
+            ref={ref}
+          >
+            {Cell}
+          </Grid>
+        );
+      }}
+    </InfiniteLoader>
   );
 };
 
