@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
-import Wrapper from '#components/Wrapper.tsx';
-import ChooseLetter from '#components/letter/ChooseLetter.tsx';
-import WriteLetter from '#components/letter/WriteLetter.tsx';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
+type CandleData = {
+  id: number;
+  imageUrl: string;
+  point: number;
+}[];
+
+async function hadleCreateLetter(){
+  // 
+}
 
 const CreateLetter = () => {
-  const [step, setStep] = useState(1);
+  const { ownerId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const candle = searchParams.get('candle');
 
-  function handleNext() {
-    setStep(step + 1);
-  }
-
-  function handlePrev() {
-    setStep(step - 1);
-  }
+  const [content, setContent] = useState('');
 
   return (
     <Wrapper>
-      <h1>Create Letter</h1>
-      {step === 1 && <ChooseLetter handleNext={handleNext} />}
-      {step === 2 && <WriteLetter handlePrev={handlePrev} />}
+      <h1>편지 작성</h1>
+      <textarea onChange={(e) => setContent(e.target.value)} />
     </Wrapper>
   );
 };
