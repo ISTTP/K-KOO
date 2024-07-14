@@ -44,6 +44,7 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
       const letterData: CakeTypeResponse = {
         nickname: letter.nickname,
         candleImageUrl: letter.candle.imageUrl,
+        letterId: letter.letterId,
       };
       if (includeKeyword) {
         letterData.keyword = letter.keyword;
