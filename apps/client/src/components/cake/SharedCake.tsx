@@ -42,7 +42,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   const navigate = useNavigate();
 
   function handleCreateLetter() {
-    navigate(`/letter/create/${ownerId}`);
+    navigate(`/letter/choose/${ownerId}`);
   }
 
   async function handleNavigateToMyCake() {
