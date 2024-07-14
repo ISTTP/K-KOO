@@ -63,7 +63,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       <button>my</button>
       <Toggle ownerId={ownerId} toggle={toggle} onClick={clickedToggle} />
       {toggle ? (
-        <GridInfo />
+        <GridInfo year={data.year} />
       ) : (
         <>
           <CakeInfo

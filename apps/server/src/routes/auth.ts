@@ -4,7 +4,6 @@ import { PrismaClient } from '@isttp/db/all';
 import { Router } from 'express';
 import { generateAccessToken, generateRefreshToken } from '@isttp/utils/all';
 import {
-  updateRefreshToken,
   setAuthCookies,
   checkUser,
   handleLogin,
@@ -39,7 +38,6 @@ router.post('/auth/signup', async (req, res) => {
     const accessToken = generateAccessToken(user.userId);
     const refreshToken = generateRefreshToken();
 
-    updateRefreshToken(user.userId, refreshToken);
     setAuthCookies(res, accessToken, refreshToken);
 
     res.status(200).json({
