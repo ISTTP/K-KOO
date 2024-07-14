@@ -10,6 +10,7 @@ export const CakeTypeResponse = z.object({
   nickname: z.string(),
   candleImageUrl: z.string(),
   keyword: z.string().optional(),
+  letterId: z.number(),
 });
 export type CakeTypeResponse = z.infer<typeof CakeTypeResponse>;
 

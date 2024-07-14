@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import {
+  CakeColorType,
   CakeTypeResponse,
   PageTypeResponse,
-  CakeColorType,
 } from '@isttp/types/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';

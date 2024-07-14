@@ -13,8 +13,9 @@ const Cake = () => {
 
   async function chooseVersion(ownerId: string) {
     const res = await axiosInstance.get(`cake/version?cakeUserId=${ownerId}`);
-    setCakeUserData(res.data.data);
-    console.log(CakeUserTypeResponse.parse(res.data.data));
+    const data = CakeUserTypeResponse.parse(res.data.data);
+    setCakeUserData(data);
+
     if (res.data.userId === ownerId) {
       setIsMyCake(true);
     }
