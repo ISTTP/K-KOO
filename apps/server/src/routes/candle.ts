@@ -9,6 +9,6 @@ router.get('/candle', async (req, res) => {
     res.status(200).json(candles);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json(`장식초 정보 조회 실패: ${error}`);
   }
 });
