@@ -12,3 +12,5 @@ router.get('/candle', async (req, res) => {
     res.status(500).json(`장식초 정보 조회 실패: ${error}`);
   }
 });
+
+export default router;
