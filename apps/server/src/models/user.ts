@@ -17,3 +17,14 @@ export async function setUser(userId: string, data: object) {
     data,
   });
 }
+
+export async function getUserBirthday(userId: string) {
+  return await prisma.user.findFirst({
+    where: {
+      userId,
+    },
+    select: {
+      birthday: true,
+    },
+  });
+}
