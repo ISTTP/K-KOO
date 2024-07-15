@@ -4,7 +4,7 @@
   "private": true,
   "imports": {
     "#images": "./src/assets/images/index.ts",
-    "#icons/*.tsx": "./src/assets/icons/*.tsx",
+    "#icons": "./src/assets/icons/index.ts",
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
     "#apis/*.ts": "./src/apis/*.ts"
