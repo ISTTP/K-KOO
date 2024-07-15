@@ -8,8 +8,9 @@ export const LetterTypeReq = z.object({
 export type LetterTypeReq = z.infer<typeof LetterTypeReq>;
 
 export const LetterTypeResponse = z.object({
-  nickname: z.string(),
-  candleImageUrl: z.string(),
-  contents: z.string(),
+  isOpen: z.boolean(),
+  nickname: z.string().optional(),
+  candleImageUrl: z.string().optional(),
+  contents: z.string().optional(),
 });
 export type LetterTypeResponse = z.infer<typeof LetterTypeResponse>;

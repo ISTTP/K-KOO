@@ -53,9 +53,13 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
       `/letter/${item.letterId}`,
     );
     const result = LetterTypeResponse.parse(res.data);
-    setSelectedItem(result);
-  };
 
+    if (result.isOpen) {
+      setSelectedItem(result);
+    } else {
+      alert('편지는 생일 이후에 확인할 수 있어요.');
+    }
+  };
   const Cell = ({
     columnIndex,
     rowIndex,
