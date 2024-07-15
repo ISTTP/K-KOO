@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
 import Wrapper from '#components/Wrapper.tsx';
-import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 import Button from '#components/Button.tsx';
+import Modal from '#components/modal/Modal.tsx';
+import { UserType } from '@isttp/schemas/all';
+import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 import { AxiosError } from 'axios';
 
 interface MyCakeProps {
@@ -18,6 +20,8 @@ type CakeColorState = {
 };
 
 const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const [cakeColor, setCakeColor] = useState<CakeColorState>({
     sheetColor: 'chocolate',
     creamColor: 'white',
@@ -39,10 +43,17 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
     }
   }
 
-  const navigate = useNavigate();
-
-  function handleNavigateToLetterPage() {
-    navigate(`/letter/choose/${ownerId}`);
+  async function handleCheckLogin() {
+    try {
+      const res = await axiosInstance.get<UserType>('/user/me');
+      if (res.status === 200) {
+        navigate(`/letter/choose/${ownerId}`);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) setOpen(true);
+      }
+    }
   }
 
   async function handleNavigateToMyCake() {
@@ -79,13 +90,31 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       <Button
         type="default"
         label="케이크 꾸며주기"
-        onClick={handleNavigateToLetterPage}
+        onClick={handleCheckLogin}
       />
       <Button
         type="default"
         label="내 케이크 보러가기"
         onClick={handleNavigateToMyCake}
       />
+      <Modal open={open}>
+        <span>편지를 작성하면 포인트를 얻을 수 있어요.</span>
+        <span>로그인 하시겠어요?</span>
+        <Button
+          type="default"
+          label="로그인하러 가기"
+          onClick={() => {
+            navigate('/');
+          }}
+        />
+        <Button
+          type="default"
+          label="괜찮아요"
+          onClick={() => {
+            navigate(`/letter/choose/${ownerId}`);
+          }}
+        />
+      </Modal>
     </Wrapper>
   );
 };
