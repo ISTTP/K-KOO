@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
+import { AxiosError } from 'axios';
 import {
   UserType,
   LetterRequestType,
@@ -12,10 +13,20 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 async function fetchUserInfo() {
   try {
     const res = await axiosInstance.get<UserType>('/user/me');
-    return UserType.parse(res.data);
+    if (res.status !== 200) {
+      return UserType.parse(res.data);
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
-    throw new Error(`${error}`);
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 401) {
+        return null;
+      } else {
+        throw new Error(`${error}`);
+      }
+    }
   }
 }
 
