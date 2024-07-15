@@ -41,7 +41,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
   const navigate = useNavigate();
 
-  function handleCreateLetter() {
+  function handleNavigateToLetterPage() {
     navigate(`/letter/choose/${ownerId}`);
   }
 
@@ -79,7 +79,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       <Button
         type="default"
         label="케이크 꾸며주기"
-        onClick={handleCreateLetter}
+        onClick={handleNavigateToLetterPage}
       />
       <Button
         type="default"
