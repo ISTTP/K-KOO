@@ -6,7 +6,6 @@ import GridInfo from '#components/GridInfo.tsx';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
-import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 
 type MyCakeProps = {
@@ -19,9 +18,12 @@ type CakeColorState = {
   creamColor: CakeColorType;
 };
 
+function handleShareUrl() {
+  alert('기능 준비중');
+}
+
 const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [cakeColor, setCakeColor] = useState<CakeColorState>({
     sheetColor: 'chocolate',
@@ -30,10 +32,6 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
   const clickedToggle = () => {
     setToggle((prev) => !prev);
-  };
-
-  const handleOpen = () => {
-    setOpen(!open);
   };
 
   async function getColors(userId: string) {
@@ -76,9 +74,8 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           <Button
             type="default"
             label="내 케이크 공유하기"
-            onClick={() => setOpen(true)}
+            onClick={handleShareUrl}
           />
-          <ShareUrlModal open={open} handleOpen={handleOpen} />
         </>
       )}
     </Wrapper>
