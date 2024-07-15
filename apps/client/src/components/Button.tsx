@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import GoogleIcon from '#icons/GoogleIcon.tsx';
-import KakaoIcon from '#icons/KakaoIcon.tsx';
+import { GoogleIcon, KakaoIcon } from '#icons';
 
 type ButtonType = 'google' | 'kakao' | 'default';
 
