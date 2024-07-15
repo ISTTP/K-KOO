@@ -1,21 +1,22 @@
 import 'dotenv/config';
 import { PrismaClient } from '@isttp/db/all';
-import { CakeTypeResponse } from '@isttp/types/all';
 import { getCakeColor, setCakeColor } from '../service/cake';
 import { checkCakeColorType } from '@isttp/utils/all';
 import { verifyToken, decodeToken } from '@isttp/utils/all';
 import { Router } from 'express';
 import { authorize } from '../service/auth';
-import { CakeUserTypeResponse } from '@isttp/schemas/all';
+import { CakeVerTypeReq, LettersTypeReq } from '@isttp/schemas/all';
+import { CakeTypeResponse } from '@isttp/types/all';
 
 const router: Router = Router();
 const prisma = new PrismaClient();
 
 router.get('/cake/letters/:userId/:year/', async (req, res) => {
-  const userId = String(req.params.userId);
-  const year = Number(req.params.year);
-  const keyword = String(req.query.keyword);
-  const page = Number(req.query.page);
+  const result = LettersTypeReq.parse(req);
+  const userId = result.params.userId;
+  const year = Number(result.params.year);
+  const keyword = result.query.keyword;
+  const page = Number(result.query.page);
   const pageSize = keyword === 'true' ? 24 : 7;
   const pageNumber = page ? page : 1;
   const includeKeyword = keyword === 'true' ? true : false;
@@ -32,7 +33,7 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
     });
-    /*총 페이지 수*/
+
     const totalCount = await prisma.letter.count({
       where: {
         recipientId: userId,
@@ -64,7 +65,8 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
 
 router.get('/cake/version', async (req, res) => {
   const accessToken = req.cookies.ACT;
-  const cakeUserId = String(req.query.cakeUserId);
+  const result = CakeVerTypeReq.parse(req);
+  const cakeUserId = result.query.cakeUserId;
 
   try {
     const cakeUserData = await prisma.user.findFirst({
@@ -80,16 +82,18 @@ router.get('/cake/version', async (req, res) => {
     }
     const today = new Date();
     const birthday = new Date(cakeUserData.birthday);
-    const thisYearBirthday = new Date(
+    const thisYearBdayAfter30 = new Date(
       today.getFullYear(),
       birthday.getMonth(),
-      birthday.getDate(),
+      birthday.getDate() + 30,
     );
 
     const year =
-      today > thisYearBirthday ? today.getFullYear() + 1 : today.getFullYear();
+      today > thisYearBdayAfter30
+        ? today.getFullYear() + 1
+        : today.getFullYear();
 
-    const responseData: CakeUserTypeResponse = {
+    const responseData = {
       nickname: cakeUserData.nickname,
       year: String(year),
     };
