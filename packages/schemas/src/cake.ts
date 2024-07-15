@@ -6,6 +6,13 @@ export const CakeUserTypeResponse = z.object({
 });
 export type CakeUserTypeResponse = z.infer<typeof CakeUserTypeResponse>;
 
+export const CakeUserResponse = z.object({
+  data: CakeUserTypeResponse,
+  userId: z.string().nullable(),
+});
+
+export type CakeUserResponse = z.infer<typeof CakeUserResponse>;
+
 export const CakeTypeResponse = z.object({
   nickname: z.string(),
   candleImageUrl: z.string(),
@@ -19,6 +26,13 @@ export const PageTypeResponse = z.object({
   totalPage: z.number(),
 });
 export type PageTypeResponse = z.infer<typeof PageTypeResponse>;
+
+export const LettersResponse = z.object({
+  data: z.array(CakeTypeResponse),
+  currentPage: z.number(),
+  totalPage: z.number(),
+});
+export type LettersResponse = z.infer<typeof LettersResponse>;
 
 export const LettersTypeReq = z.object({
   params: z.object({

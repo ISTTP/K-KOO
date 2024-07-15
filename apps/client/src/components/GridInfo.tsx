@@ -1,6 +1,10 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
 import axiosInstance from '#apis/axios.ts';
-import { CakeTypeResponse, LetterTypeResponse } from '@isttp/types/all';
+import {
+  CakeTypeResponse,
+  LettersResponse,
+  LetterTypeResponse,
+} from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 import * as G from '#components/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
@@ -21,13 +25,14 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
   );
 
   async function getLetters(page: number) {
-    const res = await axiosInstance.get(
+    const res = await axiosInstance.get<LettersResponse>(
       `/cake/letters/${ownerId}/${year}?keyword=true&page=${page}`,
     );
-    if (res.data.data.length < 24) {
+    const result = LettersResponse.parse(res.data);
+    if (result.data.length < 24) {
       setHasMore(false);
     }
-    setCakeData((prev) => [...prev, ...res.data.data]);
+    setCakeData((prev) => [...prev, ...result.data]);
   }
   useEffect(() => {
     getLetters(1);
@@ -44,8 +49,11 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
 
   const openLetter = async (index: number) => {
     const item = cakeData[index];
-    const res = await axiosInstance.get(`/letter/${item.letterId}`);
-    setSelectedItem(res.data);
+    const res = await axiosInstance.get<LetterTypeResponse>(
+      `/letter/${item.letterId}`,
+    );
+    const result = LetterTypeResponse.parse(res.data);
+    setSelectedItem(result);
   };
 
   const Cell = ({

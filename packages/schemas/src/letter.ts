@@ -6,3 +6,10 @@ export const LetterTypeReq = z.object({
   }),
 });
 export type LetterTypeReq = z.infer<typeof LetterTypeReq>;
+
+export const LetterTypeResponse = z.object({
+  nickname: z.string(),
+  candleImageUrl: z.string(),
+  contents: z.string(),
+});
+export type LetterTypeResponse = z.infer<typeof LetterTypeResponse>;
