@@ -10,6 +10,7 @@ export type CakeTypeResponse = {
   nickname: string;
   candleImageUrl: string;
   keyword?: string;
+  letterId: number;
 };
 
 export type PageTypeResponse = {

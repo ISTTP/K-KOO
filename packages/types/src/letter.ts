@@ -18,3 +18,10 @@ export type LetterResponseType = {
   keyword: string;
   year: number;
 };
+
+export type LetterTypeResponse = {
+  nickname: string;
+  candleImageUrl: string;
+  keyword?: string;
+  contents: string;
+};
