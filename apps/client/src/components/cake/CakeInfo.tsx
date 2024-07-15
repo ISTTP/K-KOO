@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
+import { CakeColorType } from '@isttp/types/all';
 import {
   CakeTypeResponse,
   PageTypeResponse,
-  CakeColorType,
-} from '@isttp/types/all';
+  LettersResponse,
+} from '@isttp/schemas/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';
 
@@ -29,14 +30,15 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   const { ownerId } = useParams();
 
   async function getLetters(page: number) {
-    const res = await axiosInstance.get(
+    const res = await axiosInstance.get<LettersResponse>(
       `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
     );
-    setCakeData(res.data.data);
+    const result = LettersResponse.parse(res.data);
+    setCakeData(result.data);
     setPageData({
-      currentPage: res.data.currentPage,
+      currentPage: result.currentPage,
       totalPage:
-        res.data.totalPage === 0 ? res.data.totalPage + 1 : res.data.totalPage,
+        result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
     });
   }
 
