@@ -4,9 +4,9 @@ import axiosInstance from '#apis/axios.ts';
 import Toggle from '#components/Toggle.tsx';
 import GridInfo from '#components/GridInfo.tsx';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
+import CakeHeader from '#components/cake/CakeHeader.tsx';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 
 type MyCakeProps = {
@@ -59,10 +59,8 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   }, [ownerId]);
 
   return (
-    <Wrapper>
-      <h3>{data.nickname} 님의 케이크</h3>
-      <p>장식초를 눌러 편지를 확인해보세요</p>
-      <button>my</button>
+    <>
+      <CakeHeader nickname={data.nickname} />
       <Toggle ownerId={ownerId} toggle={toggle} onClick={clickedToggle} />
       {toggle ? (
         <GridInfo year={data.year} />
@@ -81,7 +79,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           <ShareUrlModal open={open} handleOpen={handleOpen} />
         </>
       )}
-    </Wrapper>
+    </>
   );
 };
 
