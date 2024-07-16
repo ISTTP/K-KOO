@@ -50,6 +50,9 @@ importers:
       styled-components:
         specifier: ^6.1.11
         version: 6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
       zustand:
         specifier: ^4.5.2
         version: 4.5.4(@types/react@18.3.3)(react@18.3.1)
@@ -165,9 +168,6 @@ importers:
       webpack-dev-server:
         specifier: ^5.0.4
         version: 5.0.4(webpack-cli@5.1.4)(webpack@5.92.1)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
 
   apps/server:
     dependencies:
@@ -278,7 +278,7 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: ^5.10.2
+        specifier: ^5.16.2
         version: 5.16.2(prisma@5.16.1)
     devDependencies:
       '@isttp/eslint-config':

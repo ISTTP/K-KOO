@@ -1,12 +1,52 @@
-import 'dotenv/config';
-import { PrismaClient } from '@isttp/db/all';
 import { Router } from 'express';
+import { PrismaClient } from '@isttp/db/all';
+import { getKeyword } from '../service/keyword';
+import { getLetterYearBasedOnBirthday } from '../service/letter';
+import { createLetter } from '../models/letter';
+import { getUser, getUserBirthday, addPoint } from '../models/user';
 import { authorize } from '../service/auth';
-import { LetterTypeReq } from '@isttp/schemas/all';
-import { getUser } from '../models/user';
+import {
+  LetterTypeReq,
+  LetterRequestType,
+  LetterResponseType,
+  BirthdayType,
+  UserType,
+} from '@isttp/schemas/all';
 
 const router: Router = Router();
 const prisma = new PrismaClient();
+
+router.post('/letter', async (req, res) => {
+  try {
+    const { senderId, recipientId, candleId, nickname, contents } =
+      LetterRequestType.parse(req.body);
+
+    const { birthday } = BirthdayType.parse(await getUserBirthday(recipientId));
+    const keyword = await getKeyword(contents);
+    const year = getLetterYearBasedOnBirthday(birthday);
+
+    const letter = LetterResponseType.parse(
+      await createLetter({
+        senderId,
+        recipientId,
+        candleId,
+        nickname,
+        contents,
+        keyword,
+        year,
+      }),
+    );
+
+    if (senderId !== '') {
+      UserType.parse(await addPoint(senderId, 100));
+    }
+
+    res.status(200).json(letter);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: `편지 작성 실패: ${error}` });
+  }
+});
 
 router.get('/letter/:letterId', authorize, async (req, res) => {
   const userId = req.userId;
