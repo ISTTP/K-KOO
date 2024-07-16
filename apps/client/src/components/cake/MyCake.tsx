@@ -7,6 +7,7 @@ import CakeInfo from '#components/cake/CakeInfo.tsx';
 import Button from '#components/Button.tsx';
 import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
+import InnerWrapper from '#components/InnerWrapper.tsx';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 
 type MyCakeProps = {
@@ -59,7 +60,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   }, [ownerId]);
 
   return (
-    <>
+    <InnerWrapper>
       <CakeHeader nickname={data.nickname} />
       <Toggle ownerId={ownerId} toggle={toggle} onClick={clickedToggle} />
       {toggle ? (
@@ -79,7 +80,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           <ShareUrlModal open={open} handleOpen={handleOpen} />
         </>
       )}
-    </>
+    </InnerWrapper>
   );
 };
 
