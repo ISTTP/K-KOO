@@ -52,7 +52,13 @@ const MyPageButton = styled.button`
   }
 `;
 
-const CakeHeader = ({ nickname }: { nickname: string }) => {
+const CakeHeader = ({
+  nickname,
+  isMyCake,
+}: {
+  nickname: string;
+  isMyCake: boolean;
+}) => {
   return (
     <HeaderContainer>
       <TitleContainer>
@@ -60,11 +66,14 @@ const CakeHeader = ({ nickname }: { nickname: string }) => {
           <Nickname>{nickname}</Nickname>
           <span>님의 케이크</span>
         </Title>
-        <MyPageButton>
-          <PersonIcon width={'100%'} height={'100%'} />
-        </MyPageButton>
+        {isMyCake && (
+          <MyPageButton>
+            <PersonIcon width={'100%'} height={'100%'} />
+          </MyPageButton>
+        )}
       </TitleContainer>
-      <SubTitle>장식초를 눌러 편지를 확인해보세요!</SubTitle>
+      {isMyCake && <SubTitle>장식초를 눌러 편지를 확인해보세요!</SubTitle>}
+      {!isMyCake && <SubTitle>친구의 케이크를 꾸며보세요!</SubTitle>}
     </HeaderContainer>
   );
 };
