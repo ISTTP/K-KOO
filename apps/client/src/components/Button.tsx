@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { GoogleIcon, KakaoIcon } from '#icons';
 
-type ButtonType = 'google' | 'kakao' | 'default';
+type ButtonType = 'google' | 'kakao' | 'default' | 'gray' | 'disabled';
 
 const StyledButton = styled.button<{
   $type: ButtonType;
+  $size?: string;
   $bgColor: string;
   $textColor: string;
 }>`
-  width: 15rem;
+  width: ${(props) => (props.$size === 'large' ? '100%' : '15rem')};
   height: 3rem;
   margin-top: 1rem;
   display: flex;
@@ -20,7 +21,7 @@ const StyledButton = styled.button<{
   border: ${(props) =>
     props.$type === 'google' ? '1px solid var(--dark-gray-color)' : 'none'};
   border-radius: 0.5rem;
-  cursor: pointer;
+  cursor: ${(props) => (props.$type !== 'disabled' ? 'pointer' : '')};
   font-size: 1rem;
   font-weight: 700;
 
@@ -32,6 +33,7 @@ const StyledButton = styled.button<{
 interface ButtonProps {
   type: ButtonType;
   label: string;
+  size?: string;
   onClick: () => void;
   children?: React.ReactNode;
 }
@@ -52,17 +54,29 @@ const buttonStyles = {
     textColor: '--white-color',
     icon: null,
   },
+  gray: {
+    bgColor: '--light-gray-color',
+    textColor: '--dark-gray-color',
+    icon: null,
+  },
+  disabled: {
+    bgColor: '--light-gray-color',
+    textColor: '--dark-gray-color',
+    icon: null,
+  },
 };
 
-const Button: React.FC<ButtonProps> = ({ type, label, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ type, label, onClick, size }) => {
   const { bgColor, textColor, icon } = buttonStyles[type];
 
   return (
     <StyledButton
       $type={type}
+      $size={size}
       $bgColor={bgColor}
       $textColor={textColor}
       onClick={onClick}
+      disabled={type === 'disabled'}
     >
       {icon}
       {label}
