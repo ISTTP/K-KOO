@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import Modal from '#components/modal/Modal.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
@@ -85,7 +84,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   }, [ownerId]);
 
   return (
-    <Wrapper>
+    <>
       <h3>{data.nickname} 님의 케이크</h3>
       <p>친구의 케이크를 꾸며보세요!</p>
       <CakeInfo
@@ -129,7 +128,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         />
       </Modal>
       <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
-    </Wrapper>
+    </>
   );
 };
 
