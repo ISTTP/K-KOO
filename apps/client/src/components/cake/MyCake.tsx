@@ -61,7 +61,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
   return (
     <InnerWrapper>
-      <CakeHeader nickname={data.nickname} />
+      <CakeHeader nickname={data.nickname} isMyCake={true} />
       <Toggle ownerId={ownerId} toggle={toggle} onClick={clickedToggle} />
       {toggle ? (
         <GridInfo year={data.year} />
