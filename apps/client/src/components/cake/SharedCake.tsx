@@ -5,6 +5,7 @@ import CakeInfo from '#components/cake/CakeInfo.tsx';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import Modal from '#components/modal/Modal.tsx';
+import LoginModal from '#components/modal/LoginModal.tsx';
 import { UserType } from '@isttp/schemas/all';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 import { AxiosError } from 'axios';
@@ -22,10 +23,15 @@ type CakeColorState = {
 const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const [cakeColor, setCakeColor] = useState<CakeColorState>({
     sheetColor: 'chocolate',
     creamColor: 'white',
   });
+
+  function handleOpenLogin() {
+    setOpenLogin(!openLogin);
+  }
 
   async function getColors(userId: string) {
     try {
@@ -39,7 +45,6 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       });
     } catch (error) {
       console.log(error);
-      // 에러 코드에 따라 모달
     }
   }
 
@@ -65,10 +70,11 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           navigate(`/cake/${res.data.userId}`);
         }
       })
+      // 권한 없을 경우 로그인 유도 모달
       .catch((error) => {
         if (error instanceof AxiosError) {
           if (error.response?.status === 401) {
-            alert('로그인이 필요합니다.');
+            setOpenLogin(true);
           }
         }
       });
@@ -109,12 +115,20 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         />
         <Button
           type="default"
-          label="괜찮아요"
+          label="그냥 편지 작성하기"
           onClick={() => {
             navigate(`/letter/choose/${ownerId}`);
           }}
         />
+        <Button
+          type="default"
+          label="닫기"
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
       </Modal>
+      <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
     </Wrapper>
   );
 };

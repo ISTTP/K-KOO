@@ -4,6 +4,12 @@ import Button from '#components/Button.tsx';
 
 import { KakaoLogoIcon, FacebookLogoIcon, LinkIcon } from '#icons';
 
+function pasteUrl() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url);
+  alert('URL이 복사되었습니다.');
+}
+
 const ShareUrlModal = ({
   open,
   handleOpen,
@@ -21,7 +27,7 @@ const ShareUrlModal = ({
         <button>
           <FacebookLogoIcon />
         </button>
-        <button>
+        <button onClick={pasteUrl}>
           <LinkIcon />
         </button>
       </div>
