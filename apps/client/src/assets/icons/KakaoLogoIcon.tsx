@@ -4,7 +4,7 @@ import type { SVGProps } from 'react';
 
 const KakaoLogoIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg {...props} width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg {...props} viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="46" height="46" fill="url(#pattern0_64_26)" />
       <defs>
         <pattern id="pattern0_64_26" patternContentUnits="objectBoundingBox" width="1" height="1">

@@ -5,6 +5,7 @@ import KakaoIcon from './KakaoIcon';
 import LinkIcon from './LinkIcon';
 import HomeIcon from './HomeIcon';
 import MessengerIcon from './MessengerIcon';
+import PersonIcon from './PersonIcon';
 
 export {
   FacebookLogoIcon,
@@ -14,4 +15,5 @@ export {
   LinkIcon,
   HomeIcon,
   MessengerIcon,
+  PersonIcon,
 };
