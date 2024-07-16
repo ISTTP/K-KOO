@@ -135,7 +135,7 @@ router.get('/cake/color/:userId', async (req, res) => {
   }
 });
 
-router.post('/cake/color', authorize, async (req, res) => {
+router.put('/cake/color', authorize, async (req, res) => {
   const userId = req.userId;
   const { sheetColor, creamColor } = req.body;
 
