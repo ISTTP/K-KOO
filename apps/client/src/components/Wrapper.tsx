@@ -5,8 +5,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  height: 100vh;
+  height: 100%;
   width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
 
 export default Wrapper;
