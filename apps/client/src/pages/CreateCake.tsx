@@ -99,11 +99,15 @@ const CreateCake = () => {
     <Wrapper>
       <h1>케이크 만들기</h1>
       <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
+      <h3>시트</h3>
       <ColorSelector
-        selectedSheet={sheetColor}
-        setSelectedSheet={setSheetColor}
-        selectedCream={creamColor}
-        setSelectedCream={setCreamColor}
+        selectedColor={sheetColor}
+        setSelectedColor={setSheetColor}
+      />
+      <h3>크림</h3>
+      <ColorSelector
+        selectedColor={creamColor}
+        setSelectedColor={setCreamColor}
       />
       <Button type="default" label="케이크 만들기" onClick={handleCreateCake} />
     </Wrapper>

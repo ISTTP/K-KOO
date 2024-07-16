@@ -4,7 +4,7 @@
   "private": true,
   "imports": {
     "#images": "./src/assets/images/index.ts",
-    "#icons/*.tsx": "./src/assets/icons/*.tsx",
+    "#icons": "./src/assets/icons/index.ts",
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
     "#apis/*.ts": "./src/apis/*.ts"
@@ -27,7 +27,8 @@
     "react-window-infinite-loader": "^1.0.9",
     "serve": "^14.2.3",
     "styled-components": "^6.1.11",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
@@ -66,7 +67,6 @@
     "ts-loader": "^9.5.1",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4",
-    "zod": "^3.23.8"
+    "webpack-dev-server": "^5.0.4"
   }
 }
