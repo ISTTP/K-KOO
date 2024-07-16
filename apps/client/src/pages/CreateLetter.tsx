@@ -13,7 +13,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 async function fetchUserInfo() {
   try {
     const res = await axiosInstance.get<UserType>('/user/me');
-    if (res.status !== 200) {
+    if (res.status === 200) {
       return UserType.parse(res.data);
     } else {
       return null;
@@ -47,6 +47,7 @@ async function handleCreateLetter({
     });
 
     LetterResponseType.parse(res.data);
+
     if (res.status === 200) {
       return res.data;
     }
