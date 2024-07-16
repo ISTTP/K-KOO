@@ -3,13 +3,14 @@ import { PrismaClient } from '@isttp/db/all';
 import { getKeyword } from '../service/keyword';
 import { getLetterYearBasedOnBirthday } from '../service/letter';
 import { createLetter } from '../models/letter';
-import { getUser, getUserBirthday } from '../models/user';
+import { getUser, getUserBirthday, addPoint } from '../models/user';
 import { authorize } from '../service/auth';
 import {
   LetterTypeReq,
   LetterRequestType,
   LetterResponseType,
   BirthdayType,
+  UserType,
 } from '@isttp/schemas/all';
 
 const router: Router = Router();
@@ -35,6 +36,10 @@ router.post('/letter', async (req, res) => {
         year,
       }),
     );
+
+    if (senderId !== '') {
+      UserType.parse(await addPoint(senderId, 100));
+    }
 
     res.status(200).json(letter);
   } catch (error) {
