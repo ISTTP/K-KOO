@@ -33,7 +33,7 @@ router.get('/candle/:candleId', async (req, res) => {
   }
 });
 
-router.post('/candle', authorize, async (req, res) => {
+router.post('/candle/purchase', authorize, async (req, res) => {
   const userId = req.userId;
   const { point } = req.body;
 

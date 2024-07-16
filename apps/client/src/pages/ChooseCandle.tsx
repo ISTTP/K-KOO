@@ -111,7 +111,9 @@ const ChooseCandle = () => {
 
   async function handleBuyCandle(point: number) {
     try {
-      const res = await axiosInstance.post<UserType>('/candle', { point });
+      const res = await axiosInstance.post<UserType>('/candle/purchase', {
+        point,
+      });
       UserType.parse(res.data);
 
       if (res.status === 200) {
