@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Wrapper from '#components/Wrapper.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
 import { AxiosError } from 'axios';
-import { CandleType, CandleResponseType, UserType } from '@isttp/schemas/all';
+import { CandleType, CandleResponseType, user } from '@isttp/schemas/all';
 import Modal from '#components/modal/Modal.tsx';
 import Button from '#components/Button.tsx';
 
@@ -111,10 +111,10 @@ const ChooseCandle = () => {
 
   async function handleBuyCandle(point: number) {
     try {
-      const res = await axiosInstance.post<UserType>('/candle/purchase', {
+      const res = await axiosInstance.post<user>('/candle/purchase', {
         point,
       });
-      UserType.parse(res.data);
+      user.parse(res.data);
 
       if (res.status === 200) {
         setUserPoint(res.data.point);

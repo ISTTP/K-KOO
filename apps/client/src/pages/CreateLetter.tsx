@@ -4,7 +4,7 @@ import Button from '#components/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import {
-  UserType,
+  user,
   LetterRequestType,
   LetterResponseType,
 } from '@isttp/schemas/all';
@@ -12,9 +12,9 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 async function fetchUserInfo() {
   try {
-    const res = await axiosInstance.get<UserType>('/user/me');
+    const res = await axiosInstance.get<user>('/user/me');
     if (res.status === 200) {
-      return UserType.parse(res.data);
+      return user.parse(res.data);
     } else {
       return null;
     }

@@ -10,7 +10,7 @@ import {
   LetterRequestType,
   LetterResponseType,
   BirthdayType,
-  UserType,
+  user,
 } from '@isttp/schemas/all';
 
 const router: Router = Router();
@@ -37,7 +37,7 @@ router.post('/letter', async (req, res) => {
     );
 
     if (senderId !== '') {
-      UserType.parse(await addPoint(senderId, 100));
+      user.parse(await addPoint(senderId, 100));
     }
 
     res.status(200).json(letter);

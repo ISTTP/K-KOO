@@ -6,7 +6,7 @@ import Button from '#components/Button.tsx';
 import Modal from '#components/modal/Modal.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
-import { UserType } from '@isttp/schemas/all';
+import { user } from '@isttp/schemas/all';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 import { AxiosError } from 'axios';
 import InnerWrapper from '#components/InnerWrapper.tsx';
@@ -51,7 +51,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
   async function handleCheckLogin() {
     try {
-      const res = await axiosInstance.get<UserType>('/user/me');
+      const res = await axiosInstance.get<user>('/user/me');
       if (res.status === 200) {
         navigate(`/letter/choose/${ownerId}`);
       }
