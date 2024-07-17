@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
@@ -88,11 +89,13 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   return (
     <InnerWrapper>
       <CakeHeader nickname={data.nickname} isMyCake={false} />
-      <CakeInfo
-        year={data.year}
-        sheetColor={cakeColor.sheetColor}
-        creamColor={cakeColor.creamColor}
-      />
+      <CakeInfoWrapper>
+        <CakeInfo
+          year={data.year}
+          sheetColor={cakeColor.sheetColor}
+          creamColor={cakeColor.creamColor}
+        />
+      </CakeInfoWrapper>
       <Button
         type="default"
         label="케이크 꾸며주기"
@@ -134,3 +137,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 };
 
 export default SharedCake;
+
+const CakeInfoWrapper = styled.div`
+  pointer-events: none;
+`;
