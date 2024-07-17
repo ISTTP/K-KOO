@@ -9,6 +9,7 @@ const HeaderContainer = styled.div`
   justify-content: start;
   align-items: start;
   width: 100%;
+  padding-bottom: 20px;
 `;
 
 const TitleContainer = styled.div`
