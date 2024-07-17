@@ -1,53 +1,208 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { user } from '@isttp/schemas/all';
 import { HomeIcon, MessengerIcon } from '#icons';
+import axiosInstance from '#apis/axios.ts';
 import Wrapper from '#components/Wrapper.tsx';
+import InnerWrapper from '#components/InnerWrapper.tsx';
+import * as S from '#styles/MyPageStyle.ts';
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState<user | null>(null);
+  const [nickname, setNickname] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [disableNickname, setDisableNickname] = useState(true);
+  const [disableBirthday, setDisableBirthday] = useState(true);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const res = await axiosInstance.get<user>('/user/me');
+        user.parse(res.data);
+        if (res.status === 200) {
+          setUserInfo(res.data);
+          setNickname(res.data.nickname);
+          setBirthday(res.data.birthday.toString().split('T')[0]);
+        }
+      } catch (error) {
+        alert('로그인이 필요합니다.');
+        navigate('/');
+      }
+    })();
+  }, []);
+
+  async function changeNickname(nickname: string) {
+    try {
+      const res = await axiosInstance.put<user>('/user/me', {
+        nickname,
+      });
+      const data = user.parse(res.data);
+      if (res.status === 200) {
+        alert('닉네임이 변경되었습니다.');
+        setUserInfo(data);
+      }
+    } catch (error) {
+      alert('닉네임 변경에 실패했습니다.');
+    }
+  }
+
+  async function changeBirthday(birthday: string) {
+    try {
+      const res = await axiosInstance.put<user>('/user/me', {
+        birthday: birthday + 'T00:00:00.000Z',
+      });
+      const data = user.parse(res.data);
+      if (res.status === 200) {
+        alert('생일이 변경되었습니다.');
+        setUserInfo(data);
+      }
+    } catch (error) {
+      alert('생일 변경에 실패했습니다.');
+    }
+  }
+
+  async function logout() {
+    try {
+      await axiosInstance.post('/auth/logout');
+      alert('로그아웃 되었습니다.');
+      navigate('/');
+    } catch (error) {
+      alert('로그아웃에 실패했습니다.');
+    }
+  }
+
+  async function signOut() {
+    const res = confirm('정말로 회원탈퇴 하시겠습니까?');
+    if (!res) return;
+    try {
+      await axiosInstance.post('/auth/signout');
+      alert('회원탈퇴 되었습니다.');
+      navigate('/');
+    } catch (error) {
+      alert('회원탈퇴에 실패했습니다.');
+    }
+  }
+
   return (
     <Wrapper>
-      <div>
-        <h1>마이페이지</h1>
-        <button>
-          <HomeIcon width={'2rem'} height={'2rem'} />
-        </button>
-      </div>
+      <InnerWrapper>
+        <S.MyPageHeader>
+          <h1>마이페이지</h1>
+          <S.HomeButton
+            onClick={() => {
+              navigate(`/cake/${userInfo?.userId}`);
+            }}
+          >
+            <HomeIcon width={'2rem'} height={'2rem'} />
+          </S.HomeButton>
+        </S.MyPageHeader>
 
-      <h2>
-        <span>김예린</span>
-        <span>님</span>
-      </h2>
+        <S.NameWrapper>
+          <S.Nickname>{userInfo?.nickname}</S.Nickname>
+          <span>님</span>
+        </S.NameWrapper>
 
-      <div>
-        <div>
-          <MessengerIcon width={'2rem'} height={'2rem'} />
-          <span>내가 작성한 편지함</span>
-        </div>
+        {/* 내가 작성한 편지함 페이지 필요 */}
+        <S.InfoWrapper>
+          <S.MyLetterButton>
+            <MessengerIcon width={'1.5rem'} height={'1.5rem'} />
+            <span>내가 작성한 편지함</span>
+          </S.MyLetterButton>
 
-        <div>
-          <div>P</div>
-          <span>1000 P</span>
-        </div>
-      </div>
+          <S.PointWrapper>
+            <S.PointIcon>P</S.PointIcon>
+            <span>{userInfo?.point} P</span>
+          </S.PointWrapper>
+        </S.InfoWrapper>
 
-      <hr />
+        <S.Hr />
 
-      <div>
-        <h2>닉네임</h2>
-        <button>변경</button>
-      </div>
-      <input type="text" value="김예린" />
+        <S.InfoWrapper>
+          <S.SubTitle>닉네임</S.SubTitle>
+          {disableNickname && (
+            <button
+              onClick={() => {
+                setDisableNickname(false);
+              }}
+            >
+              변경
+            </button>
+          )}
+          {!disableNickname && (
+            <div>
+              <button
+                onClick={async () => {
+                  await changeNickname(nickname);
+                  setDisableNickname(true);
+                }}
+              >
+                확인
+              </button>
+              <button
+                onClick={() => {
+                  setDisableNickname(true);
+                  setNickname(String(userInfo?.nickname));
+                }}
+              >
+                취소
+              </button>
+            </div>
+          )}
+        </S.InfoWrapper>
+        <S.Input
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          disabled={disableNickname}
+        />
 
-      <div>
-        <h2>생일</h2>
-        <button>변경</button>
-      </div>
-      <input type="text" value="1998-01-01" />
-      <input type="date" value="1998-01-01" />
+        <S.InfoWrapper>
+          <S.SubTitle>생일</S.SubTitle>
+          {disableBirthday && (
+            <button
+              onClick={() => {
+                setDisableBirthday(false);
+              }}
+            >
+              변경
+            </button>
+          )}
+          {!disableBirthday && (
+            <div>
+              <button
+                onClick={async () => {
+                  await changeBirthday(birthday);
+                  setDisableBirthday(true);
+                }}
+              >
+                확인
+              </button>
+              <button
+                onClick={() => {
+                  setDisableBirthday(true);
+                  setBirthday(String(userInfo?.birthday).split('T')[0]);
+                }}
+              >
+                취소
+              </button>
+            </div>
+          )}
+        </S.InfoWrapper>
+        <S.Input
+          type="date"
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+          disabled={disableBirthday}
+        />
 
-      <hr />
+        <S.Hr />
 
-      <button>로그아웃</button>
-      <button>회원탈퇴</button>
+        <S.AccountSettingWrapper>
+          <S.AccountButton onClick={logout}>로그아웃</S.AccountButton>
+          <S.AccountButton onClick={signOut}>회원탈퇴</S.AccountButton>
+        </S.AccountSettingWrapper>
+      </InnerWrapper>
     </Wrapper>
   );
 };
