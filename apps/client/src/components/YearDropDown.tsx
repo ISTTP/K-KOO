@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import styled from 'styled-components';
+import { getUserYearRes } from '@isttp/schemas/all';
 
 interface YearDropdownProps {
   year: string;
@@ -13,8 +14,8 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
 
   const getYears = async () => {
     try {
-      const res = await axiosInstance.get('/user/year');
-      const firstYear = res.data;
+      const res = await axiosInstance.get<getUserYearRes>('/user/year');
+      const firstYear = res.data.year;
 
       const maxYear = Number(year);
       const Options = [];

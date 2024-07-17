@@ -16,7 +16,7 @@ router.get('/user/year', authorize, async (req, res) => {
   const data = await getUser(userId);
 
   const startYear = data?.createdAt.getFullYear();
-  res.status(200).json(startYear);
+  res.status(200).json({ year: startYear });
 });
 
 export default router;
