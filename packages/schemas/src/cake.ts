@@ -34,6 +34,11 @@ export const getCakeLettersRes = z.object({
 });
 export type getCakeLettersRes = z.infer<typeof getCakeLettersRes>;
 
+export const getCakeNoDataRes = z.object({
+  noData: z.boolean(),
+});
+export type getCakeNoDataRes = z.infer<typeof getCakeNoDataRes>;
+
 export const getCakeLettersReq = z.object({
   params: z.object({
     userId: z.string(),

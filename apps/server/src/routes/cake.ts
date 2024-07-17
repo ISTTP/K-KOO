@@ -44,25 +44,29 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
       },
     });
 
-    const responseData = letters.map((letter) => {
-      const letterData: CakeTypeResponse = {
-        nickname: letter.nickname,
-        candleImageUrl: letter.candle.imageUrl,
-        letterId: letter.letterId,
-      };
-      if (includeKeyword) {
-        letterData.keyword = letter.keyword;
-      }
-      return letterData;
-    });
+    if (totalCount === 0) {
+      res.status(200).json({ noData: true });
+    } else {
+      const responseData = letters.map((letter) => {
+        const letterData: CakeTypeResponse = {
+          nickname: letter.nickname,
+          candleImageUrl: letter.candle.imageUrl,
+          letterId: letter.letterId,
+        };
+        if (includeKeyword) {
+          letterData.keyword = letter.keyword;
+        }
+        return letterData;
+      });
 
-    res.status(200).json({
-      data: responseData,
-      totalPage: Math.ceil(totalCount / pageSize),
-      currentPage: pageNumber,
-    });
+      res.status(200).json({
+        data: responseData,
+        totalPage: Math.ceil(totalCount / pageSize),
+        currentPage: pageNumber,
+      });
+    }
   } catch (error) {
-    res.status(500).json({ message: `케이크 편지 불러오기 실패 : ${error}` });
+    res.status(500).json({ message: '케이크 편지 불러오기 실패', error });
   }
 });
 
@@ -124,7 +128,7 @@ router.get('/cake/version', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ message: `케이크 버전 구분 실패 : ${error}` });
+    res.status(500).json({ message: '케이크 버전 구분 실패 : ', error });
   }
 });
 
