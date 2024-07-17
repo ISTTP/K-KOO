@@ -34,7 +34,7 @@ const CreateCake = () => {
   async function handleCreateCake() {
     try {
       axiosInstance
-        .post('/cake/color', {
+        .put('/cake/color', {
           sheetColor: sheetColor,
           creamColor: creamColor,
         })

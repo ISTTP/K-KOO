@@ -1,5 +1,4 @@
-import { PrismaClient } from '@isttp/db/all';
-const prisma = new PrismaClient();
+import prisma from '@isttp/db/all';
 
 export async function getCandles() {
   return await prisma.candle.findMany();

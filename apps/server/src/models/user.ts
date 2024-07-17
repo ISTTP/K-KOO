@@ -1,5 +1,4 @@
-import { PrismaClient } from '@isttp/db/all';
-const prisma = new PrismaClient();
+import prisma from '@isttp/db/all';
 
 export async function getUser(userId: string) {
   return await prisma.user.findFirst({

@@ -1,12 +1,10 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
 import { NextFunction, Request, Response } from 'express';
-
-const prisma = new PrismaClient();
 
 export function setAuthCookies(
   res: Response,

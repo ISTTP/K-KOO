@@ -2,7 +2,7 @@ import { getCandles, getCandle } from '../models/candle';
 import { Router } from 'express';
 import { subtractPoint } from '../models/user';
 import { authorize } from '../service/auth';
-import { UserType } from '@isttp/schemas/all';
+import { user } from '@isttp/schemas/all';
 
 const router: Router = Router();
 
@@ -33,13 +33,14 @@ router.get('/candle/:candleId', async (req, res) => {
   }
 });
 
-router.post('/candle', authorize, async (req, res) => {
+router.post('/candle/purchase', authorize, async (req, res) => {
   const userId = req.userId;
   const { point } = req.body;
 
   try {
-    const user = UserType.parse(await subtractPoint(userId, Number(point)));
-    res.status(200).json(user);
+    const updated = await subtractPoint(userId, point);
+    const safe = user.parse(updated);
+    res.status(200).json(safe);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: `장식초 구매 실패: ${error}` });
