@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
@@ -7,6 +8,7 @@ import {
   getPageRes,
   getCakeLettersRes,
   getLetterRes,
+  getCakeNoDataRes,
 } from '@isttp/schemas/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';
@@ -36,13 +38,18 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     const res = await axiosInstance.get<getCakeLettersRes>(
       `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
     );
-    const result = getCakeLettersRes.parse(res.data);
-    setCakeData(result.data);
-    setPageData({
-      currentPage: result.currentPage,
-      totalPage:
-        result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
-    });
+    const noDataResult = getCakeNoDataRes.safeParse(res.data); //정상적으로 data가 있을 경우 error로 작동 멈추지 않도록 safeParse로 처리
+    if (noDataResult.success && noDataResult.data.noData) {
+      setCakeData([]);
+    } else {
+      const result = getCakeLettersRes.parse(res.data);
+      setCakeData(result.data);
+      setPageData({
+        currentPage: result.currentPage,
+        totalPage:
+          result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
+      });
+    }
   }
 
   useEffect(() => {
@@ -84,7 +91,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   }));
 
   return (
-    <div style={{ marginTop: '50px' }}>
+    <CakeContainer>
       <RenderCake
         sheetColor={sheetColor}
         creamColor={creamColor}
@@ -105,8 +112,12 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           candleImageUrl={selectedItem?.candleImageUrl ?? ''}
         />
       )}
-    </div>
+    </CakeContainer>
   );
 };
 
 export default CakeInfo;
+
+const CakeContainer = styled.div`
+  margin-top: 50px;
+`;

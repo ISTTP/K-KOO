@@ -54,7 +54,7 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
           onClick={handleClick ? () => handleClick(index) : undefined}
         >
           <CandleImage src={candle.candleImageUrl} alt="장식초" />
-          <Nickname sheetColor={sheetColor}>{candle.nickname}</Nickname>
+          <Nickname $sheetColor={sheetColor}>{candle.nickname}</Nickname>
         </Candle>
       ))}
     </SvgContainer>
@@ -92,13 +92,13 @@ const CandleImage = styled.img`
   height: 80px;
 `;
 
-const Nickname = styled.p<{ sheetColor: CakeColorType }>`
+const Nickname = styled.p<{ $sheetColor: CakeColorType }>`
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -2px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: ${({ sheetColor }) =>
-    sheetColor === 'white' || sheetColor === 'banana'
+  color: ${({ $sheetColor }) =>
+    $sheetColor === 'white' || $sheetColor === 'banana'
       ? 'var(--black-color)'
       : 'var(--white-color)'};
 `;
