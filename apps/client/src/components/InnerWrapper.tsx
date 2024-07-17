@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,6 +9,10 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
+
+  @media (min-width: 450px) {
+    width: 450px;
+  }
 `;
 
-export default Wrapper;
+export default InnerWrapper;

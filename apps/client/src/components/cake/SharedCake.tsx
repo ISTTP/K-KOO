@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import Modal from '#components/modal/Modal.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
-import { UserType } from '@isttp/schemas/all';
+import CakeHeader from '#components/cake/CakeHeader.tsx';
+import { user } from '@isttp/schemas/all';
 import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
 import { AxiosError } from 'axios';
+import InnerWrapper from '#components/InnerWrapper.tsx';
 
 interface MyCakeProps {
   ownerId: string;
@@ -50,7 +51,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
   async function handleCheckLogin() {
     try {
-      const res = await axiosInstance.get<UserType>('/user/me');
+      const res = await axiosInstance.get<user>('/user/me');
       if (res.status === 200) {
         navigate(`/letter/choose/${ownerId}`);
       }
@@ -85,9 +86,8 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   }, [ownerId]);
 
   return (
-    <Wrapper>
-      <h3>{data.nickname} 님의 케이크</h3>
-      <p>친구의 케이크를 꾸며보세요!</p>
+    <InnerWrapper>
+      <CakeHeader nickname={data.nickname} isMyCake={false} />
       <CakeInfo
         year={data.year}
         sheetColor={cakeColor.sheetColor}
@@ -129,7 +129,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         />
       </Modal>
       <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
-    </Wrapper>
+    </InnerWrapper>
   );
 };
 
