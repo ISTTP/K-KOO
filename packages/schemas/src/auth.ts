@@ -22,8 +22,3 @@ export const BirthdayType = z.object({
 });
 
 export type BirthdayType = z.infer<typeof BirthdayType>;
-
-export const getUserYearRes = z.object({
-  year: z.number(),
-});
-export type getUserYearRes = z.infer<typeof getUserYearRes>;
