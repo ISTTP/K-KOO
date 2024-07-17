@@ -21,7 +21,7 @@ const ReadLetter: React.FC<LetterProps> = ({
   return (
     <Container>
       <Content>
-        <img style={{ width: '30px' }} src={candleImageUrl} alt="장식초" />
+        <CandleImg src={candleImageUrl} alt="장식초" />
         <p>From. {nickname}</p>
         <p>{contents}</p>
         <button onClick={handleClose}>닫기</button>
@@ -51,4 +51,7 @@ const Content = styled.div`
   width: 100%;
 `;
 
+const CandleImg = styled.img`
+  width: 30px;
+`;
 export default ReadLetter;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
@@ -84,7 +85,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   }));
 
   return (
-    <div style={{ marginTop: '50px' }}>
+    <CakeContainer>
       <RenderCake
         sheetColor={sheetColor}
         creamColor={creamColor}
@@ -105,8 +106,12 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           candleImageUrl={selectedItem?.candleImageUrl ?? ''}
         />
       )}
-    </div>
+    </CakeContainer>
   );
 };
 
 export default CakeInfo;
+
+const CakeContainer = styled.div`
+  margin-top: 50px;
+`;

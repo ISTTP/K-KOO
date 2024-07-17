@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface PageProps {
   currentPage: number;
@@ -12,8 +13,8 @@ const Pagenation: React.FC<PageProps> = ({
   changePage,
 }) => {
   return (
-    <div style={{ marginTop: '20px', textAlign: 'center' }}>
-      <p>
+    <PageContainer>
+      <div>
         <button
           onClick={() => changePage(currentPage - 1)}
           disabled={currentPage === 1}
@@ -30,9 +31,14 @@ const Pagenation: React.FC<PageProps> = ({
         >
           &gt;
         </button>
-      </p>
-    </div>
+      </div>
+    </PageContainer>
   );
 };
 
 export default Pagenation;
+
+const PageContainer = styled.div`
+  margin-top: 20px;
+  text-align: center;
+`;
