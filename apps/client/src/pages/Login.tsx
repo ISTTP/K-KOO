@@ -26,7 +26,7 @@ const Login = () => {
           navigate(`/cake/${res.data.userId}`);
         }
       } catch (error) {
-        console.log(error);
+        alert('자동 로그인에 실패했습니다.');
       }
     }
 

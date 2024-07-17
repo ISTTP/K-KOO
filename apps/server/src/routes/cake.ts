@@ -137,7 +137,6 @@ router.get('/cake/color/:userId', async (req, res) => {
     const { sheetColor, creamColor } = await getCakeColor(userId);
     res.status(200).json({ sheetColor, creamColor });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `색상 정보 조회 실패: ${error}` });
   }
 });
@@ -161,7 +160,6 @@ router.put('/cake/color', authorize, async (req, res) => {
     const updated = await setCakeColor({ userId, sheetColor, creamColor });
     res.status(200).json(updated);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `색상 정보 수정 실패: ${error}` });
   }
 });

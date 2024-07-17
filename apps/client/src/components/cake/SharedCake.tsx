@@ -45,7 +45,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         creamColor: res.data.creamColor,
       });
     } catch (error) {
-      console.log(error);
+      alert('색상 정보를 불러오는데 실패했습니다.');
     }
   }
 

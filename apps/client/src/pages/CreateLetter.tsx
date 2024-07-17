@@ -19,12 +19,11 @@ async function fetchUserInfo() {
       return null;
     }
   } catch (error) {
-    console.log(error);
     if (error instanceof AxiosError) {
       if (error.response?.status === 401) {
         return null;
       } else {
-        throw new Error(`${error}`);
+        throw new Error(String(error));
       }
     }
   }
@@ -52,8 +51,7 @@ async function handleCreateLetter({
       return res.data;
     }
   } catch (error) {
-    console.log(error);
-    throw new Error(`${error}`);
+    throw new Error(String(error));
   }
 }
 
@@ -112,7 +110,6 @@ const CreateLetter = () => {
             navigate(`/cake/${ownerId}`);
           } else {
             alert('편지 보내기에 실패했습니다.');
-            console.error(result);
           }
         }}
       />

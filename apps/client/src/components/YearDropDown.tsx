@@ -24,7 +24,7 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
       }
       setYears(Options);
     } catch (error) {
-      console.error('회원가입 연도 정보를 받아오지 못했습니다', error);
+      alert('회원가입 연도 정보를 받아오지 못했습니다' + String(error));
     }
   };
 
