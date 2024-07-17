@@ -20,12 +20,12 @@ const ColorOption = styled.div<{ $color: string; selected: boolean }>`
   border-radius: 50%;
   background-color: var(--${(props) => props.$color}-color);
   border: ${(props) =>
-    props.selected ? '5px solid #FF7043' : '5px solid transparent'};
+    props.selected ? '5px solid var(--orange-color)' : '5px solid transparent'};
   cursor: pointer;
   transition: border 0.3s;
 
   &:hover {
-    border: 5px solid #ff7043;
+    border: 5px solid var(--light-orange-color);
   }
 `;
 
