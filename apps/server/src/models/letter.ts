@@ -1,7 +1,5 @@
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { LetterType } from '@isttp/types/all';
-
-const prisma = new PrismaClient();
 
 export async function createLetter({
   senderId,

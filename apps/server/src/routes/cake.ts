@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { getCakeColor, setCakeColor } from '../service/cake';
 import { checkCakeColorType } from '@isttp/utils/all';
 import { verifyToken, decodeToken } from '@isttp/utils/all';
@@ -9,7 +9,6 @@ import { CakeVerTypeReq, LettersTypeReq } from '@isttp/schemas/all';
 import { CakeTypeResponse } from '@isttp/types/all';
 
 const router: Router = Router();
-const prisma = new PrismaClient();
 
 router.get('/cake/letters/:userId/:year/', async (req, res) => {
   const result = LettersTypeReq.parse(req);

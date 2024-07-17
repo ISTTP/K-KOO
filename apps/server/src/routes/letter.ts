@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { getKeyword } from '../service/keyword';
 import { getLetterYearBasedOnBirthday } from '../service/letter';
 import { createLetter } from '../models/letter';
@@ -14,7 +14,6 @@ import {
 } from '@isttp/schemas/all';
 
 const router: Router = Router();
-const prisma = new PrismaClient();
 
 router.post('/letter', async (req, res) => {
   try {
