@@ -35,19 +35,19 @@ export const LetterResponseType = z.object({
 
 export type LetterResponseType = z.infer<typeof LetterResponseType>;
 
-export const LetterTypeReq = z.object({
+export const getLetterReq = z.object({
   params: z.object({
-    letterId: z.string(),
+    letterId: z.coerce.number(),
   }),
 });
 
-export type LetterTypeReq = z.infer<typeof LetterTypeReq>;
+export type getLetterReq = z.infer<typeof getLetterReq>;
 
-export const LetterTypeResponse = z.object({
+export const getLetterRes = z.object({
   isOpen: z.boolean(),
   nickname: z.string().optional(),
   candleImageUrl: z.string().optional(),
   contents: z.string().optional(),
 });
 
-export type LetterTypeResponse = z.infer<typeof LetterTypeResponse>;
+export type getLetterRes = z.infer<typeof getLetterRes>;

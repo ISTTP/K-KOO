@@ -1,56 +1,56 @@
 import { z } from 'zod';
 
-export const CakeUserTypeResponse = z.object({
+export const getCakeVerDataRes = z.object({
   nickname: z.string(),
   year: z.string(),
 });
-export type CakeUserTypeResponse = z.infer<typeof CakeUserTypeResponse>;
+export type getCakeVerDataRes = z.infer<typeof getCakeVerDataRes>;
 
-export const CakeUserResponse = z.object({
-  data: CakeUserTypeResponse,
+export const getCakeVerRes = z.object({
+  data: getCakeVerDataRes,
   userId: z.string().nullable(),
 });
 
-export type CakeUserResponse = z.infer<typeof CakeUserResponse>;
+export type getCakeVerRes = z.infer<typeof getCakeVerRes>;
 
-export const CakeTypeResponse = z.object({
+export const getCakeDataRes = z.object({
   nickname: z.string(),
   candleImageUrl: z.string(),
   keyword: z.string().optional(),
   letterId: z.number(),
 });
-export type CakeTypeResponse = z.infer<typeof CakeTypeResponse>;
+export type getCakeDataRes = z.infer<typeof getCakeDataRes>;
 
-export const PageTypeResponse = z.object({
+export const getPageRes = z.object({
   currentPage: z.number(),
   totalPage: z.number(),
 });
-export type PageTypeResponse = z.infer<typeof PageTypeResponse>;
+export type getPageRes = z.infer<typeof getPageRes>;
 
-export const LettersResponse = z.object({
-  data: z.array(CakeTypeResponse),
+export const getCakeLettersRes = z.object({
+  data: z.array(getCakeDataRes),
   currentPage: z.number(),
   totalPage: z.number(),
 });
-export type LettersResponse = z.infer<typeof LettersResponse>;
+export type getCakeLettersRes = z.infer<typeof getCakeLettersRes>;
 
-export const LettersTypeReq = z.object({
+export const getCakeLettersReq = z.object({
   params: z.object({
     userId: z.string(),
-    year: z.string(),
+    year: z.coerce.number(),
   }),
   query: z.object({
     keyword: z.string().optional(),
-    page: z.string().optional(),
+    page: z.coerce.number().optional(),
   }),
 });
 
-export type LettersTypeReq = z.infer<typeof LettersTypeReq>;
+export type getCakeLettersReq = z.infer<typeof getCakeLettersReq>;
 
-export const CakeVerTypeReq = z.object({
+export const getCakeVerReq = z.object({
   query: z.object({
     cakeUserId: z.string(),
   }),
 });
 
-export type CakeVerTypeReq = z.infer<typeof CakeVerTypeReq>;
+export type getCakeVerReq = z.infer<typeof getCakeVerReq>;

@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
 import {
-  CakeTypeResponse,
-  PageTypeResponse,
-  LettersResponse,
-  LetterTypeResponse,
+  getCakeDataRes,
+  getPageRes,
+  getCakeLettersRes,
+  getLetterRes,
 } from '@isttp/schemas/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';
@@ -23,22 +23,20 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   sheetColor,
   creamColor,
 }) => {
-  const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  const [pageData, setPageData] = useState<PageTypeResponse>({
+  const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
+  const [pageData, setPageData] = useState<getPageRes>({
     currentPage: 1,
     totalPage: 1,
   });
-  const [selectedItem, setSelectedItem] = useState<LetterTypeResponse | null>(
-    null,
-  );
+  const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
 
   const { ownerId } = useParams();
 
   async function getLetters(page: number) {
-    const res = await axiosInstance.get<LettersResponse>(
+    const res = await axiosInstance.get<getCakeLettersRes>(
       `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
     );
-    const result = LettersResponse.parse(res.data);
+    const result = getCakeLettersRes.parse(res.data);
     setCakeData(result.data);
     setPageData({
       currentPage: result.currentPage,
@@ -57,10 +55,10 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
 
   const openLetter = async (index: number) => {
     const item = cakeData[index];
-    const res = await axiosInstance.get<LetterTypeResponse>(
+    const res = await axiosInstance.get<getLetterRes>(
       `/letter/${item.letterId}`,
     );
-    const result = LetterTypeResponse.parse(res.data);
+    const result = getLetterRes.parse(res.data);
 
     if (result.isOpen) {
       setSelectedItem(result);
@@ -102,9 +100,9 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
         <ReadLetter
           isOpen={!!selectedItem}
           handleClose={() => setSelectedItem(null)}
-          nickname={selectedItem?.nickname || ''}
-          contents={selectedItem?.contents || ''}
-          candleImageUrl={selectedItem?.candleImageUrl || ''}
+          nickname={selectedItem?.nickname ?? ''}
+          contents={selectedItem?.contents ?? ''}
+          candleImageUrl={selectedItem?.candleImageUrl ?? ''}
         />
       )}
     </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import {
-  CakeTypeResponse,
-  LettersResponse,
-  LetterTypeResponse,
+  getCakeDataRes,
+  getCakeLettersRes,
+  getLetterRes,
 } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 import * as G from '#components/GridStyle.tsx';
@@ -16,20 +16,20 @@ interface yearProp {
 }
 
 const GridInfo: React.FC<yearProp> = ({ year }) => {
-  const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
+  const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { ownerId } = useParams();
-  const [selectedItem, setSelectedItem] = useState<LetterTypeResponse | null>(
-    null,
-  );
+  const GRID_PAGE = 24;
+  const COLUMN_NUM = 3;
+  const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
 
   async function getLetters(page: number) {
-    const res = await axiosInstance.get<LettersResponse>(
+    const res = await axiosInstance.get<getCakeLettersRes>(
       `/cake/letters/${ownerId}/${year}?keyword=true&page=${page}`,
     );
-    const result = LettersResponse.parse(res.data);
-    if (result.data.length < 24) {
+    const result = getCakeLettersRes.parse(res.data);
+    if (result.data.length < GRID_PAGE) {
       setHasMore(false);
     }
     setCakeData((prev) => [...prev, ...result.data]);
@@ -49,10 +49,10 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
 
   const openLetter = async (index: number) => {
     const item = cakeData[index];
-    const res = await axiosInstance.get<LetterTypeResponse>(
+    const res = await axiosInstance.get<getLetterRes>(
       `/letter/${item.letterId}`,
     );
-    const result = LetterTypeResponse.parse(res.data);
+    const result = getLetterRes.parse(res.data);
 
     if (result.isOpen) {
       setSelectedItem(result);
@@ -69,12 +69,11 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
     rowIndex: number;
     style: CSSProperties;
   }) => {
-    const index = rowIndex * 3 + columnIndex;
+    const index = rowIndex * COLUMN_NUM + columnIndex;
     if (index >= cakeData.length) return null;
 
     const item = cakeData[index];
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         className={
           columnIndex % 2
@@ -121,12 +120,12 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
               overscanRowStopIndex,
             } = gridData;
 
-            if (visibleRowStopIndex >= cakeData.length / 3 - 1) {
+            if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 1) {
               onItemsRendered({
-                visibleStartIndex: visibleRowStartIndex * 3,
-                visibleStopIndex: visibleRowStopIndex * 3,
-                overscanStartIndex: overscanRowStartIndex * 3 + 2,
-                overscanStopIndex: overscanRowStopIndex * 3,
+                visibleStartIndex: visibleRowStartIndex * COLUMN_NUM,
+                visibleStopIndex: visibleRowStopIndex * COLUMN_NUM,
+                overscanStartIndex: overscanRowStartIndex * COLUMN_NUM + 2,
+                overscanStopIndex: overscanRowStopIndex * COLUMN_NUM,
               });
             }
           };
@@ -134,10 +133,10 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
           return (
             <Grid
               style={{ scrollbarWidth: 'none' }}
-              columnCount={3}
+              columnCount={COLUMN_NUM}
               columnWidth={100}
               height={500}
-              rowCount={Math.ceil(cakeData.length / 3)}
+              rowCount={Math.ceil(cakeData.length / COLUMN_NUM)}
               rowHeight={150}
               width={300}
               onItemsRendered={newItemsRendered}
@@ -151,9 +150,9 @@ const GridInfo: React.FC<yearProp> = ({ year }) => {
       <ReadLetter
         isOpen={!!selectedItem}
         handleClose={() => setSelectedItem(null)}
-        nickname={selectedItem?.nickname || ''}
-        contents={selectedItem?.contents || ''}
-        candleImageUrl={selectedItem?.candleImageUrl || ''}
+        nickname={selectedItem?.nickname ?? ''}
+        contents={selectedItem?.contents ?? ''}
+        candleImageUrl={selectedItem?.candleImageUrl ?? ''}
       />
     </>
   );

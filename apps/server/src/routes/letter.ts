@@ -6,7 +6,7 @@ import { createLetter } from '../models/letter';
 import { getUser, getUserBirthday, addPoint } from '../models/user';
 import { authorize } from '../service/auth';
 import {
-  LetterTypeReq,
+  getLetterReq,
   LetterRequestType,
   LetterResponseType,
   BirthdayType,
@@ -50,14 +50,14 @@ router.post('/letter', async (req, res) => {
 
 router.get('/letter/:letterId', authorize, async (req, res) => {
   const userId = req.userId;
-  const result = LetterTypeReq.parse(req);
-  const letterId = Number(result.params.letterId);
+  const result = getLetterReq.parse(req);
+  const letterId = result.params.letterId;
 
   try {
     const userData = await getUser(userId);
 
     const today = new Date();
-    const birthday = new Date(userData!.birthday);
+    const birthday = userData!.birthday;
 
     const thisYearBday = new Date(
       today.getFullYear(),
@@ -78,7 +78,7 @@ router.get('/letter/:letterId', authorize, async (req, res) => {
       return res.status(500).json({ message: '편지가 존재하지 않습니다' });
     }
 
-    const createdAt = new Date(letter.createdAt);
+    const createdAt = letter.createdAt;
 
     if (createdAt <= thisYearBday) {
       return res.status(200).json({
