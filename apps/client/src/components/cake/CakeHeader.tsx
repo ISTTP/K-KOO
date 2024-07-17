@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { PersonIcon } from '#icons';
 
 const HeaderContainer = styled.div`
@@ -59,6 +60,7 @@ const CakeHeader = ({
   nickname: string;
   isMyCake: boolean;
 }) => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <TitleContainer>
@@ -67,7 +69,11 @@ const CakeHeader = ({
           <span>님의 케이크</span>
         </Title>
         {isMyCake && (
-          <MyPageButton>
+          <MyPageButton
+            onClick={() => {
+              navigate('/mypage');
+            }}
+          >
             <PersonIcon width={'100%'} height={'100%'} />
           </MyPageButton>
         )}
