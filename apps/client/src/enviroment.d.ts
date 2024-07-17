@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      [key: string]: string;
+      SERVER_URL: string;
     }
   }
 }
