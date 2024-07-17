@@ -3,19 +3,19 @@ import Wrapper from '#components/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
-import { CakeUserResponse, CakeUserTypeResponse } from '@isttp/schemas/all';
+import { getCakeVerRes, getCakeVerDataRes } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 
 const Cake = () => {
   const { ownerId } = useParams();
   const [isMyCake, setIsMyCake] = useState(false);
-  const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
+  const [cakeUserData, setCakeUserData] = useState<getCakeVerDataRes>();
 
   async function chooseVersion(ownerId: string) {
-    const res = await axiosInstance.get<CakeUserResponse>(
+    const res = await axiosInstance.get<getCakeVerRes>(
       `cake/version?cakeUserId=${ownerId}`,
     );
-    const result = CakeUserResponse.parse(res.data);
+    const result = getCakeVerRes.parse(res.data);
     setCakeUserData(result.data);
 
     if (result.userId === ownerId) {

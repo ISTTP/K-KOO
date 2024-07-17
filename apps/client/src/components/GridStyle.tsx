@@ -29,3 +29,10 @@ export const Keyword = styled.p`
   margin: 0;
   color: var(--black-color);
 `;
+
+export const NoDataText = styled.p`
+  font-size: 18px;
+  padding: 30px;
+  margin: 0;
+  color: var(--black-color);
+`;

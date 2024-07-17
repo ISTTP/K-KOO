@@ -25,4 +25,12 @@ router.put('/user/me', authorize, async (req, res) => {
   }
 });
 
+router.get('/user/year', authorize, async (req, res) => {
+  const userId = req.userId;
+  const data = await getUser(userId);
+
+  const startYear = data?.createdAt.getFullYear();
+  res.status(200).json({ year: startYear });
+});
+
 export default router;

@@ -5,18 +5,21 @@ import { checkCakeColorType } from '@isttp/utils/all';
 import { verifyToken, decodeToken } from '@isttp/utils/all';
 import { Router } from 'express';
 import { authorize } from '../service/auth';
-import { CakeVerTypeReq, LettersTypeReq } from '@isttp/schemas/all';
+import { getCakeVerReq, getCakeLettersReq } from '@isttp/schemas/all';
 import { CakeTypeResponse } from '@isttp/types/all';
 
 const router: Router = Router();
 
 router.get('/cake/letters/:userId/:year/', async (req, res) => {
-  const result = LettersTypeReq.parse(req);
+  const CAKE_PAGE = 7;
+  const GRID_PAGE = 24;
+
+  const result = getCakeLettersReq.parse(req);
   const userId = result.params.userId;
-  const year = Number(result.params.year);
+  const year = result.params.year;
   const keyword = result.query.keyword;
-  const page = Number(result.query.page);
-  const pageSize = keyword === 'true' ? 24 : 7;
+  const page = result.query.page;
+  const pageSize = keyword === 'true' ? GRID_PAGE : CAKE_PAGE;
   const pageNumber = page ? page : 1;
   const includeKeyword = keyword === 'true' ? true : false;
 
@@ -40,31 +43,35 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
       },
     });
 
-    const responseData = letters.map((letter) => {
-      const letterData: CakeTypeResponse = {
-        nickname: letter.nickname,
-        candleImageUrl: letter.candle.imageUrl,
-        letterId: letter.letterId,
-      };
-      if (includeKeyword) {
-        letterData.keyword = letter.keyword;
-      }
-      return letterData;
-    });
+    if (totalCount === 0) {
+      res.status(200).json({ noData: true });
+    } else {
+      const responseData = letters.map((letter) => {
+        const letterData: CakeTypeResponse = {
+          nickname: letter.nickname,
+          candleImageUrl: letter.candle.imageUrl,
+          letterId: letter.letterId,
+        };
+        if (includeKeyword) {
+          letterData.keyword = letter.keyword;
+        }
+        return letterData;
+      });
 
-    res.status(200).json({
-      data: responseData,
-      totalPage: Math.ceil(totalCount / pageSize),
-      currentPage: pageNumber,
-    });
+      res.status(200).json({
+        data: responseData,
+        totalPage: Math.ceil(totalCount / pageSize),
+        currentPage: pageNumber,
+      });
+    }
   } catch (error) {
-    res.status(500).json({ message: `케이크 편지 불러오기 실패 : ${error}` });
+    res.status(500).json({ message: '케이크 편지 불러오기 실패', error });
   }
 });
 
 router.get('/cake/version', async (req, res) => {
   const accessToken = req.cookies.ACT;
-  const result = CakeVerTypeReq.parse(req);
+  const result = getCakeVerReq.parse(req);
   const cakeUserId = result.query.cakeUserId;
 
   try {
@@ -79,8 +86,9 @@ router.get('/cake/version', async (req, res) => {
         message: '케이크의 주인이 없습니다.',
       });
     }
+
     const today = new Date();
-    const birthday = new Date(cakeUserData.birthday);
+    const birthday = cakeUserData.birthday;
     const thisYearBdayAfter30 = new Date(
       today.getFullYear(),
       birthday.getMonth(),
@@ -119,7 +127,7 @@ router.get('/cake/version', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ message: `케이크 버전 구분 실패 : ${error}` });
+    res.status(500).json({ message: '케이크 버전 구분 실패 : ', error });
   }
 });
 

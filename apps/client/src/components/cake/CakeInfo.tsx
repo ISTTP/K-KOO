@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
 import {
-  CakeTypeResponse,
-  PageTypeResponse,
-  LettersResponse,
+  getCakeDataRes,
+  getPageRes,
+  getCakeLettersRes,
+  getLetterRes,
 } from '@isttp/schemas/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/RenderCake.tsx';
+import ReadLetter from '#components/letter/ReadLetter.tsx';
 
 interface CakeInfoProps {
   year: string;
@@ -21,19 +23,20 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   sheetColor,
   creamColor,
 }) => {
-  const [cakeData, setCakeData] = useState<CakeTypeResponse[]>([]);
-  const [pageData, setPageData] = useState<PageTypeResponse>({
+  const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
+  const [pageData, setPageData] = useState<getPageRes>({
     currentPage: 1,
     totalPage: 1,
   });
+  const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
 
   const { ownerId } = useParams();
 
   async function getLetters(page: number) {
-    const res = await axiosInstance.get<LettersResponse>(
+    const res = await axiosInstance.get<getCakeLettersRes>(
       `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
     );
-    const result = LettersResponse.parse(res.data);
+    const result = getCakeLettersRes.parse(res.data);
     setCakeData(result.data);
     setPageData({
       currentPage: result.currentPage,
@@ -50,27 +53,59 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     getLetters(page);
   }
 
+  const openLetter = async (index: number) => {
+    const item = cakeData[index];
+    const res = await axiosInstance.get<getLetterRes>(
+      `/letter/${item.letterId}`,
+    );
+    const result = getLetterRes.parse(res.data);
+
+    if (result.isOpen) {
+      setSelectedItem(result);
+    } else {
+      alert('편지는 생일 이후에 확인할 수 있어요.');
+    }
+  };
+
+  const candlePositions = [
+    { top: 5, left: 35 },
+    { top: 5, left: 65 },
+    { top: 35, left: 30 },
+    { top: 35, left: 70 },
+    { top: 65, left: 15 },
+    { top: 65, left: 50 },
+    { top: 65, left: 85 },
+  ];
+
+  const candles = cakeData.map((cake, index) => ({
+    candleImageUrl: cake.candleImageUrl,
+    nickname: cake.nickname,
+    position: candlePositions[index % candlePositions.length],
+  }));
+
   return (
-    <>
-      <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {cakeData.map((cake, index) => (
-          <div key={index} style={{ margin: '10px', textAlign: 'center' }}>
-            <img
-              src={cake.candleImageUrl}
-              alt={'장식초'}
-              style={{ width: '100px', height: '100px' }}
-            />
-            <p>{cake.nickname}</p>
-          </div>
-        ))}
-      </div>
+    <div style={{ marginTop: '50px' }}>
+      <RenderCake
+        sheetColor={sheetColor}
+        creamColor={creamColor}
+        candles={candles}
+        handleClick={openLetter}
+      />
       <Pagenation
         currentPage={pageData.currentPage}
         totalPage={pageData.totalPage}
         changePage={changePage}
       />
-    </>
+      {selectedItem && (
+        <ReadLetter
+          isOpen={!!selectedItem}
+          handleClose={() => setSelectedItem(null)}
+          nickname={selectedItem?.nickname ?? ''}
+          contents={selectedItem?.contents ?? ''}
+          candleImageUrl={selectedItem?.candleImageUrl ?? ''}
+        />
+      )}
+    </div>
   );
 };
 
