@@ -36,7 +36,7 @@ const Container = styled.div`
   left: 0;
   width: 100dvw;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +44,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  background-color: white;
+  background: var(--white-color);
   padding: 20px;
   border-radius: 8px;
   max-width: 240px;
