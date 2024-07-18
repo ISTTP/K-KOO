@@ -1,17 +1,11 @@
 import { z } from 'zod';
 
-export const getCakeVerDataRes = z.object({
+export const getCakeRes = z.object({
   nickname: z.string(),
   year: z.string(),
 });
-export type getCakeVerDataRes = z.infer<typeof getCakeVerDataRes>;
 
-export const getCakeVerRes = z.object({
-  data: getCakeVerDataRes,
-  userId: z.string().nullable(),
-});
-
-export type getCakeVerRes = z.infer<typeof getCakeVerRes>;
+export type getCakeRes = z.infer<typeof getCakeRes>;
 
 export const getCakeDataRes = z.object({
   nickname: z.string(),
