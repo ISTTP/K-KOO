@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
+import { AxiosError } from 'axios';
 
 async function handleKakaoLogin() {
   const res = await axiosInstance.get('/auth/kakao/url');
@@ -26,7 +27,11 @@ const Login = () => {
           navigate(`/cake/${res.data.userId}`);
         }
       } catch (error) {
-        alert('자동 로그인에 실패했습니다.');
+        if (error instanceof AxiosError) {
+          if (error.status === 500) {
+            alert('오류가 발생했습니다, 새로고침 해주세요.');
+          }
+        }
       }
     }
 
