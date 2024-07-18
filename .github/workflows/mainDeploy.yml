@@ -38,7 +38,7 @@ jobs:
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
           KAKAO_JAVASCRIPT_KEY: ${{ secrets.KAKAO_JAVASCRIPT_KEY }}
-
+          
       - name: build
         run: pnpm turbo run build
 
