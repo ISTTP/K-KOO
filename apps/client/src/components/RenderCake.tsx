@@ -40,9 +40,9 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
   handleClick,
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
-  sheetColor = creamColor ?? 'white';
+  creamColor = creamColor ?? 'white';
   const SheetComponent = SheetSVG[sheetColor];
-  const CreamComponent = CreamSVG[sheetColor];
+  const CreamComponent = CreamSVG[creamColor];
 
   return (
     <SvgContainer>
