@@ -39,7 +39,7 @@ const SignUp = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.error(error.response?.data.message);
+        alert('회원가입에 실패했습니다.');
       }
     }
   }

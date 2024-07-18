@@ -32,6 +32,7 @@
     "@isttp/types": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
     "@isttp/utils": "workspace:*",
+    "@isttp/schemas": "workspace:*",
     "@types/body-parser": "^1.19.5",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",

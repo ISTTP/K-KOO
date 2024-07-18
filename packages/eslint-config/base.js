@@ -18,7 +18,7 @@ module.exports = {
       "error",
       {
         selector: "typeAlias",  // 타입선언
-        format: ["PascalCase"],
+        format: ["camelCase", "PascalCase"],
       },
       {
         selector: "memberLike",  // Property 멤버

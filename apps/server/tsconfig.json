@@ -15,6 +15,9 @@
   ],
   "references": [
     {
+      "path": "../../packages/schemas"
+    },
+    {
       "path": "../../packages/database"
     },
     {

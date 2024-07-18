@@ -1,20 +1,19 @@
 import 'dotenv/config';
 import qs from 'qs';
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { Router } from 'express';
 import { generateAccessToken, generateRefreshToken } from '@isttp/utils/all';
 import {
-  updateRefreshToken,
   setAuthCookies,
   checkUser,
   handleLogin,
   getGoogleAccessToken,
   getKakaoAccessToken,
   getSocialUid,
+  authorize,
 } from '../service/auth';
 
 const router: Router = Router();
-const prisma = new PrismaClient();
 
 /* 회원가입 API */
 router.post('/auth/signup', async (req, res) => {
@@ -39,7 +38,6 @@ router.post('/auth/signup', async (req, res) => {
     const accessToken = generateAccessToken(user.userId);
     const refreshToken = generateRefreshToken();
 
-    updateRefreshToken(user.userId, refreshToken);
     setAuthCookies(res, accessToken, refreshToken);
 
     res.status(200).json({
@@ -47,7 +45,6 @@ router.post('/auth/signup', async (req, res) => {
       userId: user.userId,
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: `회원가입 실패 : ${error}` });
   }
 });
@@ -79,7 +76,6 @@ router.post('/auth/google/login', async (req, res) => {
 
     handleLogin(userId, res, 'google', googleId);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: '구글 로그인 실패 : ' + error });
   }
 });
@@ -113,8 +109,37 @@ router.post('/auth/kakao/login', async (req, res) => {
 
     handleLogin(userId, res, 'kakao', kakaoId);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: '카카오 로그인 실패 : ' + error });
+  }
+});
+
+router.post('/auth/logout', authorize, (_, res) => {
+  res.clearCookie('ACT');
+  res.clearCookie('RFT');
+  res.status(200).json({ message: '로그아웃 되었습니다.' });
+});
+
+router.post('/auth/signout', authorize, async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    await prisma.letter.deleteMany({
+      where: {
+        recipientId: userId,
+      },
+    });
+
+    await prisma.user.delete({
+      where: {
+        userId,
+      },
+    });
+
+    res.clearCookie('ACT');
+    res.clearCookie('RFT');
+    res.status(200).json({ message: '탈퇴 처리 되었습니다.' });
+  } catch (error) {
+    res.status(500).json({ message: `탈퇴 처리 실패 : ${error}` });
   }
 });
 

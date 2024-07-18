@@ -23,16 +23,15 @@ model User {
   loginType       String // 로그인 타입
   sheetColor      String? // 시트 색깔 (선택적)
   creamColor      String? // 크림 색깔 (선택적)
-  refreshToken    String? // 리프레시 토큰 (선택적)
   createdAt       DateTime @default(now()) // 생성 날짜
   updatedAt       DateTime @updatedAt // 수정 날짜
-  sentLetters     Letter[] @relation("SentLetters") // 발신 편지들과의 관계
+  fcmToken        String? //fcm device token
   receivedLetters Letter[] @relation("ReceivedLetters") // 수신한 편지들과의 관계
 }
 
 model Letter {
   letterId    Int      @id @default(autoincrement()) // 편지 아이디 (기본키)
-  senderId    String // 발신자 유저 아이디 (외래키)
+  senderId    String? // 발신자 유저 아이디 (선택적)
   recipientId String // 수신자 유저 아이디 (외래키)
   candleId    Int // 촛불 타입 (외래키)
   nickname    String // 닉네임
@@ -40,7 +39,6 @@ model Letter {
   keyword     String // 키워드
   year        Int // 연도
   createdAt   DateTime @default(now()) // 생성 날짜
-  sender      User     @relation("SentLetters", fields: [senderId], references: [userId]) // 발신자와의 관계
   recipient   User     @relation("ReceivedLetters", fields: [recipientId], references: [userId]) // 수신자와의 관계
   candle      Candle   @relation("CandleLetters", fields: [candleId], references: [candleId]) // 촛불 타입과의 관계
 }

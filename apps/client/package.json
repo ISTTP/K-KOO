@@ -4,10 +4,11 @@
   "private": true,
   "imports": {
     "#images": "./src/assets/images/index.ts",
-    "#icons/*.tsx": "./src/assets/icons/*.tsx",
+    "#icons": "./src/assets/icons/index.ts",
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
-    "#apis/*.ts": "./src/apis/*.ts"
+    "#apis/*.ts": "./src/apis/*.ts",
+    "#styles/*.ts": "./src/styles/*.ts"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
@@ -23,9 +24,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.24.0",
+    "react-window": "^1.8.10",
+    "react-window-infinite-loader": "^1.0.9",
     "serve": "^14.2.3",
     "styled-components": "^6.1.11",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
@@ -34,12 +38,13 @@
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
     "@babel/runtime-corejs3": "^7.24.7",
-    "@playwright/test": "^1.44.1",
     "@isttp/eslint-config": "workspace:*",
     "@isttp/jest-presets": "workspace:*",
+    "@isttp/schemas": "workspace:*",
+    "@isttp/types": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
     "@isttp/utils": "workspace:*",
-    "@isttp/types": "workspace:*",
+    "@playwright/test": "^1.44.1",
     "@testing-library/dom": "^10.2.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
@@ -49,6 +54,8 @@
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-window": "^1.8.8",
+    "@types/react-window-infinite-loader": "^1.0.9",
     "@types/styled-components": "^5.1.34",
     "babel-loader": "^9.1.3",
     "css-loader": "^7.1.2",

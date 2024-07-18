@@ -1,30 +1,10 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { PrismaClient } from '@isttp/db/all';
+import prisma from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
 import { NextFunction, Request, Response } from 'express';
-
-const prisma = new PrismaClient();
-
-export async function updateRefreshToken(
-  userId: string,
-  newRefreshToken: string,
-) {
-  try {
-    await prisma.user.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        refreshToken: newRefreshToken,
-      },
-    });
-  } catch (error) {
-    console.log('리프레시 토큰 수정 실패: ', error);
-  }
-}
 
 export function setAuthCookies(
   res: Response,
@@ -47,7 +27,6 @@ export function handleLogin(
     if (userId) {
       const { accessToken, refreshToken } = reissueToken(userId);
 
-      updateRefreshToken(userId, refreshToken);
       setAuthCookies(res, accessToken, refreshToken);
 
       res.status(200).json({
@@ -101,7 +80,7 @@ export async function getGoogleAccessToken(code: string) {
     const { access_token } = result.data as GoogleTokenType;
     return access_token;
   } catch (error) {
-    console.log('구글 access token 발급 실패 : ', error);
+    console.error('구글 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -126,7 +105,7 @@ export async function getKakaoAccessToken(code: string) {
     const { access_token } = result.data as KakaoTokenType;
     return access_token;
   } catch (error) {
-    console.log('카카오 access token 발급 실패 : ', error);
+    console.error('카카오 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -157,7 +136,7 @@ export async function getSocialUid(
     const userId = userInfo.data.id.toString();
     return userId;
   } catch (error) {
-    console.log('소셜 id 받아오기 실패 ', error);
+    console.error('소셜 id 받아오기 실패 ', error);
     return null;
   }
 }
@@ -183,27 +162,12 @@ export async function checkValidation({
             return { message: 'EXPIRED' };
           }
 
-          const storedToken = await prisma.user.findFirst({
-            where: {
-              userId,
-            },
-            select: {
-              refreshToken: true,
-            },
-          });
-
-          if (storedToken?.refreshToken !== refreshToken) {
-            return { message: 'EXPIRED' };
-          }
-
           const decoded = verifyToken(refreshToken);
           if (decoded instanceof Error) {
             return { message: 'EXPIRED' };
           }
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
             reissueToken(userId);
-
-          updateRefreshToken(userId, newRefreshToken);
 
           return {
             message: 'REFRESH_VALID',

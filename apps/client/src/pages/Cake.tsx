@@ -3,28 +3,60 @@ import Wrapper from '#components/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
-import { CakeUserTypeResponse } from '@isttp/types/all';
+import Loading from '#components/Loading.tsx';
+import { AxiosError } from 'axios';
+import { getCakeRes, getUserMeRes } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 
 const Cake = () => {
   const { ownerId } = useParams();
   const [isMyCake, setIsMyCake] = useState(false);
-  const [cakeUserData, setCakeUserData] = useState<CakeUserTypeResponse>();
+  const [cakeUserData, setCakeUserData] = useState<getCakeRes>();
 
-  async function chooseVersion(ownerId: string) {
-    const res = await axiosInstance.get(`cake/version?cakeUserId=${ownerId}`);
-    setCakeUserData(res.data.data);
-    if (res.data.userId === ownerId) {
-      setIsMyCake(true);
+  async function checkIsMyCake(ownerId: string) {
+    try {
+      const res = await axiosInstance.get<getUserMeRes>('/user/me');
+      const result = getUserMeRes.parse(res.data);
+      if (result.userId === ownerId) {
+        setIsMyCake(true);
+      } else {
+        setIsMyCake(false);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.status === 401) {
+          setIsMyCake(false);
+        }
+        if (error.status === 500) {
+          alert('현재 유저 정보를 불러오는데 실패했습니다. 새로고침 해주세요.');
+        }
+      }
+    }
+  }
+
+  async function getCakeOwnerInfo(ownerId: string) {
+    try {
+      const res = await axiosInstance.get<getCakeRes>(`cake/${ownerId}`);
+      const result = getCakeRes.parse(res.data);
+      setCakeUserData(result);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.status === 500) {
+          alert(
+            '케이크 소유자 정보를 불러오는데 실패했습니다. 새로고침 해주세요.',
+          );
+        }
+      }
     }
   }
 
   useEffect(() => {
-    chooseVersion(ownerId);
+    checkIsMyCake(ownerId);
+    getCakeOwnerInfo(ownerId);
   }, [ownerId]);
 
   if (!cakeUserData) {
-    return <div>에러처리 해주기</div>;
+    return <Loading />;
   }
 
   return (

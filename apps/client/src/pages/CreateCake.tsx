@@ -20,8 +20,7 @@ async function getColors(userId: string) {
 
     return { sheetColor, creamColor };
   } catch (error) {
-    console.log(error);
-    // 로그인이 필요합니다 모달 어떤 에러인지에 따라 모달 달리 하기
+    alert('색상 정보를 불러오는데 실패했습니다.');
   }
 }
 
@@ -34,7 +33,7 @@ const CreateCake = () => {
   async function handleCreateCake() {
     try {
       axiosInstance
-        .post('/cake/color', {
+        .put('/cake/color', {
           sheetColor: sheetColor,
           creamColor: creamColor,
         })
@@ -69,7 +68,6 @@ const CreateCake = () => {
           }
         })
         .catch((error) => {
-          console.error(error);
           if (error instanceof AxiosError) {
             if (error.response?.status === 401) {
               alert('로그인이 필요합니다.');
@@ -99,11 +97,15 @@ const CreateCake = () => {
     <Wrapper>
       <h1>케이크 만들기</h1>
       <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
+      <h3>시트</h3>
       <ColorSelector
-        selectedSheet={sheetColor}
-        setSelectedSheet={setSheetColor}
-        selectedCream={creamColor}
-        setSelectedCream={setCreamColor}
+        selectedColor={sheetColor}
+        setSelectedColor={setSheetColor}
+      />
+      <h3>크림</h3>
+      <ColorSelector
+        selectedColor={creamColor}
+        setSelectedColor={setCreamColor}
       />
       <Button type="default" label="케이크 만들기" onClick={handleCreateCake} />
     </Wrapper>
