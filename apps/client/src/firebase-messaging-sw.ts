@@ -43,7 +43,6 @@ function getFcmToken() {
   messaging
     .getToken({ vapidKey: process.env.FIREBASE_VAPID_KEY })
     .then((token: string) => {
-      console.log('토큰발급', token);
       sendToken(token);
     })
     .catch(() => {
