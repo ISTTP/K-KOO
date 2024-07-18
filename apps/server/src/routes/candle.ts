@@ -11,7 +11,6 @@ router.get('/candle', async (req, res) => {
     const candles = await getCandles();
     res.status(200).json(candles);
   } catch (error) {
-    console.log(error);
     res.status(500).json(`장식초 정보 조회 실패: ${error}`);
   }
 });
@@ -28,7 +27,6 @@ router.get('/candle/:candleId', async (req, res) => {
       res.status(404).json({ message: '해당 장식초를 찾을 수 없습니다.' });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `장식초 정보 조회 실패: ${error}` });
   }
 });
@@ -42,7 +40,6 @@ router.post('/candle/purchase', authorize, async (req, res) => {
     const safe = user.parse(updated);
     res.status(200).json(safe);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `장식초 구매 실패: ${error}` });
   }
 });

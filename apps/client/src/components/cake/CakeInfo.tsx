@@ -16,8 +16,8 @@ import ReadLetter from '#components/letter/ReadLetter.tsx';
 
 interface CakeInfoProps {
   year: string;
-  sheetColor: CakeColorType;
-  creamColor: CakeColorType;
+  sheetColor: CakeColorType | null;
+  creamColor: CakeColorType | null;
 }
 
 const CakeInfo: React.FC<CakeInfoProps> = ({

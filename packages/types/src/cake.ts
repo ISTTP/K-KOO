@@ -21,4 +21,6 @@ export type PageTypeResponse = {
 export type CakeUserTypeResponse = {
   nickname: string;
   year: string;
+  sheetColor: CakeColorType | null;
+  creamColor: CakeColorType | null;
 };

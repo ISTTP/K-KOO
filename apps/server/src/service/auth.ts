@@ -80,7 +80,7 @@ export async function getGoogleAccessToken(code: string) {
     const { access_token } = result.data as GoogleTokenType;
     return access_token;
   } catch (error) {
-    console.log('구글 access token 발급 실패 : ', error);
+    console.error('구글 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -105,7 +105,7 @@ export async function getKakaoAccessToken(code: string) {
     const { access_token } = result.data as KakaoTokenType;
     return access_token;
   } catch (error) {
-    console.log('카카오 access token 발급 실패 : ', error);
+    console.error('카카오 access token 발급 실패 : ', error);
     return null;
   }
 }
@@ -136,7 +136,7 @@ export async function getSocialUid(
     const userId = userInfo.data.id.toString();
     return userId;
   } catch (error) {
-    console.log('소셜 id 받아오기 실패 ', error);
+    console.error('소셜 id 받아오기 실패 ', error);
     return null;
   }
 }
