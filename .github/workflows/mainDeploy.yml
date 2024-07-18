@@ -31,10 +31,13 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Generate Environment Variables File for Client
-        run: echo "SERVER_URL=$SERVER_URL" >> .env
+        run: |
+          echo "SERVER_URL=$SERVER_URL" >> .env
+          echo "KAKAO_JAVASCRIPT_KEY=$KAKAO_JAVASCRIPT_KEY" >> .env
         working-directory: ./apps/client
-        env: 
+        env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
+          KAKAO_JAVASCRIPT_KEY: ${{ secrets.KAKAO_JAVASCRIPT_KEY }}
               
       - name: build
         run: pnpm turbo run build
