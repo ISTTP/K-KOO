@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toggle from '#components/Toggle.tsx';
 import GridInfo from '#components/GridInfo.tsx';
@@ -27,9 +27,11 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
     setOpen(!open);
   }
 
-  if (!data.sheetColor || !data.creamColor) {
-    navigate(`/cake/create/${ownerId}`);
-  }
+  useEffect(() => {
+    if (!data.sheetColor || !data.creamColor) {
+      navigate(`/cake/create/${ownerId}`);
+    }
+  }, [data.sheetColor, data.creamColor]);
 
   return (
     <InnerWrapper>
