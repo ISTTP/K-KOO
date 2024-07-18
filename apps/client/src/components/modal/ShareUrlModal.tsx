@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import Modal from '#components/modal/Modal.tsx';
 import Button from '#components/Button.tsx';
 
@@ -10,26 +11,57 @@ function pasteUrl() {
   alert('URL이 복사되었습니다.');
 }
 
+function kakaoShare(nickname: string) {
+  const { Kakao, location } = window;
+  Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: `${nickname}님의 케이크`,
+      description: '생일 편지를 쓰고 케이크를 꾸며주세요❤️',
+      imageUrl:
+        'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/thumbnail.png',
+      link: {
+        mobileWebUrl: location.href,
+        webUrl: location.href,
+      },
+    },
+  });
+}
+
+function facebookShare(nickname: string) {
+  window.open(
+    `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&title=${nickname}님의 케이크`,
+  );
+}
+
 const ShareUrlModal = ({
+  nickname,
   open,
   handleOpen,
 }: {
+  nickname: string;
   open: boolean;
   handleOpen: () => void;
 }) => {
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
+
   return (
     <Modal open={open}>
       <h3>내 케이크 공유하기</h3>
       <div>
-        <button>
-          <KakaoLogoIcon />
-        </button>
-        <button>
-          <FacebookLogoIcon />
-        </button>
-        <button onClick={pasteUrl}>
-          <LinkIcon />
-        </button>
+        <IconButton onClick={() => kakaoShare(nickname)}>
+          <KakaoLogoIcon width={'3rem'} height={'3rem'} />
+        </IconButton>
+        <IconButton onClick={() => facebookShare(nickname)}>
+          <FacebookLogoIcon width={'3rem'} height={'3rem'} />
+        </IconButton>
+        <IconButton onClick={pasteUrl}>
+          <LinkIcon width={'3rem'} height={'3rem'} />
+        </IconButton>
       </div>
       <Button type="default" label="닫기" onClick={handleOpen} />
     </Modal>
@@ -37,3 +69,10 @@ const ShareUrlModal = ({
 };
 
 export default ShareUrlModal;
+
+const IconButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+`;
