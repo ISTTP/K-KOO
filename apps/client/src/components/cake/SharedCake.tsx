@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
@@ -7,7 +7,7 @@ import Modal from '#components/modal/Modal.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
 import { user } from '@isttp/schemas/all';
-import { CakeUserTypeResponse, CakeColorType } from '@isttp/types/all';
+import { CakeUserTypeResponse } from '@isttp/types/all';
 import { AxiosError } from 'axios';
 import InnerWrapper from '#components/InnerWrapper.tsx';
 
@@ -16,37 +16,13 @@ interface MyCakeProps {
   data: CakeUserTypeResponse;
 }
 
-type CakeColorState = {
-  sheetColor: CakeColorType;
-  creamColor: CakeColorType;
-};
-
 const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
-  const [cakeColor, setCakeColor] = useState<CakeColorState>({
-    sheetColor: 'chocolate',
-    creamColor: 'white',
-  });
 
   function handleOpenLogin() {
     setOpenLogin(!openLogin);
-  }
-
-  async function getColors(userId: string) {
-    try {
-      const res = await axiosInstance.get(`/cake/color/${userId}`);
-
-      if (!res.data.sheetColor || !res.data.creamColor) return;
-
-      setCakeColor({
-        sheetColor: res.data.sheetColor,
-        creamColor: res.data.creamColor,
-      });
-    } catch (error) {
-      alert('색상 정보를 불러오는데 실패했습니다.');
-    }
   }
 
   async function handleCheckLogin() {
@@ -81,17 +57,13 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       });
   }
 
-  useEffect(() => {
-    getColors(ownerId);
-  }, [ownerId]);
-
   return (
     <InnerWrapper>
       <CakeHeader nickname={data.nickname} isMyCake={false} />
       <CakeInfo
         year={data.year}
-        sheetColor={cakeColor.sheetColor}
-        creamColor={cakeColor.creamColor}
+        sheetColor={data.sheetColor}
+        creamColor={data.creamColor}
       />
       <Button
         type="default"
