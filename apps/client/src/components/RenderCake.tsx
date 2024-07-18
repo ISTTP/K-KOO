@@ -5,8 +5,8 @@ import { CakeColorType } from '@isttp/types/all';
 import * as Svg from '#images';
 
 type RenderedCakeProps = {
-  sheetColor: CakeColorType;
-  creamColor: CakeColorType;
+  sheetColor: CakeColorType | null;
+  creamColor: CakeColorType | null;
   candles?: {
     candleImageUrl: string;
     nickname: string;
@@ -39,6 +39,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
   candles,
   handleClick,
 }) => {
+  sheetColor = sheetColor ?? 'chocolate';
+  creamColor = creamColor ?? 'white';
   const SheetComponent = SheetSVG[sheetColor];
   const CreamComponent = CreamSVG[creamColor];
 

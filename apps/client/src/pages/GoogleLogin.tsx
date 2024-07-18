@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import Wrapper from '#components/Wrapper.tsx';
+import Loading from '#components/Loading.tsx';
 
 type ResponseType = {
   success: boolean;
@@ -46,8 +47,7 @@ const GoogleLogin = () => {
 
   return (
     <Wrapper>
-      <h1>구글 로그인</h1>
-      <p>로딩중...</p>
+      <Loading />
     </Wrapper>
   );
 };

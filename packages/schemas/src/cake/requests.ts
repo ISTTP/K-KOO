@@ -12,11 +12,3 @@ export const getCakeLettersReq = z.object({
 });
 
 export type getCakeLettersReq = z.infer<typeof getCakeLettersReq>;
-
-export const getCakeVerReq = z.object({
-  query: z.object({
-    cakeUserId: z.string(),
-  }),
-});
-
-export type getCakeVerReq = z.infer<typeof getCakeVerReq>;

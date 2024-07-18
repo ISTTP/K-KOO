@@ -2,10 +2,9 @@ import 'dotenv/config';
 import prisma from '@isttp/db/all';
 import { getCakeColor, setCakeColor } from '../service/cake';
 import { checkCakeColorType } from '@isttp/utils/all';
-import { verifyToken, decodeToken } from '@isttp/utils/all';
 import { Router } from 'express';
 import { authorize } from '../service/auth';
-import { getCakeVerReq, getCakeLettersReq } from '@isttp/schemas/all';
+import { getCakeLettersReq } from '@isttp/schemas/all';
 import { CakeTypeResponse } from '@isttp/types/all';
 
 const router: Router = Router();
@@ -69,21 +68,18 @@ router.get('/cake/letters/:userId/:year/', async (req, res) => {
   }
 });
 
-router.get('/cake/version', async (req, res) => {
-  const accessToken = req.cookies.ACT;
-  const result = getCakeVerReq.parse(req);
-  const cakeUserId = result.query.cakeUserId;
-
+router.get('/cake/:ownerId', async (req, res) => {
   try {
+    const userId = req.params.ownerId;
     const cakeUserData = await prisma.user.findFirst({
       where: {
-        userId: cakeUserId,
+        userId,
       },
     });
 
     if (!cakeUserData) {
-      return res.status(500).json({
-        message: '케이크의 주인이 없습니다.',
+      return res.status(400).json({
+        message: '잘못된 요청: 해당 사용자를 찾을 수 없습니다.',
       });
     }
 
@@ -100,34 +96,14 @@ router.get('/cake/version', async (req, res) => {
         ? today.getFullYear() + 1
         : today.getFullYear();
 
-    const responseData = {
+    res.status(200).json({
       nickname: cakeUserData.nickname,
       year: String(year),
-    };
-
-    let userId;
-    try {
-      if (verifyToken(accessToken)) {
-        const payload = decodeToken(accessToken);
-        userId = payload?.userId;
-      }
-    } catch (error) {
-      userId = null;
-    }
-
-    if (userId) {
-      res.status(200).json({
-        userId,
-        data: responseData,
-      });
-    } else {
-      res.status(200).json({
-        userId: null,
-        data: responseData,
-      });
-    }
+      sheetColor: cakeUserData.sheetColor,
+      creamColor: cakeUserData.creamColor,
+    });
   } catch (error) {
-    res.status(500).json({ message: '케이크 버전 구분 실패 : ', error });
+    res.status(500).json({ message: '케이크 소유자 정보 조회 실패: ', error });
   }
 });
 
@@ -137,7 +113,6 @@ router.get('/cake/color/:userId', async (req, res) => {
     const { sheetColor, creamColor } = await getCakeColor(userId);
     res.status(200).json({ sheetColor, creamColor });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `색상 정보 조회 실패: ${error}` });
   }
 });
@@ -161,7 +136,6 @@ router.put('/cake/color', authorize, async (req, res) => {
     const updated = await setCakeColor({ userId, sheetColor, creamColor });
     res.status(200).json(updated);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `색상 정보 수정 실패: ${error}` });
   }
 });

@@ -1,17 +1,22 @@
 import { z } from 'zod';
 
-export const getCakeVerDataRes = z.object({
+const CakeColorType = z.union([
+  z.literal('white'),
+  z.literal('chocolate'),
+  z.literal('strawberry'),
+  z.literal('banana'),
+  z.literal('mint'),
+  z.literal('blueberry'),
+]);
+
+export const getCakeRes = z.object({
   nickname: z.string(),
   year: z.string(),
-});
-export type getCakeVerDataRes = z.infer<typeof getCakeVerDataRes>;
-
-export const getCakeVerRes = z.object({
-  data: getCakeVerDataRes,
-  userId: z.string().nullable(),
+  sheetColor: CakeColorType.nullable(),
+  creamColor: CakeColorType.nullable(),
 });
 
-export type getCakeVerRes = z.infer<typeof getCakeVerRes>;
+export type getCakeRes = z.infer<typeof getCakeRes>;
 
 export const getCakeDataRes = z.object({
   nickname: z.string(),

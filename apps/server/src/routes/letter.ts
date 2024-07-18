@@ -42,7 +42,6 @@ router.post('/letter', async (req, res) => {
 
     res.status(200).json(letter);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: `편지 작성 실패: ${error}` });
   }
 });
