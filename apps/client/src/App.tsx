@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from '#pages/Login.tsx';
 import SignUp from '#pages/Signup.tsx';
@@ -10,12 +10,8 @@ import CreateCake from '#pages/CreateCake.tsx';
 import ChooseCandle from '#pages/ChooseCandle.tsx';
 import CreateLetter from '#pages/CreateLetter.tsx';
 import './App.css';
-import { requestPermission } from './firebase-messaging-sw';
 
 const App = () => {
-  useEffect(() => {
-    requestPermission();
-  }, []);
   return (
     <Routes>
       <Route path="/" element={<Login />} />

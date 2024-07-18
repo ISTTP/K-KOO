@@ -2,6 +2,7 @@ import { authorize } from '../service/auth';
 import { getUser, setUser } from '../models/user';
 import { Router } from 'express';
 import { user } from '@isttp/schemas/all';
+import prisma from '@isttp/db/all';
 
 const router: Router = Router();
 
@@ -31,6 +32,28 @@ router.get('/user/year', authorize, async (req, res) => {
 
   const startYear = data?.createdAt.getFullYear();
   res.status(200).json({ year: startYear });
+});
+
+router.put('/user/token', authorize, async (req, res) => {
+  const { token } = req.body;
+  const userId = req.userId;
+  try {
+    const data = await getUser(userId);
+
+    if (!data?.fcmToken) {
+      await prisma.user.update({
+        where: {
+          userId: userId,
+        },
+        data: {
+          fcmToken: token,
+        },
+      });
+      res.status(200).json({ success: true });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'FCM 토큰 저장 실패 : ', error });
+  }
 });
 
 export default router;

@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/messaging';
+import axiosInstance from '#apis/axios.ts';
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -19,7 +20,7 @@ export function requestPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
       registerServiceWorker().then(() => {
-        getToken();
+        getFcmToken();
       });
     } else if (permission === 'denied') {
       console.log('푸시 알림 권한 차단');
@@ -38,13 +39,25 @@ function registerServiceWorker() {
     });
 }
 
-function getToken() {
+function getFcmToken() {
   messaging
     .getToken({ vapidKey: process.env.FIREBASE_VAPID_KEY })
     .then((token: string) => {
-      console.log('푸시 토큰 발급 완료', token);
+      console.log('토큰발급', token);
+      sendToken(token);
     })
     .catch(() => {
       console.log('푸시 토큰 발급 중 에러');
+    });
+}
+
+function sendToken(token: string) {
+  axiosInstance
+    .put('/user/token', { token })
+    .then((response) => {
+      console.log('FCM 토큰 저장 성공', response.data);
+    })
+    .catch((error) => {
+      console.error('FCM 토큰 저장 실패', error);
     });
 }

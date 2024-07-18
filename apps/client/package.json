@@ -8,7 +8,8 @@
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
     "#apis/*.ts": "./src/apis/*.ts",
-    "#styles/*.ts": "./src/styles/*.ts"
+    "#styles/*.ts": "./src/styles/*.ts",
+    "#firebase": "./src/firebase-messaging-sw.ts"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
