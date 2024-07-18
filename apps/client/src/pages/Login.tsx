@@ -28,7 +28,7 @@ const Login = () => {
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          if (error.status === 500) {
+          if (error.response?.status === 500) {
             alert('오류가 발생했습니다, 새로고침 해주세요.');
           }
         }
