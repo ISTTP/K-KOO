@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
@@ -10,6 +11,7 @@ import { useParams } from 'react-router-dom';
 
 const Cake = () => {
   const { ownerId } = useParams();
+  const navigate = useNavigate();
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<getCakeRes>();
 
@@ -24,10 +26,10 @@ const Cake = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.status === 401) {
+        if (error.response?.status === 401) {
           setIsMyCake(false);
         }
-        if (error.status === 500) {
+        if (error.response?.status === 500) {
           alert('현재 유저 정보를 불러오는데 실패했습니다. 새로고침 해주세요.');
         }
       }
@@ -41,7 +43,11 @@ const Cake = () => {
       setCakeUserData(result);
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.status === 500) {
+        if (error.response?.status === 400) {
+          alert('잘못된 케이크 주소입니다.');
+          navigate('/');
+        }
+        if (error.response?.status === 500) {
           alert(
             '케이크 소유자 정보를 불러오는데 실패했습니다. 새로고침 해주세요.',
           );

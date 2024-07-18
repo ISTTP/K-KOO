@@ -1,10 +1,10 @@
 import axios from 'axios';
 import qs from 'qs';
-
 import prisma from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
 import { NextFunction, Request, Response } from 'express';
+import { getUser } from '../models/user';
 
 export function setAuthCookies(
   res: Response,
@@ -201,6 +201,13 @@ export async function authorize(
     }
 
     const { userId } = payload;
+
+    const data = await getUser(userId);
+    if (!data) {
+      res.clearCookie('ACT');
+      res.clearCookie('RFT');
+      return res.status(500).json({ message: '존재하지 않는 유저' });
+    }
 
     const result = await checkValidation({
       userId,
