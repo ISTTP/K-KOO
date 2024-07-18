@@ -25,6 +25,7 @@ model User {
   creamColor      String? // 크림 색깔 (선택적)
   createdAt       DateTime @default(now()) // 생성 날짜
   updatedAt       DateTime @updatedAt // 수정 날짜
+  fcmToken        String? //fcm device token
   receivedLetters Letter[] @relation("ReceivedLetters") // 수신한 편지들과의 관계
 }
 
