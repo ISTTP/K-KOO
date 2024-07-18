@@ -78,15 +78,21 @@ router.get('/letter/:letterId', authorize, async (req, res) => {
     }
 
     const createdAt = letter.createdAt;
+    console.log(createdAt);
+    console.log(thisYearBday);
 
-    if (createdAt <= thisYearBday) {
+    if (createdAt <= today && today < thisYearBday) {
+      return res.status(200).json({
+        isOpen: false,
+      });
+    } else if (createdAt <= thisYearBday && thisYearBday <= today) {
       return res.status(200).json({
         isOpen: true,
         contents: letter.contents,
         nickname: letter.nickname,
         candleImageUrl: letter.candle.imageUrl,
       });
-    } else {
+    } else if (thisYearBday < createdAt) {
       return res.status(200).json({
         isOpen: false,
       });
