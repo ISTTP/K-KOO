@@ -2,6 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -64,6 +65,14 @@ module.exports = {
     }),
     new Dotenv({
       path: './.env',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public', 'firebase-messaging-sw.js'),
+          to: '',
+        },
+      ],
     }),
   ],
 };
