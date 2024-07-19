@@ -2,7 +2,8 @@
   "extends": "@isttp/typescript-config/react.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"

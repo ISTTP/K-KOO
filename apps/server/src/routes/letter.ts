@@ -5,6 +5,8 @@ import { getLetterYearBasedOnBirthday } from '../service/letter';
 import { createLetter } from '../models/letter';
 import { getUser, getUserBirthday, addPoint } from '../models/user';
 import { authorize } from '../service/auth';
+import * as admin from 'firebase-admin';
+import * as serviceAccount from '../../service-account.json';
 import {
   getLetterReq,
   LetterRequestType,
@@ -14,6 +16,10 @@ import {
 } from '@isttp/schemas/all';
 
 const router: Router = Router();
+
+const firebaseAdmin = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+});
 
 router.post('/letter', async (req, res) => {
   try {
@@ -38,6 +44,29 @@ router.post('/letter', async (req, res) => {
 
     if (senderId !== '') {
       user.parse(await addPoint(senderId, 100));
+    }
+
+    const recipient = await getUser(recipientId);
+    const fcmToken = recipient?.fcmToken;
+
+    if (fcmToken) {
+      const message = {
+        notification: {
+          title: '새 편지가 도착했습니다!',
+          body: `${nickname}님으로부터 ${keyword} 편지가 도착했습니다.`,
+        },
+        token: fcmToken,
+      };
+
+      firebaseAdmin
+        .messaging()
+        .send(message)
+        .then((response) => {
+          console.log('알림 생성 성공', response);
+        })
+        .catch((error) => {
+          console.log('알림 생성 실패', error);
+        });
     }
 
     res.status(200).json(letter);
