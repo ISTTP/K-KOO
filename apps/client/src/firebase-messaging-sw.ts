@@ -34,8 +34,8 @@ function registerServiceWorker() {
     .then(() => {
       console.log('Service Worker 등록 성공');
     })
-    .catch(() => {
-      console.log('Service Worker 등록 실패');
+    .catch((error) => {
+      throw new Error(error);
     });
 }
 
@@ -45,18 +45,18 @@ function getFcmToken() {
     .then((token: string) => {
       sendToken(token);
     })
-    .catch(() => {
-      console.log('푸시 토큰 발급 중 에러');
+    .catch((error) => {
+      throw new Error(error);
     });
 }
 
 function sendToken(token: string) {
   axiosInstance
     .put('/user/token', { token })
-    .then((response) => {
-      console.log('FCM 토큰 저장 성공', response.data);
+    .then(() => {
+      console.log('FCM 토큰 저장 성공');
     })
     .catch((error) => {
-      console.error('FCM 토큰 저장 실패', error);
+      throw new Error(error);
     });
 }

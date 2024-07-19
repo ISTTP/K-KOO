@@ -27,8 +27,8 @@ self.addEventListener('push', function (e) {
   );
 });
 
-self.addEventListener('notificationclick', function (event) {
+self.addEventListener('notificationclick', function (e) {
   const url = 'https://k-koo.kro.kr';
-  event.notification.close();
-  event.waitUntil(clients.openWindow(url));
+  e.notification.close();
+  e.waitUntil(clients.openWindow(url));
 });
