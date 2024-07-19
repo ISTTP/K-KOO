@@ -221,4 +221,4 @@ const ChooseCandle = () => {
   );
 };
 
-export default ChooseCandle;
+export { ChooseCandle };

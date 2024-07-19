@@ -128,7 +128,7 @@ const CreateLetter = () => {
   );
 };
 
-export default CreateLetter;
+export { CreateLetter };
 
 const Input = styled.input`
   width: 100%;
