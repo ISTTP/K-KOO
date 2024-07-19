@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
@@ -9,6 +10,7 @@ import {
   LetterResponseType,
 } from '@isttp/schemas/all';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import InnerWrapper from '#components/InnerWrapper.tsx';
 
 async function fetchUserInfo() {
   try {
@@ -55,7 +57,6 @@ async function handleCreateLetter({
   }
 }
 
-// letter/create/ownerId?candleId=123
 const CreateLetter = () => {
   const { ownerId } = useParams();
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ const CreateLetter = () => {
   const [senderId, setSenderId] = useState('');
   const [nickname, setNickname] = useState('');
   const [contents, setContents] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchUserInfo().then((data) => {
@@ -78,43 +80,66 @@ const CreateLetter = () => {
 
   return (
     <Wrapper>
-      <h1>편지 작성</h1>
-      <input
-        type="text"
-        value={nickname}
-        style={{ marginBottom: '10px', width: '50%', height: '2rem' }}
-        placeholder="닉네임을 작성해주세요"
-        onChange={(e) => setNickname(e.target.value)}
-      />
-      <textarea
-        value={contents}
-        cols={100}
-        rows={10}
-        placeholder="편지 내용을 작성해주세요"
-        onChange={(e) => setContents(e.target.value)}
-      />
-      <Button
-        type="default"
-        label="편지 보내기"
-        onClick={async () => {
-          const result = await handleCreateLetter({
-            senderId,
-            recipientId: ownerId,
-            candleId: Number(candleId),
-            nickname,
-            contents,
-          });
+      <InnerWrapper>
+        <h1>편지 작성</h1>
+        <Input
+          type="text"
+          value={nickname}
+          placeholder="닉네임을 입력하세요 (10자 이하)"
+          maxLength={10}
+          onChange={(e) => setNickname(e.target.value)}
+        />
+        <TextArea
+          value={contents}
+          rows={10}
+          placeholder="편지 내용을 작성해주세요"
+          onChange={(e) => setContents(e.target.value)}
+        />
+        <Button
+          type={loading ? 'loading' : 'default'}
+          label="편지 보내기"
+          onClick={async () => {
+            setLoading(true);
 
-          if (result) {
-            alert('편지 보내기에 성공했습니다.');
-            navigate(`/cake/${ownerId}`);
-          } else {
-            alert('편지 보내기에 실패했습니다.');
-          }
-        }}
-      />
+            if (!nickname || !contents) {
+              alert('닉네임과 내용을 작성해주세요.');
+              setLoading(false);
+              return;
+            }
+
+            const result = await handleCreateLetter({
+              senderId,
+              recipientId: ownerId,
+              candleId: Number(candleId),
+              nickname,
+              contents,
+            });
+
+            if (result) {
+              alert('편지 보내기에 성공했습니다.');
+              navigate(`/cake/${ownerId}`);
+            } else {
+              alert('편지 보내기에 실패했습니다.');
+            }
+          }}
+        />
+      </InnerWrapper>
     </Wrapper>
   );
 };
 
 export default CreateLetter;
+
+const Input = styled.input`
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+`;

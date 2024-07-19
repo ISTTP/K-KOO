@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
@@ -48,13 +49,13 @@ const SignUp = () => {
   return (
     <Wrapper>
       <h1>Sign Up</h1>
-      <input
+      <Input
         type="text"
         placeholder="닉네임"
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
       />
-      <input
+      <Input
         type="date"
         value={birthday}
         onChange={(e) => setBirthday(e.target.value)}
@@ -66,3 +67,11 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const Input = styled.input`
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+`;

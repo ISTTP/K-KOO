@@ -24,6 +24,7 @@
     "firebase-admin": "^12.2.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "openai": "^4.52.7",
     "qs": "^6.12.2"
   },
   "devDependencies": {

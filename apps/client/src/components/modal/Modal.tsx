@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Overlay = styled.div<{ open: boolean }>`
-  display: ${(props) => (props.open ? 'block' : 'none')};
+  display: ${(props) => (props.open ? 'flex' : 'none')};
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,10 +18,6 @@ const Overlay = styled.div<{ open: boolean }>`
 `;
 
 const ModalContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--white-color);
   padding: 1rem;
   border-radius: 10px;
