@@ -67,6 +67,7 @@ const ChooseCandle = () => {
   const [candle, setCandle] = useState<CandleType | null>(null);
   const [candles, setCandles] = useState<CandleType[] | null>(null);
   const [userPoint, setUserPoint] = useState<number | null>(null);
+  const [isEnoughPoint, setIsEnoughPoint] = useState<boolean>(false);
 
   useEffect(() => {
     getCandles().then((data) => setCandles(data));
@@ -81,32 +82,37 @@ const ChooseCandle = () => {
   }
 
   async function openModal(candleId: number) {
-    // 선택한 장식초 정보 가져오기
-    axiosInstance.get(`/candle/${candleId}`).then((res) => {
-      if (res.status === 200) {
-        CandleType.parse(res.data);
-        setCandle(res.data);
+    try {
+      // 선택한 장식초 정보 가져오기
+      const candleResponse = await axiosInstance.get<CandleType>(
+        `/candle/${candleId}`,
+      );
+      if (candleResponse.status === 200) {
+        const data = CandleType.parse(candleResponse.data);
+        setCandle(data);
+
+        // 토큰 유효성 확인 후 결제 모달
+        const userResponse = await axiosInstance.get<user>('/user/me');
+        if (userResponse.status === 200) {
+          const point = userResponse.data.point;
+          const candlePrice = data.point;
+          setUserPoint(point);
+          setIsEnoughPoint(point >= candlePrice);
+          setOpenBuy(true);
+        }
       } else {
         throw new Error('장식초 정보를 가져오는데 실패했습니다.');
       }
-    });
-    // 토큰 유효성 확인 후 결제 모달
-    axiosInstance
-      .get('/user/me')
-      .then((res) => {
-        if (res.status === 200) {
-          setUserPoint(res.data.point);
-          setOpenBuy(true);
-        }
-      })
+    } catch (error) {
       // 권한 없을 경우 로그인 유도 모달
-      .catch((error) => {
-        if (error instanceof AxiosError) {
-          if (error.response?.status === 401) {
-            setOpenLogin(true);
-          }
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setOpenLogin(true);
         }
-      });
+      } else {
+        console.error(error);
+      }
+    }
   }
 
   async function handleBuyCandle(point: number) {
@@ -166,7 +172,7 @@ const ChooseCandle = () => {
         <h3>해당 장식초를 구매하시겠습니까?</h3>
         <span>남은 포인트: {userPoint}P</span>
         <span>결제 포인트: {candle?.point}P</span>
-        {userPoint && candle?.point && userPoint < candle?.point && (
+        {!isEnoughPoint && (
           <span style={{ color: 'red' }}>포인트가 부족합니다.</span>
         )}
         <div
@@ -184,11 +190,7 @@ const ChooseCandle = () => {
             onClick={handleOpenBuy}
           />
           <Button
-            type={
-              userPoint && candle?.point && userPoint >= candle?.point
-                ? 'default'
-                : 'disabled'
-            }
+            type={isEnoughPoint ? 'default' : 'disabled'}
             size="large"
             label="구매하기"
             onClick={() => {
