@@ -8,7 +8,8 @@
     "#components/*.tsx": "./src/components/*.tsx",
     "#pages/*.tsx": "./src/pages/*.tsx",
     "#apis/*.ts": "./src/apis/*.ts",
-    "#styles/*.ts": "./src/styles/*.ts"
+    "#styles/*.ts": "./src/styles/*.ts",
+    "#firebase": "./src/firebase-messaging-sw.ts"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
@@ -21,6 +22,7 @@
   "dependencies": {
     "@sentry/react": "^8.11.0",
     "axios": "^1.7.2",
+    "firebase": "^8.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.24.0",
@@ -58,6 +60,7 @@
     "@types/react-window-infinite-loader": "^1.0.9",
     "@types/styled-components": "^5.1.34",
     "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
     "html-webpack-plugin": "^5.6.0",
