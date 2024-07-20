@@ -68,7 +68,7 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export { SignUp };
 
 const Input = styled.input`
   width: 100%;

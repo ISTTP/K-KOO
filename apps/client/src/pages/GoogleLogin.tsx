@@ -52,4 +52,4 @@ const GoogleLogin = () => {
   );
 };
 
-export default GoogleLogin;
+export { GoogleLogin };
