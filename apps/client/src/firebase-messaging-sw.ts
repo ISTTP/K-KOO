@@ -19,9 +19,7 @@ const messaging = firebase.messaging();
 export function requestPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
-      registerServiceWorker().then(() => {
-        getFcmToken();
-      });
+      registerServiceWorker();
     } else if (permission === 'denied') {
       console.log('푸시 알림 권한 차단');
     }
@@ -39,7 +37,7 @@ function registerServiceWorker() {
     });
 }
 
-function getFcmToken() {
+export function getFcmToken() {
   messaging
     .getToken({ vapidKey: process.env.FIREBASE_VAPID_KEY })
     .then((token: string) => {

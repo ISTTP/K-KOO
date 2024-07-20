@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { requestPermission } from '#firebase';
 
 const MyPage = lazy(() =>
   import('#pages/MyPage.tsx').then((module) => ({ default: module.MyPage })),
@@ -41,6 +42,9 @@ const CreateLetter = lazy(() =>
 );
 
 const App = () => {
+  useEffect(() => {
+    requestPermission();
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Login />} />
