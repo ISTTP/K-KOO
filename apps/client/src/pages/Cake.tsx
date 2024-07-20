@@ -76,4 +76,4 @@ const Cake = () => {
   );
 };
 
-export default Cake;
+export { Cake };

@@ -1,17 +1,50 @@
-import React from 'react';
+import React, { useEffect, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from '#pages/Login.tsx';
-import SignUp from '#pages/Signup.tsx';
-import MyPage from '#pages/MyPage.tsx';
-import GoogleLogin from '#pages/GoogleLogin.tsx';
-import KakaoLogin from '#pages/KakaoLogin.tsx';
-import Cake from '#pages/Cake.tsx';
-import CreateCake from '#pages/CreateCake.tsx';
-import ChooseCandle from '#pages/ChooseCandle.tsx';
-import CreateLetter from '#pages/CreateLetter.tsx';
 import './App.css';
+import { requestPermission } from '#firebase';
+
+const MyPage = lazy(() =>
+  import('#pages/MyPage.tsx').then((module) => ({ default: module.MyPage })),
+);
+const Cake = lazy(() =>
+  import('#pages/Cake.tsx').then((module) => ({ default: module.Cake })),
+);
+const Login = lazy(() =>
+  import('#pages/Login.tsx').then((module) => ({ default: module.Login })),
+);
+const GoogleLogin = lazy(() =>
+  import('#pages/GoogleLogin.tsx').then((module) => ({
+    default: module.GoogleLogin,
+  })),
+);
+const KakaoLogin = lazy(() =>
+  import('#pages/KakaoLogin.tsx').then((module) => ({
+    default: module.KakaoLogin,
+  })),
+);
+const SignUp = lazy(() =>
+  import('#pages/SignUp.tsx').then((module) => ({ default: module.SignUp })),
+);
+const CreateCake = lazy(() =>
+  import('#pages/CreateCake.tsx').then((module) => ({
+    default: module.CreateCake,
+  })),
+);
+const ChooseCandle = lazy(() =>
+  import('#pages/ChooseCandle.tsx').then((module) => ({
+    default: module.ChooseCandle,
+  })),
+);
+const CreateLetter = lazy(() =>
+  import('#pages/CreateLetter.tsx').then((module) => ({
+    default: module.CreateLetter,
+  })),
+);
 
 const App = () => {
+  useEffect(() => {
+    requestPermission();
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Login />} />

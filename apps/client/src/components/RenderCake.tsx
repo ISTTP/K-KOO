@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CakeColorType } from '@isttp/types/all';
 
-import * as Svg from '#images';
-
 type RenderedCakeProps = {
   sheetColor: CakeColorType | null;
   creamColor: CakeColorType | null;
@@ -15,23 +13,7 @@ type RenderedCakeProps = {
   handleClick?: (index: number) => void;
 };
 
-const SheetSVG = {
-  white: Svg.WhiteSheet,
-  chocolate: Svg.ChocoSheet,
-  strawberry: Svg.StrawberrySheet,
-  banana: Svg.BananaSheet,
-  mint: Svg.MintSheet,
-  blueberry: Svg.BlueberrySheet,
-};
-
-const CreamSVG = {
-  white: Svg.WhiteCream,
-  chocolate: Svg.ChocoCream,
-  strawberry: Svg.StrawberryCream,
-  banana: Svg.BananaCream,
-  mint: Svg.MintCream,
-  blueberry: Svg.BlueberryCream,
-};
+const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/';
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
@@ -41,13 +23,13 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
   creamColor = creamColor ?? 'white';
-  const SheetComponent = SheetSVG[sheetColor];
-  const CreamComponent = CreamSVG[creamColor];
+  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.svg';
+  const creamSrc = baseUrl + 'cream_' + creamColor + '.svg';
 
   return (
     <SvgContainer>
-      <SvgElement as={SheetComponent} />
-      <SvgElement as={CreamComponent} />
+      <SvgElement src={sheetSrc} alt="시트 이미지" />
+      <SvgElement src={creamSrc} alt="크림 이미지" />
       {candles?.map((candle, index) => (
         <Candle
           key={index}
@@ -72,7 +54,7 @@ const SvgContainer = styled.div`
   position: relative;
 `;
 
-const SvgElement = styled.svg`
+const SvgElement = styled.img`
   width: 100%;
   height: 100%;
   position: absolute;
