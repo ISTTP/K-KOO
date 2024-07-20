@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CakeColorType } from '@isttp/types/all';
 
-import * as Svg from '#images';
-
 type RenderedCakeProps = {
   sheetColor: CakeColorType | null;
   creamColor: CakeColorType | null;
@@ -15,7 +13,7 @@ type RenderedCakeProps = {
   handleClick?: (index: number) => void;
 };
 
-const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/'
+const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/';
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
@@ -30,8 +28,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 
   return (
     <SvgContainer>
-      <SvgElement src={sheetSrc} alt='시트 이미지' />
-      <SvgElement src={creamSrc} alt='크림 이미지' />
+      <SvgElement src={sheetSrc} alt="시트 이미지" />
+      <SvgElement src={creamSrc} alt="크림 이미지" />
       {candles?.map((candle, index) => (
         <Candle
           key={index}
