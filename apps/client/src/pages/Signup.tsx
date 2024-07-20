@@ -5,7 +5,7 @@ import Wrapper from '#components/Wrapper.tsx';
 import Button from '#components/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
-import { requestPermission } from '#firebase';
+import { getFcmToken } from '#firebase';
 
 interface SignUpProps {
   id: string;
@@ -37,7 +37,9 @@ const SignUp = () => {
       );
       if (response.status === 200) {
         alert('회원가입이 완료되었습니다.');
-        requestPermission();
+        if (Notification.permission === 'granted') {
+          getFcmToken();
+        }
         navigate(`/cake/${response.data.userId}`);
       }
     } catch (error) {
