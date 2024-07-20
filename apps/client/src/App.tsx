@@ -12,22 +12,32 @@ const Login = lazy(() =>
   import('#pages/Login.tsx').then((module) => ({ default: module.Login })),
 );
 const GoogleLogin = lazy(() =>
-  import('#pages/GoogleLogin.tsx').then((module) => ({ default: module.GoogleLogin })),
+  import('#pages/GoogleLogin.tsx').then((module) => ({
+    default: module.GoogleLogin,
+  })),
 );
 const KakaoLogin = lazy(() =>
-  import('#pages/KakaoLogin.tsx').then((module) => ({ default: module.KakaoLogin })),
+  import('#pages/KakaoLogin.tsx').then((module) => ({
+    default: module.KakaoLogin,
+  })),
 );
 const SignUp = lazy(() =>
   import('#pages/SignUp.tsx').then((module) => ({ default: module.SignUp })),
 );
 const CreateCake = lazy(() =>
-  import('#pages/CreateCake.tsx').then((module) => ({ default: module.CreateCake })),
+  import('#pages/CreateCake.tsx').then((module) => ({
+    default: module.CreateCake,
+  })),
 );
 const ChooseCandle = lazy(() =>
-  import('#pages/ChooseCandle.tsx').then((module) => ({ default: module.ChooseCandle })),
+  import('#pages/ChooseCandle.tsx').then((module) => ({
+    default: module.ChooseCandle,
+  })),
 );
 const CreateLetter = lazy(() =>
-  import('#pages/CreateLetter.tsx').then((module) => ({ default: module.CreateLetter })),
+  import('#pages/CreateLetter.tsx').then((module) => ({
+    default: module.CreateLetter,
+  })),
 );
 
 const App = () => {
