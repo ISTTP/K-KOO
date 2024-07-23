@@ -11,7 +11,7 @@ import {
   getCakeNoDataRes,
 } from '@isttp/schemas/all';
 import Pagenation from '#components/cake/Pagenation.tsx';
-import RenderCake from '#components/RenderCake.tsx';
+import RenderCake from '#components/cake/RenderCake.tsx';
 import ReadLetter from '#components/letter/ReadLetter.tsx';
 
 interface CakeInfoProps {

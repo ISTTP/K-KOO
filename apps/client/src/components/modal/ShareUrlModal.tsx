@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from '#components/modal/Modal.tsx';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 
 import { KakaoLogoIcon, FacebookLogoIcon, LinkIcon } from '#icons';
 

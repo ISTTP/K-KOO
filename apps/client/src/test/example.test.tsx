@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 
 test('카카오 버튼 렌더링', () => {
   render(

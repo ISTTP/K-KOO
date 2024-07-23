@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import Wrapper from '#components/Wrapper.tsx';
-import Button from '#components/Button.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import Button from '#components/common/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { getFcmToken } from '#firebase';
