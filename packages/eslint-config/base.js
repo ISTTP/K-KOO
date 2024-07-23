@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:sonarjs/recommended-legacy"
   ],
   parser: "@typescript-eslint/parser",
   rules: {
