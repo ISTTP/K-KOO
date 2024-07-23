@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Wrapper from '#components/Wrapper.tsx';
-import Button from '#components/Button.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import Button from '#components/common/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 

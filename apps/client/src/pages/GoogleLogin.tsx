@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
-import Wrapper from '#components/Wrapper.tsx';
-import Loading from '#components/Loading.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import Loading from '#components/common/Loading.tsx';
 
 type ResponseType = {
   success: boolean;
