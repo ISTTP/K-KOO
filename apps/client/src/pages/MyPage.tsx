@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { user } from '@isttp/schemas/all';
 import { HomeIcon, MessengerIcon } from '#icons';
 import axiosInstance from '#apis/axios.ts';
-import Wrapper from '#components/Wrapper.tsx';
-import InnerWrapper from '#components/InnerWrapper.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import * as S from '#styles/MyPageStyle.ts';
 
 const MyPage = () => {
@@ -207,4 +207,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export { MyPage };

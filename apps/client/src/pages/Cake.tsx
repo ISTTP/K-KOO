@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Wrapper from '#components/Wrapper.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
-import Loading from '#components/Loading.tsx';
+import Loading from '#components/common/Loading.tsx';
 import { AxiosError } from 'axios';
 import { getCakeRes, getUserMeRes } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
@@ -76,4 +76,4 @@ const Cake = () => {
   );
 };
 
-export default Cake;
+export { Cake };

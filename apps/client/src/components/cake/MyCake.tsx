@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Toggle from '#components/Toggle.tsx';
-import GridInfo from '#components/GridInfo.tsx';
+import Toggle from '#components/common/Toggle.tsx';
+import GridInfo from '#components/cake/GridInfo.tsx';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
-import InnerWrapper from '#components/InnerWrapper.tsx';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import { CakeUserTypeResponse } from '@isttp/types/all';
 
 type MyCakeProps = {

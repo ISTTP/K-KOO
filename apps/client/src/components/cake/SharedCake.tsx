@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 import Modal from '#components/modal/Modal.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
 import { user } from '@isttp/schemas/all';
 import { CakeUserTypeResponse } from '@isttp/types/all';
 import { AxiosError } from 'axios';
-import InnerWrapper from '#components/InnerWrapper.tsx';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 
 interface MyCakeProps {
   ownerId: string;

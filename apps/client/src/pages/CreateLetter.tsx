@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Wrapper from '#components/Wrapper.tsx';
-import Button from '#components/Button.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import Button from '#components/common/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import {
@@ -10,7 +10,7 @@ import {
   LetterResponseType,
 } from '@isttp/schemas/all';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import InnerWrapper from '#components/InnerWrapper.tsx';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 
 async function fetchUserInfo() {
   try {
@@ -128,7 +128,7 @@ const CreateLetter = () => {
   );
 };
 
-export default CreateLetter;
+export { CreateLetter };
 
 const Input = styled.input`
   width: 100%;

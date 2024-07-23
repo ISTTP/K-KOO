@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import styled from 'styled-components';
-import Wrapper from '#components/Wrapper.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
 import LoginModal from '#components/modal/LoginModal.tsx';
 import { AxiosError } from 'axios';
 import { CandleType, CandleResponseType, user } from '@isttp/schemas/all';
 import Modal from '#components/modal/Modal.tsx';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 
 const CandleContainer = styled.div`
   display: grid;
@@ -221,4 +221,4 @@ const ChooseCandle = () => {
   );
 };
 
-export default ChooseCandle;
+export { ChooseCandle };

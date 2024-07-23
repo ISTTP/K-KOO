@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import axiosInstance from '#apis/axios.ts';
-import Button from '#components/Button.tsx';
-import Wrapper from '#components/Wrapper.tsx';
-import RenderCake from '#components/RenderCake.tsx';
-import ColorSelector from '#components/ColorSelector.tsx';
+import Button from '#components/common/Button.tsx';
+import Wrapper from '#components/layout/Wrapper.tsx';
+import RenderCake from '#components/cake/RenderCake.tsx';
+import ColorSelector from '#components/cake/ColorSelector.tsx';
 
 import { CakeColorType } from '@isttp/types/all';
 
@@ -112,4 +112,4 @@ const CreateCake = () => {
   );
 };
 
-export default CreateCake;
+export { CreateCake };
