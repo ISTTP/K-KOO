@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { requestPermission } from '#firebase';
@@ -46,17 +46,21 @@ const App = () => {
     requestPermission();
   }, []);
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/mypage" element={<MyPage />} />
-      <Route path="/auth/kakao" element={<KakaoLogin />} />
-      <Route path="/auth/google" element={<GoogleLogin />} />
-      <Route path="/cake/:ownerId" element={<Cake />} />
-      <Route path="/cake/create/:ownerId" element={<CreateCake />} />
-      <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
-      <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
-    </Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/auth/kakao" element={<KakaoLogin />} />
+        <Route path="/auth/google" element={<GoogleLogin />} />
+        <Route path="/cake/:ownerId" element={<Cake />} />
+        <Route path="/cake/create/:ownerId" element={<CreateCake />} />
+        <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
+        <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
+
+      </Routes>
+    </Suspense>
   );
 };
 
