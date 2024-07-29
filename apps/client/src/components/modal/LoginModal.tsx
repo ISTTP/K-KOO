@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '#components/modal/Modal.tsx';
-import Button from '#components/Button.tsx';
+import Button from '#components/common/Button.tsx';
 
 const LoginModal = ({
   open,

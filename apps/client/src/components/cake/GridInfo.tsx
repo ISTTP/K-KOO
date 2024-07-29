@@ -1,11 +1,11 @@
 import React, { useEffect, useState, CSSProperties, useRef } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import { useParams } from 'react-router-dom';
-import * as G from '#components/GridStyle.tsx';
+import * as G from '#components/cake/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import ReadLetter from './letter/ReadLetter';
-import YearDropdown from './YearDropDown';
+import ReadLetter from '../letter/ReadLetter';
+import YearDropdown from '../common/YearDropDown';
 import {
   getCakeDataRes,
   getCakeLettersRes,
