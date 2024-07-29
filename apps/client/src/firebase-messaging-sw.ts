@@ -14,9 +14,15 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const messaging = firebase.messaging();
+//const messaging = firebase.messaging();
+let messaging: firebase.messaging.Messaging | null = null;
+if (firebase.messaging.isSupported()) {
+  messaging = firebase.messaging();
+}
+
 
 export function requestPermission() {
+  if (!messaging) { return console.log('ios') }
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
       registerServiceWorker();
@@ -38,8 +44,7 @@ function registerServiceWorker() {
 }
 
 export function getFcmToken() {
-  messaging
-    .getToken({ vapidKey: process.env.FIREBASE_VAPID_KEY })
+  messaging?.getToken({ vapidKey: process.env.FIREBASE_VAPID_KEY })
     .then((token: string) => {
       sendToken(token);
     })
