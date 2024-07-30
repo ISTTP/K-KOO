@@ -63,7 +63,9 @@ const ShareUrlModal = ({
           <LinkIcon width={'3rem'} height={'3rem'} />
         </IconButton>
       </div>
-      <Button type="default" label="닫기" onClick={handleOpen} />
+      <Button type="default" onClick={handleOpen} >
+        닫기
+      </Button>
     </Modal>
   );
 };

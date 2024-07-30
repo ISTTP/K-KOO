@@ -93,7 +93,7 @@ const buttonStyles = {
   },
 };
 
-const Button: React.FC<ButtonProps> = ({ type, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ children, type, onClick }) => {
   const { bgColor, textColor, icon } = buttonStyles[type];
 
   return (
@@ -105,6 +105,7 @@ const Button: React.FC<ButtonProps> = ({ type, onClick }) => {
       disabled={type === 'disabled' || type === 'loading'}
     >
       {icon}
+      {children}
       {type === 'loading' && <ButtonLoading />}
     </StyledButton>
   );

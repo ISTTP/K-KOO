@@ -17,18 +17,20 @@ const LoginModal = ({
       <span>로그인이 필요합니다.</span>
       <Button
         type="default"
-        label="로그인하러 가기"
         onClick={() => {
           navigate('/');
         }}
-      />
+      >
+        로그인하러 가기
+      </Button>
       <Button
         type="default"
-        label="괜찮아요"
         onClick={() => {
           handleOpen();
         }}
-      />
+      >
+        괜찮아요
+      </Button>
     </Modal>
   );
 };
