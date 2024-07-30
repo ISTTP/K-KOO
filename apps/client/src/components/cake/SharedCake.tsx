@@ -61,13 +61,12 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   return (
     <InnerWrapper>
       <CakeHeader nickname={data.nickname} isMyCake={false} />
-      <CakeInfoWrapper>
-        <CakeInfo
-          year={data.year}
-          sheetColor={data.sheetColor}
-          creamColor={data.creamColor}
-        />
-      </CakeInfoWrapper>
+      <CakeInfo
+        year={data.year}
+        sheetColor={data.sheetColor}
+        creamColor={data.creamColor}
+        isMyCake={false}
+      />
       <Button
         type="default"
         label="케이크 꾸며주기"
@@ -110,6 +109,3 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
 
 export default SharedCake;
 
-const CakeInfoWrapper = styled.div`
-  pointer-events: none;
-`;

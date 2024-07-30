@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
@@ -18,12 +18,14 @@ interface CakeInfoProps {
   year: string;
   sheetColor: CakeColorType | null;
   creamColor: CakeColorType | null;
+  isMyCake?: boolean;
 }
 
 const CakeInfo: React.FC<CakeInfoProps> = ({
   year,
   sheetColor,
   creamColor,
+  isMyCake,
 }) => {
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [pageData, setPageData] = useState<getPageRes>({
@@ -92,12 +94,14 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
 
   return (
     <CakeContainer>
-      <RenderCake
-        sheetColor={sheetColor}
-        creamColor={creamColor}
-        candles={candles}
-        handleClick={openLetter}
-      />
+      <CakeInfoWrapper isMyCake={isMyCake}>
+        <RenderCake
+          sheetColor={sheetColor}
+          creamColor={creamColor}
+          candles={candles}
+          handleClick={openLetter}
+        />
+      </CakeInfoWrapper>
       <Pagenation
         currentPage={pageData.currentPage}
         totalPage={pageData.totalPage}
@@ -120,4 +124,12 @@ export default CakeInfo;
 
 const CakeContainer = styled.div`
   margin-top: 50px;
+`;
+
+const CakeInfoWrapper = styled.div<{ isMyCake?: boolean }>`
+  ${({ isMyCake }) =>
+    isMyCake === false &&
+    css`
+      pointer-events: none;
+    `}
 `;
