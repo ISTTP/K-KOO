@@ -17,7 +17,6 @@ const StyledButton = styled.button<{
 }>`
   width: 100%;
   height: 3.5rem;
-  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +26,7 @@ const StyledButton = styled.button<{
     props.$type === 'google' ? '1px solid var(--gray-400)' : 'none'};
   border-radius: 0.25rem;
   cursor: ${(props) => (props.$type !== 'disabled' ? 'pointer' : '')};
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
 
   svg {
