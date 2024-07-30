@@ -16,7 +16,7 @@ const StyledButton = styled.button<{
   $textColor: string;
 }>`
   width: 100%;
-  height: 3rem;
+  height: 3.5rem;
   margin-top: 1rem;
   display: flex;
   align-items: center;
