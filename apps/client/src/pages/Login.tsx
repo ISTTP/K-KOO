@@ -46,14 +46,16 @@ const Login = () => {
         <Link to="/signup">Sign Up</Link>
         <Button
           type="kakao"
-          label="Kakao로 시작하기"
           onClick={handleKakaoLogin}
-        />
+        >
+          카카오로 시작하기
+        </Button>
         <Button
           type="google"
-          label="Google로 시작하기"
           onClick={handleGoogleLogin}
-        />
+        >
+          구글로 시작하기
+        </Button>
       </InnerWrapper>
     </Wrapper>
   );

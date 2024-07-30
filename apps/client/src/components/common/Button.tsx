@@ -55,7 +55,6 @@ const ButtonLoading = styled.div`
 
 interface ButtonProps {
   type: ButtonType;
-  label: string;
   size?: string;
   onClick: () => void;
   children?: React.ReactNode;
@@ -94,7 +93,7 @@ const buttonStyles = {
   },
 };
 
-const Button: React.FC<ButtonProps> = ({ type, label, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ type, onClick }) => {
   const { bgColor, textColor, icon } = buttonStyles[type];
 
   return (
@@ -106,7 +105,6 @@ const Button: React.FC<ButtonProps> = ({ type, label, onClick }) => {
       disabled={type === 'disabled' || type === 'loading'}
     >
       {icon}
-      {label}
       {type === 'loading' && <ButtonLoading />}
     </StyledButton>
   );

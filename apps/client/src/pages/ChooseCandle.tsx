@@ -186,18 +186,20 @@ const ChooseCandle = () => {
           <Button
             type="gray"
             size="large"
-            label="취소"
             onClick={handleOpenBuy}
-          />
+          >
+            취소
+          </Button>
           <Button
             type={isEnoughPoint ? 'default' : 'disabled'}
             size="large"
-            label="구매하기"
             onClick={() => {
               setOpenBuy(false);
               handleBuyCandle(candle?.point ? candle.point : 0);
             }}
-          />
+          >
+            구매하기
+          </Button>
         </div>
       </Modal>
       <Modal open={openSuccess}>
@@ -210,11 +212,12 @@ const ChooseCandle = () => {
         <span>남은 포인트: {userPoint}P</span>
         <Button
           type="default"
-          label="확인"
           onClick={() => {
             navigate(`/letter/create/${ownerId}?candleId=${candle?.candleId}`);
           }}
-        />
+        >
+          확인
+        </Button>
       </Modal>
       <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
     </Wrapper>

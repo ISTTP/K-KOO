@@ -62,7 +62,9 @@ const SignUp = () => {
         value={birthday}
         onChange={(e) => setBirthday(e.target.value)}
       />
-      <Button type="default" label="확인" onClick={handleSignup} />
+      <Button type="default" onClick={handleSignup}>
+        확인
+      </Button>
       <Link to="/">Login</Link>
     </Wrapper>
   );
