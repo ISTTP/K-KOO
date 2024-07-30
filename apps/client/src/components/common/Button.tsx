@@ -25,7 +25,7 @@ const StyledButton = styled.button<{
   color: ${(props) => `var(${props.$textColor})`};
   border: ${(props) =>
     props.$type === 'google' ? '1px solid var(--gray-400)' : 'none'};
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   cursor: ${(props) => (props.$type !== 'disabled' ? 'pointer' : '')};
   font-size: 1rem;
   font-weight: 700;
