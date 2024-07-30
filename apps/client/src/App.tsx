@@ -48,7 +48,6 @@ const App = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/mypage" element={<MyPage />} />
@@ -58,7 +57,6 @@ const App = () => {
         <Route path="/cake/create/:ownerId" element={<CreateCake />} />
         <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
         <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
-
       </Routes>
     </Suspense>
   );

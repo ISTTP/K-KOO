@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-const Input = styled.input`
-  padding: 10px 20px;
+type InputType = 'invalid' | 'default';
+
+const Input = styled.input<{
+  $type: InputType;
+}>`
+  padding: 18px 20px;
   margin: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;

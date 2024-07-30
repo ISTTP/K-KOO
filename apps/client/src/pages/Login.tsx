@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <Wrapper>
       <InnerWrapper>
-        <h1>Login</h1>
+        <h1>케이꾸</h1>
         <Link to="/signup">Sign Up</Link>
         <Button
           type="kakao"
