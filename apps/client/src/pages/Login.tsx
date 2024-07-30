@@ -5,6 +5,7 @@ import Wrapper from '#components/layout/Wrapper.tsx';
 import Button from '#components/common/Button.tsx';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 
 async function handleKakaoLogin() {
   const res = await axiosInstance.get('/auth/kakao/url');
@@ -40,18 +41,20 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <h1>Login</h1>
-      <Link to="/signup">Sign Up</Link>
-      <Button
-        type="kakao"
-        label="Kakao로 시작하기"
-        onClick={handleKakaoLogin}
-      />
-      <Button
-        type="google"
-        label="Google로 시작하기"
-        onClick={handleGoogleLogin}
-      />
+      <InnerWrapper>
+        <h1>Login</h1>
+        <Link to="/signup">Sign Up</Link>
+        <Button
+          type="kakao"
+          label="Kakao로 시작하기"
+          onClick={handleKakaoLogin}
+        />
+        <Button
+          type="google"
+          label="Google로 시작하기"
+          onClick={handleGoogleLogin}
+        />
+      </InnerWrapper>
     </Wrapper>
   );
 };
