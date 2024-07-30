@@ -16,3 +16,7 @@
   --blueberry: #C4A7F3;
   --chocolate: #7B4B23;
 }
+
+body {
+  background-color: var(--orange-100);
+}
