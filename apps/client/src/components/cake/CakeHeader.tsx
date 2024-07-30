@@ -31,7 +31,7 @@ const SubTitle = styled.span`
 `;
 
 const Nickname = styled.span`
-  color: var(--orange-color);
+  color: var(--orange-500);
 `;
 
 const MyPageButton = styled.button`

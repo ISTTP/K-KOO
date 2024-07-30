@@ -29,7 +29,7 @@ const CandleButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    border: 2px solid var(--orange-color);
+    border: 2px solid var(--orange-500);
   }
 `;
 
@@ -42,8 +42,8 @@ const CandleBadge = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  background-color: var(--orange-color);
-  color: var(--white-color);
+  background-color: var(--orange-500);
+  color: var(--white);
   padding: 0.2rem 0.5rem;
   border-radius: 0 0 0 1rem;
 `;

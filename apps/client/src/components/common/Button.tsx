@@ -24,7 +24,7 @@ const StyledButton = styled.button<{
   background-color: ${(props) => `var(${props.$bgColor})`};
   color: ${(props) => `var(${props.$textColor})`};
   border: ${(props) =>
-    props.$type === 'google' ? '1px solid var(--dark-gray-color)' : 'none'};
+    props.$type === 'google' ? '1px solid var(--gray-400)' : 'none'};
   border-radius: 0.5rem;
   cursor: ${(props) => (props.$type !== 'disabled' ? 'pointer' : '')};
   font-size: 1rem;
@@ -39,8 +39,8 @@ const ButtonLoading = styled.div`
   margin-left: 1rem;
   width: 1rem;
   height: 1rem;
-  border: 2px solid var(--white-color);
-  border-top: 2px solid var(--dark-gray-color);
+  border: 2px solid var(--white);
+  border-top: 2px solid var(--gray-400);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   @keyframes spin {
@@ -63,33 +63,33 @@ interface ButtonProps {
 
 const buttonStyles = {
   google: {
-    bgColor: '--white-color',
-    textColor: '--black-color',
+    bgColor: '--white',
+    textColor: '--black',
     icon: <GoogleIcon height={'1.2rem'} width={'1.2rem'} />,
   },
   kakao: {
-    bgColor: '--yellow-color',
-    textColor: '--black-color',
+    bgColor: '--yellow',
+    textColor: '--black',
     icon: <KakaoIcon height={'1.4rem'} width={'1.4rem'} />,
   },
   default: {
-    bgColor: '--orange-color',
-    textColor: '--white-color',
+    bgColor: '--orange-500',
+    textColor: '--white',
     icon: null,
   },
   gray: {
-    bgColor: '--light-gray-color',
-    textColor: '--dark-gray-color',
+    bgColor: '--gray-300',
+    textColor: '--gray-400',
     icon: null,
   },
   disabled: {
-    bgColor: '--light-gray-color',
-    textColor: '--dark-gray-color',
+    bgColor: '--gray-300',
+    textColor: '--gray-400',
     icon: null,
   },
   loading: {
-    bgColor: '--light-gray-color',
-    textColor: '--dark-gray-color',
+    bgColor: '--gray-300',
+    textColor: '--gray-400',
     icon: null,
   },
 };
