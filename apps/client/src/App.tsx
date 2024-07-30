@@ -1,7 +1,9 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import { requestPermission } from '#firebase';
+import Loading from '#components/common/Loading.tsx';
+import './App.css';
+
 
 const MyPage = lazy(() =>
   import('#pages/MyPage.tsx').then((module) => ({ default: module.MyPage })),
@@ -46,7 +48,7 @@ const App = () => {
     requestPermission();
   }, []);
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
