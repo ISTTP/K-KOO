@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '#apis/axios.ts';
 
 export const fetchLetters = async (ownerId: string, year: string, page: number) => {
@@ -7,8 +7,10 @@ export const fetchLetters = async (ownerId: string, year: string, page: number) 
 };
 
 export const useGetLetters = (ownerId: string, year: string, page: number) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['grid-letters', ownerId, year, page],
     queryFn: () => fetchLetters(ownerId, year, page),
+    placeholderData: (previousData) => previousData,
   });
 };
+

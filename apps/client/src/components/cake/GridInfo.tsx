@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties, useRef, useEffect } from 'react';
+import React, { useState, CSSProperties, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import * as G from '#components/cake/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
@@ -14,14 +14,10 @@ import {
 import axiosInstance from '#apis/axios.ts';
 import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
 
-interface yearProp {
-  year: string;
-}
-
 const GRID_PAGE = 24;
 const COLUMN_NUM = 3;
 
-const GridInfo: React.FC<yearProp> = ({ year: init }) => {
+const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
   const [year, setYear] = useState(init);
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [page, setPage] = useState(1);
@@ -31,10 +27,9 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
 
-  const { data } = useGetLetters(ownerId!, year, page);
+  const { data, isFetching } = useGetLetters(ownerId!, year, page);
 
   useEffect(() => {
-
     if (data) {
       const noDataResult = getCakeNoDataRes.safeParse(data);
       if (noDataResult.success && noDataResult.data.noData) {
@@ -48,7 +43,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
         setCakeData((prev) => (page === 1 ? result.data : [...prev, ...result.data]));
       }
     }
-  }, [data])
+  }, [data]);
 
   useEffect(() => {
     setPage(1);
@@ -59,11 +54,11 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
 
   const isItemLoaded = (index: number) => !hasMore || index < cakeData.length;
 
-  const loadMoreItems = () => {
-    if (hasMore) {
+  const loadMoreItems = useCallback(() => {
+    if (hasMore && !isFetching) {
       setPage((prev) => prev + 1);
     }
-  };
+  }, [hasMore, isFetching]);
 
   const openLetter = async (index: number) => {
     const item = cakeData[index];
@@ -75,7 +70,6 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
       alert('편지는 생일 이후에 확인할 수 있어요.');
     }
   };
-
 
   const Cell = ({
     columnIndex,
@@ -142,7 +136,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
                 overscanRowStopIndex,
               } = gridData;
 
-              if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 1) {
+              if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 2) {
                 onItemsRendered({
                   visibleStartIndex: visibleRowStartIndex * COLUMN_NUM,
                   visibleStopIndex: visibleRowStopIndex * COLUMN_NUM,
@@ -170,6 +164,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
           }}
         </InfiniteLoader>
       )}
+      {isFetching && <div>Loading</div>}
       <ReadLetter
         isOpen={!!selectedItem}
         handleClose={() => setSelectedItem(null)}
