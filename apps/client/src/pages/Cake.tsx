@@ -9,11 +9,14 @@ import { AxiosError } from 'axios';
 import { getCakeRes, getUserMeRes } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
 
+
 const Cake = () => {
   const { ownerId } = useParams();
   const navigate = useNavigate();
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<getCakeRes>();
+
+  if (!ownerId) { return ('에러') }
 
   async function checkIsMyCake(ownerId: string) {
     try {

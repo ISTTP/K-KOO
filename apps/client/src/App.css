@@ -1,3 +1,5 @@
+@import './Normalize.css';
+
 :root {
   --white-color: #FFFFFF;
   --black-color: #000000;
