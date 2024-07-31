@@ -13,6 +13,7 @@ import {
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/cake/RenderCake.tsx';
 import ReadLetter from '#components/letter/ReadLetter.tsx';
+import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
 
 interface CakeInfoProps {
   year: string;
@@ -27,40 +28,34 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   creamColor,
   isMyCake,
 }) => {
+  const { ownerId } = useParams();
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
+  const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
   const [pageData, setPageData] = useState<getPageRes>({
     currentPage: 1,
     totalPage: 1,
   });
-  const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
 
-  const { ownerId } = useParams();
+  const { data: cakeLettersData } = useGetCakeLetters(ownerId!, year, pageData.currentPage);
 
-  async function getLetters(page: number) {
-    const res = await axiosInstance.get<getCakeLettersRes>(
-      `/cake/letters/${ownerId}/${year}?keyword=false&page=${page}`,
-    );
-    const noDataResult = getCakeNoDataRes.safeParse(res.data); //정상적으로 data가 있을 경우 error로 작동 멈추지 않도록 safeParse로 처리
+  useEffect(() => {
+    const noDataResult = getCakeNoDataRes.safeParse(cakeLettersData);
     if (noDataResult.success && noDataResult.data.noData) {
       setCakeData([]);
+      setPageData({ currentPage: 1, totalPage: 1 });
     } else {
-      const result = getCakeLettersRes.parse(res.data);
+      const result = getCakeLettersRes.parse(cakeLettersData);
       setCakeData(result.data);
       setPageData({
         currentPage: result.currentPage,
-        totalPage:
-          result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
+        totalPage: result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
       });
     }
-  }
+  }, [cakeLettersData]);
 
-  useEffect(() => {
-    getLetters(1);
-  }, [ownerId]);
-
-  function changePage(page: number) {
-    getLetters(page);
-  }
+  const changePage = (page: number) => {
+    setPageData((prev) => ({ ...prev, currentPage: page }));
+  };
 
   const openLetter = async (index: number) => {
     const item = cakeData[index];
@@ -75,6 +70,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
       alert('편지는 생일 이후에 확인할 수 있어요.');
     }
   };
+
 
   const candlePositions = [
     { top: 5, left: 35 },
