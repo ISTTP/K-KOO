@@ -1,5 +1,4 @@
-import React, { useEffect, useState, CSSProperties, useRef } from 'react';
-import axiosInstance from '#apis/axios.ts';
+import React, { useState, CSSProperties, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as G from '#components/cake/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
@@ -12,10 +11,15 @@ import {
   getCakeNoDataRes,
   getLetterRes,
 } from '@isttp/schemas/all';
+import axiosInstance from '#apis/axios.ts';
+import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
 
 interface yearProp {
   year: string;
 }
+
+const GRID_PAGE = 24;
+const COLUMN_NUM = 3;
 
 const GridInfo: React.FC<yearProp> = ({ year: init }) => {
   const [year, setYear] = useState(init);
@@ -26,37 +30,28 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
-  const GRID_PAGE = 24;
-  const COLUMN_NUM = 3;
 
-  async function getLetters(page: number, year: string) {
-    try {
-      const res = await axiosInstance.get(
-        `/cake/letters/${ownerId}/${year}?keyword=true&page=${page}`,
-      );
-      const noDataResult = getCakeNoDataRes.safeParse(res.data); //정상적으로 data가 있을 경우 error로 작동 멈추지 않도록 safeParse로 처리
+  const { data } = useGetLetters(ownerId!, year, page);
+
+  useEffect(() => {
+
+    if (data) {
+      const noDataResult = getCakeNoDataRes.safeParse(data);
       if (noDataResult.success && noDataResult.data.noData) {
         setNoData(true);
         setHasMore(false);
         setCakeData([]);
       } else {
-        const result = getCakeLettersRes.parse(res.data);
+        const result = getCakeLettersRes.parse(data);
         setNoData(false);
         setHasMore(result.data.length >= GRID_PAGE);
-        setCakeData((prev) =>
-          page === 1 ? result.data : [...prev, ...result.data],
-        );
+        setCakeData((prev) => (page === 1 ? result.data : [...prev, ...result.data]));
       }
-    } catch (error) {
-      alert('편지 데이터를 불러오는데 실패했습니다:' + String(error));
     }
-  }
+  }, [data])
 
   useEffect(() => {
     setPage(1);
-    setCakeData([]);
-    setHasMore(true);
-    getLetters(1, year);
     if (loaderRef.current) {
       loaderRef.current.resetloadMoreItemsCache();
     }
@@ -67,7 +62,6 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
   const loadMoreItems = () => {
     if (hasMore) {
       setPage((prev) => prev + 1);
-      getLetters(page + 1, year);
     }
   };
 
@@ -81,6 +75,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
       alert('편지는 생일 이후에 확인할 수 있어요.');
     }
   };
+
 
   const Cell = ({
     columnIndex,
@@ -146,6 +141,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
                 overscanRowStartIndex,
                 overscanRowStopIndex,
               } = gridData;
+
               if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 1) {
                 onItemsRendered({
                   visibleStartIndex: visibleRowStartIndex * COLUMN_NUM,
