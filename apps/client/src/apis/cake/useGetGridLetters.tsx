@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '#apis/axios.ts';
 
-export const fetchLetters = async (ownerId: string, year: string, page: number) => {
+async function fetchLetters(ownerId: string, year: string, page: number) {
   const res = await axiosInstance.get(`/cake/letters/${ownerId}/${year}?keyword=true&page=${page}`);
   return res.data;
 };

@@ -9,7 +9,7 @@ async function fetchCakeLetters(ownerId: string, year: string, page: number) {
   return res.data;
 }
 
-export function useGetCakeLetters(ownerId: string, year: string, page: number) {
+export const useGetCakeLetters = (ownerId: string, year: string, page: number) => {
   return useSuspenseQuery({
     queryKey: ['cake-letters', ownerId, year, page],
     queryFn: () => fetchCakeLetters(ownerId, year, page),
