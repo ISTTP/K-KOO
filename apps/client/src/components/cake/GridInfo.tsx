@@ -1,6 +1,6 @@
 import React, { useState, CSSProperties, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import * as G from '#components/cake/GridStyle.tsx';
+import * as G from '#styles/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import ReadLetter from '../letter/ReadLetter';
@@ -11,8 +11,8 @@ import {
   getCakeNoDataRes,
   getLetterRes,
 } from '@isttp/schemas/all';
-import axiosInstance from '#apis/axios.ts';
 import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
+import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
 
 const GRID_PAGE = 24;
 const COLUMN_NUM = 3;
@@ -24,10 +24,13 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
   const [noData, setNoData] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
+  const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
 
   const { data, isFetching } = useGetLetters(ownerId!, year, page);
+
+  const { data: letterData } = useGetLetter(selectedLetterId!);
 
   useEffect(() => {
     if (data) {
@@ -52,6 +55,18 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
     }
   }, [year]);
 
+  useEffect(() => {
+    if (letterData) {
+      const result = getLetterRes.parse(letterData);
+      if (result.isOpen) {
+        setSelectedItem(result);
+      } else {
+        alert('편지는 생일 이후에 확인할 수 있어요.');
+        setSelectedLetterId(null);
+      }
+    }
+  }, [letterData]);
+
   const isItemLoaded = (index: number) => !hasMore || index < cakeData.length;
 
   const loadMoreItems = useCallback(() => {
@@ -60,15 +75,9 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
     }
   }, [hasMore, isFetching]);
 
-  const openLetter = async (index: number) => {
+  const openLetter = (index: number) => {
     const item = cakeData[index];
-    const res = await axiosInstance.get(`/letter/${item.letterId}`);
-    const result = getLetterRes.parse(res.data);
-    if (result.isOpen) {
-      setSelectedItem(result);
-    } else {
-      alert('편지는 생일 이후에 확인할 수 있어요.');
-    }
+    setSelectedLetterId(item.letterId);
   };
 
   const Cell = ({
