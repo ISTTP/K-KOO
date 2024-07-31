@@ -113,7 +113,7 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
         onClick={() => openLetter(index)}
       >
         <G.CandleImage src={item.candleImageUrl} alt="장식초" />
-        <G.Keyword># {item.keyword}</G.Keyword>
+        <G.Keyword>#{item.keyword}</G.Keyword>
         <G.Nickname>{item.nickname}</G.Nickname>
       </div>
     );
@@ -159,11 +159,11 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
               <Grid
                 style={{ scrollbarWidth: 'none' }}
                 columnCount={COLUMN_NUM}
-                columnWidth={100}
+                columnWidth={130}
                 height={500}
                 rowCount={Math.ceil(cakeData.length / COLUMN_NUM)}
                 rowHeight={150}
-                width={300}
+                width={390}
                 onItemsRendered={newItemsRendered}
                 ref={ref}
               >
