@@ -12,12 +12,13 @@ import {
   getLetterRes,
 } from '@isttp/schemas/all';
 import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
-import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
+import { useGetLetter, useGetAllLetter } from '#apis/letter/useGetLetter.tsx';
+import { useGetMyLetters } from '#apis/letter/useGetMyLetters.tsx';
 
 const GRID_PAGE = 24;
 const COLUMN_NUM = 3;
 
-const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
+const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => void }> = ({ year: init, handleTotalChange }) => {
   const [year, setYear] = useState(init);
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [page, setPage] = useState(1);
@@ -28,9 +29,13 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
 
-  const { data, isFetching } = useGetLetters(ownerId!, year, page);
+  const { data, isFetching } = year === 'all'
+    ? useGetMyLetters(page)
+    : useGetLetters(ownerId!, year, page);
 
-  const { data: letterData } = useGetLetter(selectedLetterId!);
+  const { data: letterData } = year === 'all'
+    ? useGetAllLetter(selectedLetterId!)
+    : useGetLetter(selectedLetterId!);
 
   useEffect(() => {
     if (data) {
@@ -39,11 +44,13 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
         setNoData(true);
         setHasMore(false);
         setCakeData([]);
+        handleTotalChange?.(0);
       } else {
         const result = getCakeLettersRes.parse(data);
         setNoData(false);
         setHasMore(result.data.length >= GRID_PAGE);
         setCakeData((prev) => (page === 1 ? result.data : [...prev, ...result.data]));
+        handleTotalChange?.(result.totalPage);
       }
     }
   }, [data]);
@@ -121,7 +128,7 @@ const GridInfo: React.FC<{ year: string }> = ({ year: init }) => {
 
   return (
     <>
-      <YearDropdown year={year} handleYear={setYear} />
+      {year !== 'all' && <YearDropdown year={year} handleYear={setYear} />}
       {noData ? (
         <G.NoDataText>받은 편지가 없습니다</G.NoDataText>
       ) : (
