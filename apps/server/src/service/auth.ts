@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import crypto from 'crypto';
 import prisma from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
@@ -239,4 +240,11 @@ export async function authorize(
   } catch (error) {
     return res.status(500).json({ message: `SERVER_ERROR: ${error}` });
   }
+}
+
+export function createHashedPassword(password: string) {
+  const hashAlgorithm = crypto.createHash('sha256');
+  const saltedPassword = String(password) + String(process.env.PASSWORD_SALT);
+  const hashedPassword = hashAlgorithm.update(saltedPassword).digest('hex');
+  return hashedPassword;
 }

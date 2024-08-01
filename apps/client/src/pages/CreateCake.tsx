@@ -107,7 +107,9 @@ const CreateCake = () => {
         selectedColor={creamColor}
         setSelectedColor={setCreamColor}
       />
-      <Button type="default" label="케이크 만들기" onClick={handleCreateCake} />
+      <Button type="default" onClick={handleCreateCake}>
+        케이크 만들기
+      </Button>
     </Wrapper>
   );
 };

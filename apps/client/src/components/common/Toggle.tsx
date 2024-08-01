@@ -42,7 +42,7 @@ const ToggleBtn = styled.button<Proptype>`
   border: none;
   cursor: pointer;
   background-color: ${(props) =>
-    !props.$istoggle ? 'none' : 'var(--light-gray-color)'};
+    !props.$istoggle ? 'none' : 'var(--gray-300)'};
   position: relative;
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@ const ToggleBtn = styled.button<Proptype>`
 `;
 
 const Circle = styled.div<Proptype>`
-  background-color: var(--orange-color);
+  background-color: var(--orange-500);
   width: 30px;
   height: 30px;
   border-radius: 30px;

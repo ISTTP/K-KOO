@@ -11,13 +11,19 @@ import {
   getKakaoAccessToken,
   getSocialUid,
   authorize,
+  createHashedPassword,
 } from '../service/auth';
 
 const router: Router = Router();
 
 /* 회원가입 API */
 router.post('/auth/signup', async (req, res) => {
-  const { id, loginType, nickname, birthday } = req.body;
+  const { id, password, email, nickname, birthday, loginType } = req.body;
+  let Pwd = null;
+
+  if (loginType === 'default') {
+    Pwd = createHashedPassword(password);
+  }
 
   try {
     const isExist = await checkUser(loginType, id);
@@ -29,6 +35,8 @@ router.post('/auth/signup', async (req, res) => {
     const user = await prisma.user.create({
       data: {
         id,
+        password: Pwd,
+        email,
         nickname,
         birthday,
         loginType,
@@ -129,11 +137,17 @@ router.post('/auth/signout', authorize, async (req, res) => {
       },
     });
 
-    await prisma.user.delete({
+    const deletedUser = await prisma.user.delete({
       where: {
         userId,
       },
     });
+
+    await prisma.verify.deleteMany({
+      where: {
+        email: deletedUser.email ?? '',
+      },
+    })
 
     res.clearCookie('ACT');
     res.clearCookie('RFT');

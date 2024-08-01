@@ -97,7 +97,6 @@ const CreateLetter = () => {
         />
         <Button
           type={loading ? 'loading' : 'default'}
-          label="편지 보내기"
           onClick={async () => {
             setLoading(true);
 
@@ -122,7 +121,9 @@ const CreateLetter = () => {
               alert('편지 보내기에 실패했습니다.');
             }
           }}
-        />
+        >
+          편지 보내기
+        </Button>
       </InnerWrapper>
     </Wrapper>
   );

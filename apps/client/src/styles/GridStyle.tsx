@@ -6,7 +6,7 @@ export const GridItem = styled.div`
   align-items: center;
   padding: 8px;
   border-radius: 8px;
-  background-color: var(--light-orange-color);
+  background-color: var(--white);
 `;
 
 export const CandleImage = styled.img`
@@ -15,11 +15,12 @@ export const CandleImage = styled.img`
   object-fit: cover;
   margin-bottom: 4px;
   border-radius: 10px;
-  border: 1px solid var(--orange-color );
+  border: 1px solid var(--orange-500 );
   position: relative;
+  background: var(--white);
 
   &:hover {
-    border: 3px solid var(--orange-color );
+    border: 3px solid var(--orange-500 );
   }
 
 
@@ -27,7 +28,7 @@ export const CandleImage = styled.img`
 
 export const Nickname = styled.p`
   font-size: 14px;
-  color: var(--black-color);
+  color: var(--black);
   text-align: center;
   font-family: 'Pretendard';
   font-size: 17px;
@@ -40,12 +41,12 @@ export const Nickname = styled.p`
 export const Keyword = styled.p`
   font-size: 14px;
   padding: 4px 12px;
-  color: var(--black-color);
+  color: var(--black);
   position: absolute;
   top: 72px;
   left: 15px;
   border-radius: 10px;
-  background: var(--orange-color);
+  background: var(--orange-500);
   color: var(--white, #FFF);
   text-align: center;
   font-family: 'Pretendard';
@@ -59,5 +60,5 @@ export const NoDataText = styled.p`
   font-size: 18px;
   padding: 30px;
   margin: 0;
-  color: var(--black-color);
+  color: var(--black);
 `;

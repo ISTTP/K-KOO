@@ -9,9 +9,10 @@ const InnerWrapper = styled.div`
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-
-  @media (min-width: 450px) {
-    width: 450px;
+  margin: 0 35px;
+  
+  @media (min-width: 801px) {
+    width: 800px;
   }
 `;
 

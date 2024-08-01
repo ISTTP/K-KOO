@@ -44,7 +44,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  background: var(--white-color);
+  background: var(--white);
   padding: 20px;
   border-radius: 8px;
   max-width: 240px;
