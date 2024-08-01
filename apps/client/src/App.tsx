@@ -51,7 +51,7 @@ const App = () => {
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup/:step" element={<SignUp />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/auth/kakao" element={<KakaoLogin />} />
         <Route path="/auth/google" element={<GoogleLogin />} />
