@@ -25,9 +25,15 @@ const StyledButton = styled.button<{
   border: ${(props) =>
     props.$type === 'google' ? '1px solid var(--gray-400)' : 'none'};
   border-radius: 0.25rem;
-  cursor: ${(props) => (props.$type !== 'disabled' ? 'pointer' : '')};
-  font-size: 1.05rem;
+  cursor: ${(props) => (props.$type !== 'disabled' && props.$type !== 'loading' ? 'pointer' : 'not-allowed')};
+  font-family: Pretendard, sans-serif;
+  font-size: 1.06rem;
   font-weight: 700;
+  transition: color 0.2s, opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   svg {
     margin-right: 1rem;
@@ -38,8 +44,8 @@ const ButtonLoading = styled.div`
   margin-left: 1rem;
   width: 1rem;
   height: 1rem;
-  border: 2px solid var(--white);
-  border-top: 2px solid var(--gray-400);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-top: 2px solid var(--white);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   @keyframes spin {
@@ -86,8 +92,8 @@ const buttonStyles = {
     icon: null,
   },
   loading: {
-    bgColor: '--gray-300',
-    textColor: '--gray-400',
+    bgColor: '--orange-400',
+    textColor: '--white',
     icon: null,
   },
 };
