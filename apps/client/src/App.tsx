@@ -40,6 +40,11 @@ const CreateLetter = lazy(() =>
     default: module.CreateLetter,
   })),
 );
+const MyLetter = lazy(() =>
+  import('#pages/MyLetter.tsx').then((module) => ({
+    default: module.MyLetter,
+  })),
+);
 
 const App = () => {
   useEffect(() => {
@@ -58,6 +63,7 @@ const App = () => {
         <Route path="/cake/create/:ownerId" element={<CreateCake />} />
         <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
         <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
+        <Route path="/myletter" element={<MyLetter />} />
 
       </Routes>
     </Suspense>
