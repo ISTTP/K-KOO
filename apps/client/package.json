@@ -9,6 +9,7 @@
     "#components/*.ts": "./src/components/*.ts",
     "#pages/*.tsx": "./src/pages/*.tsx",
     "#apis/*.ts": "./src/apis/*.ts",
+    "#apis/*.tsx": "./src/apis/*.tsx",
     "#styles/*.ts": "./src/styles/*.ts",
     "#firebase": "./src/firebase-messaging-sw.ts"
   },
@@ -22,8 +23,12 @@
   },
   "dependencies": {
     "@sentry/react": "^8.11.0",
+    "@tanstack/query-core": "^5.51.15",
+    "@tanstack/react-query": "^5.51.15",
+    "@tanstack/react-query-devtools": "^5.51.15",
     "axios": "^1.7.2",
     "firebase": "^8.2.3",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.24.0",
