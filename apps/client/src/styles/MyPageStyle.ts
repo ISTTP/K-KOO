@@ -26,7 +26,7 @@ export const NameWrapper = styled.h2`
 `;
 
 export const Nickname = styled.span`
-  color: var(--orange-color);
+  color: var(--orange-500);
 `;
 
 export const InfoWrapper = styled.div`
@@ -68,12 +68,12 @@ export const PointWrapper = styled.div`
 export const PointIcon = styled.div`
   width: 1.5rem;
   height: 1.5rem;
-  background-color: var(--orange-color);
+  background-color: var(--orange-500);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--white-color);
+  color: var(--white);
 `;
 
 export const SubTitle = styled.h2`
@@ -84,7 +84,7 @@ export const SubTitle = styled.h2`
 
 export const Hr = styled.hr`
   width: 100%;
-  border: 1.5px solid var(--light-gray-color);
+  border: 1.5px solid var(--gray-300);
   margin: 2rem 0;
 `;
 
@@ -92,11 +92,11 @@ export const Input = styled.input`
   width: 100%;
   padding: 0.5rem;
   margin: 0.5rem 0;
-  border: 1px solid var(--dark-gray-color);
+  border: 1px solid var(--gray-400);
   border-radius: 0.5rem;
 
   &:disabled {
-    background-color: var(--light-gray-color);
+    background-color: var(--gray-300);
   }
 `;
 

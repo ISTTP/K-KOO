@@ -69,38 +69,43 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
       />
       <Button
         type="default"
-        label="케이크 꾸며주기"
         onClick={handleCheckLogin}
-      />
+      >
+        케이크 꾸며주기
+      </Button>
       <Button
         type="default"
-        label="내 케이크 보러가기"
         onClick={handleNavigateToMyCake}
-      />
+      >
+        내 케이크 보러가기
+      </Button>
       <Modal open={open}>
         <span>편지를 작성하면 포인트를 얻을 수 있어요.</span>
         <span>로그인 하시겠어요?</span>
         <Button
           type="default"
-          label="로그인하러 가기"
           onClick={() => {
             navigate('/');
           }}
-        />
+        >
+          로그인하러 가기
+        </Button>
         <Button
           type="default"
-          label="그냥 편지 작성하기"
           onClick={() => {
             navigate(`/letter/choose/${ownerId}`);
           }}
-        />
+        >
+          그냥 편지 작성하기
+        </Button>
         <Button
           type="default"
-          label="닫기"
           onClick={() => {
             setOpen(false);
           }}
-        />
+        >
+          닫기
+        </Button>
       </Modal>
       <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
     </InnerWrapper>

@@ -48,9 +48,10 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           />
           <Button
             type="default"
-            label="내 케이크 공유하기"
             onClick={handleOpen}
-          />
+          >
+            내 케이크 공유하기
+          </Button>
           <ShareUrlModal
             nickname={data.nickname}
             open={open}

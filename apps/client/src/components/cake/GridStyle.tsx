@@ -6,7 +6,7 @@ export const GridItem = styled.div`
   align-items: center;
   padding: 8px;
   border-radius: 8px;
-  background-color: var(--light-orange-color);
+  background-color: var(--orange-100);
 `;
 
 export const CandleImage = styled.img`
@@ -20,19 +20,19 @@ export const Nickname = styled.p`
   font-size: 14px;
   padding: 0;
   margin: 0;
-  color: var(--black-color);
+  color: var(--black);
 `;
 
 export const Keyword = styled.p`
   font-size: 14px;
   padding: 0;
   margin: 0;
-  color: var(--black-color);
+  color: var(--black);
 `;
 
 export const NoDataText = styled.p`
   font-size: 18px;
   padding: 30px;
   margin: 0;
-  color: var(--black-color);
+  color: var(--black);
 `;

@@ -83,6 +83,6 @@ const Nickname = styled.p<{ $sheetColor: CakeColorType }>`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: ${({ $sheetColor }) =>
     $sheetColor === 'white' || $sheetColor === 'banana'
-      ? 'var(--black-color)'
-      : 'var(--white-color)'};
+      ? 'var(--black)'
+      : 'var(--white)'};
 `;
