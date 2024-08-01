@@ -38,7 +38,7 @@ const GoogleLogin = () => {
         navigate(`/cake/${response.userId}`);
         break;
       case false:
-        navigate('/signup', {
+        navigate('/signup/nickname', {
           state: { loginType: response.loginType, id: response.id },
         });
         break;
