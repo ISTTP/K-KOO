@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import styled from 'styled-components';
 import { getUserYearRes } from '@isttp/schemas/all';
+import { useGetYear } from '#apis/cake/useGetYear.tsx';
 
 interface YearDropdownProps {
   year: string;
@@ -12,25 +13,20 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
   const [years, setYears] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const getYears = async () => {
-    try {
-      const res = await axiosInstance.get<getUserYearRes>('/user/year');
-      const firstYear = res.data.year;
-
-      const maxYear = Number(year);
-      const Options = [];
-      for (let list = firstYear; list <= maxYear; list++) {
-        Options.push(list.toString());
-      }
-      setYears(Options);
-    } catch (error) {
-      alert('회원가입 연도 정보를 받아오지 못했습니다' + String(error));
-    }
-  };
+  const { data, isError } = useGetYear();
 
   useEffect(() => {
-    getYears();
-  }, []);
+    if (isError) {
+      alert('회원가입 연도 정보를 받아오지 못했습니다');
+    }
+    const firstYear = data.year;
+    const maxYear = Number(year);
+    const Options = [];
+    for (let list = firstYear; list <= maxYear; list++) {
+      Options.push(list.toString());
+    }
+    setYears(Options);
+  }, [data]);
 
   return (
     <DropdownContainer>

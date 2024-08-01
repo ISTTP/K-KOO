@@ -1,6 +1,6 @@
-import React, { useState, CSSProperties, useRef, useEffect } from 'react';
+import React, { useState, CSSProperties, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import * as G from '#components/cake/GridStyle.tsx';
+import * as G from '#styles/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import ReadLetter from '../letter/ReadLetter';
@@ -11,44 +11,49 @@ import {
   getCakeNoDataRes,
   getLetterRes,
 } from '@isttp/schemas/all';
-import axiosInstance from '#apis/axios.ts';
 import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
-
-interface yearProp {
-  year: string;
-}
+import { useGetLetter, useGetAllLetter } from '#apis/letter/useGetLetter.tsx';
+import { useGetMyLetters } from '#apis/letter/useGetMyLetters.tsx';
 
 const GRID_PAGE = 24;
 const COLUMN_NUM = 3;
 
-const GridInfo: React.FC<yearProp> = ({ year: init }) => {
+const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => void }> = ({ year: init, handleTotalChange }) => {
   const [year, setYear] = useState(init);
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
+  const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
 
-  const { data } = useGetLetters(ownerId!, year, page);
+  const { data, isFetching } = year === 'all'
+    ? useGetMyLetters(page)
+    : useGetLetters(ownerId!, year, page);
+
+  const { data: letterData } = year === 'all'
+    ? useGetAllLetter(selectedLetterId!)
+    : useGetLetter(selectedLetterId!);
 
   useEffect(() => {
-
     if (data) {
       const noDataResult = getCakeNoDataRes.safeParse(data);
       if (noDataResult.success && noDataResult.data.noData) {
         setNoData(true);
         setHasMore(false);
         setCakeData([]);
+        handleTotalChange?.(0);
       } else {
         const result = getCakeLettersRes.parse(data);
         setNoData(false);
         setHasMore(result.data.length >= GRID_PAGE);
         setCakeData((prev) => (page === 1 ? result.data : [...prev, ...result.data]));
+        handleTotalChange?.(result.totalPage);
       }
     }
-  }, [data])
+  }, [data]);
 
   useEffect(() => {
     setPage(1);
@@ -57,25 +62,30 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
     }
   }, [year]);
 
+  useEffect(() => {
+    if (letterData) {
+      const result = getLetterRes.parse(letterData);
+      if (result.isOpen) {
+        setSelectedItem(result);
+      } else {
+        alert('편지는 생일 이후에 확인할 수 있어요.');
+        setSelectedLetterId(null);
+      }
+    }
+  }, [letterData]);
+
   const isItemLoaded = (index: number) => !hasMore || index < cakeData.length;
 
-  const loadMoreItems = () => {
-    if (hasMore) {
+  const loadMoreItems = useCallback(() => {
+    if (hasMore && !isFetching) {
       setPage((prev) => prev + 1);
     }
-  };
+  }, [hasMore, isFetching]);
 
-  const openLetter = async (index: number) => {
+  const openLetter = (index: number) => {
     const item = cakeData[index];
-    const res = await axiosInstance.get(`/letter/${item.letterId}`);
-    const result = getLetterRes.parse(res.data);
-    if (result.isOpen) {
-      setSelectedItem(result);
-    } else {
-      alert('편지는 생일 이후에 확인할 수 있어요.');
-    }
+    setSelectedLetterId(item.letterId);
   };
-
 
   const Cell = ({
     columnIndex,
@@ -110,7 +120,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
         onClick={() => openLetter(index)}
       >
         <G.CandleImage src={item.candleImageUrl} alt="장식초" />
-        <G.Keyword># {item.keyword}</G.Keyword>
+        <G.Keyword>#{item.keyword}</G.Keyword>
         <G.Nickname>{item.nickname}</G.Nickname>
       </div>
     );
@@ -118,7 +128,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
 
   return (
     <>
-      <YearDropdown year={year} handleYear={setYear} />
+      {year !== 'all' && <YearDropdown year={year} handleYear={setYear} />}
       {noData ? (
         <G.NoDataText>받은 편지가 없습니다</G.NoDataText>
       ) : (
@@ -142,7 +152,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
                 overscanRowStopIndex,
               } = gridData;
 
-              if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 1) {
+              if (visibleRowStopIndex >= cakeData.length / COLUMN_NUM - 2) {
                 onItemsRendered({
                   visibleStartIndex: visibleRowStartIndex * COLUMN_NUM,
                   visibleStopIndex: visibleRowStopIndex * COLUMN_NUM,
@@ -156,11 +166,11 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
               <Grid
                 style={{ scrollbarWidth: 'none' }}
                 columnCount={COLUMN_NUM}
-                columnWidth={100}
+                columnWidth={130}
                 height={500}
                 rowCount={Math.ceil(cakeData.length / COLUMN_NUM)}
                 rowHeight={150}
-                width={300}
+                width={390}
                 onItemsRendered={newItemsRendered}
                 ref={ref}
               >
@@ -170,6 +180,7 @@ const GridInfo: React.FC<yearProp> = ({ year: init }) => {
           }}
         </InfiniteLoader>
       )}
+      {isFetching && <div>Loading</div>}
       <ReadLetter
         isOpen={!!selectedItem}
         handleClose={() => setSelectedItem(null)}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
-import axiosInstance from '#apis/axios.ts';
 import { CakeColorType } from '@isttp/types/all';
 import {
   getCakeDataRes,
@@ -14,6 +13,7 @@ import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/cake/RenderCake.tsx';
 import ReadLetter from '#components/letter/ReadLetter.tsx';
 import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
+import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
 
 interface CakeInfoProps {
   year: string;
@@ -31,12 +31,15 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   const { ownerId } = useParams();
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
+  const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
   const [pageData, setPageData] = useState<getPageRes>({
     currentPage: 1,
     totalPage: 1,
   });
 
   const { data: cakeLettersData } = useGetCakeLetters(ownerId!, year, pageData.currentPage);
+
+  const { data: letterData } = useGetLetter(selectedLetterId!);
 
   useEffect(() => {
     const noDataResult = getCakeNoDataRes.safeParse(cakeLettersData);
@@ -57,20 +60,22 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     setPageData((prev) => ({ ...prev, currentPage: page }));
   };
 
-  const openLetter = async (index: number) => {
-    const item = cakeData[index];
-    const res = await axiosInstance.get<getLetterRes>(
-      `/letter/${item.letterId}`,
-    );
-    const result = getLetterRes.parse(res.data);
-
-    if (result.isOpen) {
-      setSelectedItem(result);
-    } else {
-      alert('편지는 생일 이후에 확인할 수 있어요.');
+  useEffect(() => {
+    if (letterData) {
+      const result = getLetterRes.parse(letterData);
+      if (result.isOpen) {
+        setSelectedItem(result);
+      } else {
+        alert('편지는 생일 이후에 확인할 수 있어요.');
+        setSelectedLetterId(null);
+      }
     }
-  };
+  }, [letterData]);
 
+  const openLetter = (index: number) => {
+    const item = cakeData[index];
+    setSelectedLetterId(item.letterId);
+  };
 
   const candlePositions = [
     { top: 5, left: 35 },
