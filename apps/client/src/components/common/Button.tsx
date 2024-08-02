@@ -59,6 +59,7 @@ const ButtonLoading = styled.div`
 `;
 
 interface ButtonProps {
+  ref?: React.RefObject<HTMLButtonElement>;
   type: ButtonType;
   size?: string;
   onClick: () => void;
@@ -98,11 +99,12 @@ const buttonStyles = {
   },
 };
 
-const Button: React.FC<ButtonProps> = ({ children, type, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ children, ref, type, onClick }) => {
   const { bgColor, textColor, icon } = buttonStyles[type];
 
   return (
     <StyledButton
+      ref={ref}
       $type={type}
       $bgColor={bgColor}
       $textColor={textColor}
