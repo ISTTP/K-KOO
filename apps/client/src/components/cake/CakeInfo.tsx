@@ -14,6 +14,7 @@ import RenderCake from '#components/cake/RenderCake.tsx';
 import ReadLetter from '#components/letter/ReadLetter.tsx';
 import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
 import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CakeInfoProps {
   year: string;
@@ -36,7 +37,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     currentPage: 1,
     totalPage: 1,
   });
-
+  const queryClient = useQueryClient();
   const { data: cakeLettersData } = useGetCakeLetters(ownerId!, year, pageData.currentPage);
 
   const { data: letterData } = useGetLetter(selectedLetterId!);
@@ -75,6 +76,9 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   const openLetter = (index: number) => {
     const item = cakeData[index];
     setSelectedLetterId(item.letterId);
+    queryClient.resetQueries({
+      queryKey: ['letter', item.letterId],
+    });
   };
 
   const candlePositions = [

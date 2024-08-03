@@ -14,6 +14,7 @@ import {
 import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
 import { useGetLetter, useGetAllLetter } from '#apis/letter/useGetLetter.tsx';
 import { useGetMyLetters } from '#apis/letter/useGetMyLetters.tsx';
+import { useQueryClient } from '@tanstack/react-query';
 
 const GRID_PAGE = 24;
 const COLUMN_NUM = 3;
@@ -28,6 +29,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
   const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
+  const queryClient = useQueryClient();
 
   const { data, isFetching } = year === 'all'
     ? useGetMyLetters(page)
@@ -85,6 +87,9 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
   const openLetter = (index: number) => {
     const item = cakeData[index];
     setSelectedLetterId(item.letterId);
+    queryClient.resetQueries({
+      queryKey: ['letter', item.letterId],
+    });
   };
 
   const Cell = ({
@@ -167,7 +172,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
                 style={{ scrollbarWidth: 'none' }}
                 columnCount={COLUMN_NUM}
                 columnWidth={130}
-                height={500}
+                height={590}
                 rowCount={Math.ceil(cakeData.length / COLUMN_NUM)}
                 rowHeight={150}
                 width={390}

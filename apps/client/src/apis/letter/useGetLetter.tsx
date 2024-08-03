@@ -10,7 +10,8 @@ export const useGetLetter = (letterId: number) => {
   return useQuery({
     queryKey: ['letter', letterId],
     queryFn: () => fetchLetter(letterId),
-    enabled: !!letterId
+    enabled: !!letterId,
+    staleTime: 0,
   });
 }
 
