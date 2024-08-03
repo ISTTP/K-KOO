@@ -27,7 +27,6 @@ axiosInstance.interceptors.response.use(
 
     // 400, 404 에러 응답
     if (axiosError === 404 || 400) {
-      window.history.back();
       return Promise.reject(error);
     }
 

@@ -19,6 +19,22 @@ export async function getUserBirthday(userId: string) {
   });
 }
 
+export async function getUserFromEmail(email: string) {
+  return await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+}
+
+export async function getUserFromId(id: string) {
+  return await prisma.user.findFirst({
+    where: {
+      id,
+    },
+  });
+}
+
 export async function setUser(userId: string, data: object) {
   return await prisma.user.update({
     where: {

@@ -11,19 +11,14 @@ import {
   getKakaoAccessToken,
   getSocialUid,
   authorize,
-  createHashedPassword,
 } from '../service/auth';
+import { getUserFromId } from '../models/user';
 
 const router: Router = Router();
 
 /* 회원가입 API */
 router.post('/auth/signup', async (req, res) => {
   const { id, password, email, nickname, birthday, loginType } = req.body;
-  let Pwd = null;
-
-  if (loginType === 'default') {
-    Pwd = createHashedPassword(password);
-  }
 
   try {
     const isExist = await checkUser(loginType, id);
@@ -35,7 +30,7 @@ router.post('/auth/signup', async (req, res) => {
     const user = await prisma.user.create({
       data: {
         id,
-        password: Pwd,
+        password,
         email,
         nickname,
         birthday,
@@ -54,6 +49,35 @@ router.post('/auth/signup', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: `회원가입 실패 : ${error}` });
+  }
+});
+
+/* 로그인 API */
+router.post('/auth/login', async (req, res) => {
+  const { id, password } = req.body;
+
+  try {
+    const user = await getUserFromId(id);
+
+    if (!user) {
+      return res.status(200).json({
+        success: false,
+        message: '회원가입이 필요합니다.',
+        id,
+        loginType: 'default',
+      });
+    }
+
+    if (user.password !== password) {
+      return res.status(200).json({
+        success: false,
+        message: '비밀번호가 일치하지 않습니다.',
+      });
+    }
+
+    handleLogin(user.userId, res, 'default', id);
+  } catch (error) {
+    res.status(500).json({ message: `로그인 실패 : ${error}` });
   }
 });
 

@@ -13,6 +13,9 @@ export async function getVerifyInfo(email: string) {
   return await prisma.verify.findFirst({
     where: {
       email,
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 }
