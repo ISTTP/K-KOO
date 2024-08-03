@@ -6,7 +6,7 @@ import Button from '#components/common/Button.tsx';
 import * as S from '#styles/SignUpStyle.ts';
 
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from '#utils/handleButtonClick.ts';
+import { handleButtonClick } from '#utils';
 
 const NicknameForm = () => {
   const navigate = useNavigate();

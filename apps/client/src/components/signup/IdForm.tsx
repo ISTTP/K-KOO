@@ -8,7 +8,7 @@ import * as S from '#styles/SignUpStyle.ts';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from '#utils/handleButtonClick.ts';
+import { handleButtonClick } from '#utils';
 
 async function checkId(id: string) {
   try {

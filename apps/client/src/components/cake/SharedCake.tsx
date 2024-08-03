@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '#apis/axios.ts';
-import CakeInfo from '#components/cake/CakeInfo.tsx';
-import Button from '#components/common/Button.tsx';
-import Modal from '#components/modal/Modal.tsx';
-import LoginModal from '#components/modal/LoginModal.tsx';
+
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
+import CakeInfo from '#components/cake/CakeInfo.tsx';
+import LoginModal from '#components/modal/LoginModal.tsx';
+import Modal from '#components/modal/Modal.tsx';
+import Button from '#components/common/Button.tsx';
+
 import { user } from '@isttp/schemas/all';
 import { CakeUserTypeResponse } from '@isttp/types/all';
+import { checkBirthdayWithin30Days } from '#utils';
+
 import { AxiosError } from 'axios';
-import InnerWrapper from '#components/layout/InnerWrapper.tsx';
-import { checkBirthdayWithin30Days } from '#utils/checkBirthdayWithin30Days.ts';
+import axiosInstance from '#apis/axios.ts';
 
 interface MyCakeProps {
   ownerId: string;

@@ -8,7 +8,7 @@ import * as S from '#styles/SignUpStyle.ts';
 
 import axiosInstance from '#apis/axios.ts';
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from "#utils/handleButtonClick.ts";
+import { handleButtonClick } from "#utils";
 
 async function sendVerifyCode(email: string) {
   try {
