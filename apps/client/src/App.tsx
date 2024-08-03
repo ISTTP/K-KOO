@@ -65,7 +65,6 @@ const App = () => {
         <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
         <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
         <Route path="/myletter" element={<MyLetter />} />
-
       </Routes>
     </Suspense>
   );
