@@ -13,7 +13,8 @@
     "#styles/*.ts": "./src/styles/*.ts",
     "#styles/*.tsx": "./src/styles/*.tsx",
     "#utils": "./src/utils/index.ts",
-    "#firebase": "./src/firebase-messaging-sw.ts"
+    "#firebase": "./src/firebase-messaging-sw.ts",
+    "#hooks/*.tsx": "./src/hooks/*.tsx"
   },
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
@@ -31,6 +32,7 @@
     "axios": "^1.7.2",
     "crypto-js": "^4.2.0",
     "firebase": "^8.2.3",
+    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -62,6 +64,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/dotenv-webpack": "^7.0.7",
     "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.9",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
