@@ -18,7 +18,7 @@ const ColorOption = styled.div<{ $color: string; selected: boolean }>`
   height: 60px;
   margin: 10px;
   border-radius: 50%;
-  background-color: var(--${(props) => props.$color}-color);
+  background-color: var(--${(props) => props.$color});
   border: ${(props) =>
     props.selected ? '5px solid var(--orange-500)' : '5px solid transparent'};
   cursor: pointer;
