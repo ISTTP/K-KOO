@@ -12,6 +12,7 @@
     "#apis/*.tsx": "./src/apis/*.tsx",
     "#styles/*.ts": "./src/styles/*.ts",
     "#styles/*.tsx": "./src/styles/*.tsx",
+    "#utils/*.ts": "./src/utils/*.ts",
     "#firebase": "./src/firebase-messaging-sw.ts"
   },
   "scripts": {
