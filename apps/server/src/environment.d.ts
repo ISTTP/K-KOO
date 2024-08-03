@@ -15,6 +15,7 @@ export declare global {
       EMAILJS_TEMPLATE_ID: string;
       EMAILJS_PRIVATE_KEY: string;
       PASSWORD_SALT: string;
+      ENVIRONMENT: 'development' | 'production';
     }
   }
 }
