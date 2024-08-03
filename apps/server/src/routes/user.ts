@@ -1,5 +1,5 @@
 import { authorize } from '../service/auth';
-import { getUser, setUser } from '../models/user';
+import { getUser, getUserBirthday, setUser } from '../models/user';
 import { Router } from 'express';
 import { user } from '@isttp/schemas/all';
 import prisma from '@isttp/db/all';
@@ -58,6 +58,18 @@ router.put('/user/token', authorize, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'FCM 토큰 저장 실패 : ', error });
   }
+});
+
+router.get('/user/birthday/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const data = await getUserBirthday(userId);
+
+  if (!data) {
+    res.status(400).json({ message: '생일 정보가 없습니다.' });
+    return;
+  }
+
+  res.status(200).json({ birthday: data.birthday });
 });
 
 export default router;
