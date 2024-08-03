@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Input from '#components/common/Input.tsx';
 import Button from '#components/common/Button.tsx';
-import {
-  TitleWrapper,
-  Title,
-  SubTitle,
-  InputWrapper,
-  Warning,
-  WarningWrapper
-} from '#components/signup/common.tsx';
+import * as S from '#styles/SignUpStyle.ts';
 
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
+import { ButtonType } from '@isttp/types/all';
+import { handleButtonClick } from '#utils/handleButtonClick.ts';
 
 async function checkId(id: string) {
   try {
@@ -32,11 +27,10 @@ async function checkId(id: string) {
   }
 }
 
-type ButtonType = 'disabled' | 'default' | 'loading';
-
 const IdForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const submitButton = useRef<HTMLButtonElement>(null);
   const { loginType } = location.state;
   const pattern = /^[a-zA-Z0-9]*$/;
 
@@ -45,6 +39,20 @@ const IdForm = () => {
   const [isIdValid, setIsIdValid] = useState(true);
   const [isIdLengthValid, setIsIdLengthValid] = useState(true);
   const [isDuplicate, setIsDuplicate] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleEnterKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleEnterKeyDown);
+    }
+  }, [buttonType]);
+
+  function handleEnterKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      handleButtonClick({ buttonType, submitButton: submitButton.current });
+    }
+  }
 
   function handleValidId(id: string) {
     if (id) {
@@ -76,13 +84,14 @@ const IdForm = () => {
 
   return (
     <>
-      <TitleWrapper>
-        <Title>아이디 입력하기</Title>
-        <SubTitle>회원가입하실 아이디를 입력해주세요.</SubTitle>
-      </TitleWrapper>
+      <S.TitleWrapper>
+        <S.Title>아이디 입력하기</S.Title>
+        <S.SubTitle>회원가입하실 아이디를 입력해주세요.</S.SubTitle>
+      </S.TitleWrapper>
 
-      <InputWrapper>
+      <S.InputWrapper>
         <Input
+          autoFocus
           $isValid={isIdValid && isIdLengthValid && !isDuplicate}
           type="text"
           placeholder="6~20자 이내 영문 대소문자, 숫자 포함"
@@ -93,13 +102,14 @@ const IdForm = () => {
             handleValidId(e.target.value);
           }}
         />
-      </InputWrapper>
-      <WarningWrapper>
-        {!isIdLengthValid && <Warning>아이디는 6자 이상이어야합니다.</Warning>}
-        {!isIdValid && <Warning>아이디는 영문 대소문자, 숫자만 사용 가능합니다.</Warning>}
-        {isDuplicate && <Warning>이미 사용중인 아이디입니다.</Warning>}
-      </WarningWrapper>
+      </S.InputWrapper>
+      <S.WarningWrapper>
+        {!isIdLengthValid && <S.Warning>아이디는 6자 이상이어야합니다.</S.Warning>}
+        {!isIdValid && <S.Warning>아이디는 영문 대소문자, 숫자만 사용 가능합니다.</S.Warning>}
+        {isDuplicate && <S.Warning>이미 사용중인 아이디입니다.</S.Warning>}
+      </S.WarningWrapper>
       <Button
+        ref={submitButton}
         type={buttonType}
         onClick={handleSubmit}
       >
