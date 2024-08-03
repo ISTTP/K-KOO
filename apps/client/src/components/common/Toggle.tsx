@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { PenIcon, CakeIcon, GridIcon } from '#icons'; // Assuming you have a GridIcon
 
 interface ToggleBtnProps {
   ownerId: string;
@@ -17,12 +18,27 @@ const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
 
   return (
     <Container>
-      <ToggleBtn onClick={onClick} $istoggle={toggle}>
-        <Circle $istoggle={toggle} />
+      <ToggleBtn $istoggle={toggle}>
+        <CakeIconWrapper $istoggle={!toggle}>
+          <CakeIcon width={32} height={32} fill={'#AEAEAE'} stroke={'#AEAEAE'} />
+        </CakeIconWrapper>
+        <GridIconWrapper $istoggle={toggle}>
+          <GridIcon width={20} height={20} fill={'#AEAEAE'} />
+        </GridIconWrapper>
+        <Circle $istoggle={toggle} onClick={onClick}>
+          <CircleIconWrapper>
+            {toggle ? (
+              <GridIcon width={20} height={20} fill="#FFF" />
+            ) : (
+              <CakeIcon width={32} height={32} fill="#FFF" stroke="#FFF" />
+            )}
+          </CircleIconWrapper>
+        </Circle>
       </ToggleBtn>
-      <button onClick={() => navigate(`/cake/create/${ownerId}`)}>
+      <ChangeBtn onClick={() => navigate(`/cake/create/${ownerId}`)}>
         케이크 수정
-      </button>
+        <PenIcon width='16px' height='16px' />
+      </ChangeBtn>
     </Container>
   );
 };
@@ -32,36 +48,77 @@ export default Toggle;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  gap: 100px;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const ToggleBtn = styled.button<Proptype>`
-  width: 50px;
-  height: 30px;
-  border-radius: 30px;
+  width: 100px;
+  height: 37px;
+  border-radius: 15px;
   border: none;
   cursor: pointer;
-  background-color: ${(props) =>
-    !props.$istoggle ? 'none' : 'var(--gray-300)'};
+  background-color: var(--gray-300);
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  transition: all 0.5s ease-in-out;
+`;
+
+const CakeIconWrapper = styled.div<Proptype>`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.5s ease-in-out;
+`;
+
+const GridIconWrapper = styled.div<Proptype>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
 `;
 
 const Circle = styled.div<Proptype>`
   background-color: var(--orange-500);
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
+  width: 55px;
+  height: 37px;
+  border-radius: 15px;
   position: absolute;
   left: 0;
-  transition: all 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
   ${(props) =>
     props.$istoggle &&
     css`
-      transform: translate(24px, 0);
-      transition: all 0.5s ease-in-out;
+      transform: translateX(45px);
     `}
+`;
+
+const CircleIconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChangeBtn = styled.button`
+  border-radius: 15px;
+  background: var(--orange-500);
+  padding: 8px 12px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: var(--white);
+  font-family: Pretendard;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0;
+  cursor: pointer;
 `;
