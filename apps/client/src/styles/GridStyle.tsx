@@ -36,6 +36,10 @@ export const Nickname = styled.p`
   font-weight: 700;
   line-height: normal;
   margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
 `;
 
 export const Keyword = styled.p<{ isPC: boolean }>`
