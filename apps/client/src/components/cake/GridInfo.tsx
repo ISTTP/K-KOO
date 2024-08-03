@@ -197,6 +197,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         nickname={selectedItem?.nickname ?? ''}
         contents={selectedItem?.contents ?? ''}
         candleImageUrl={selectedItem?.candleImageUrl ?? ''}
+        keyword={selectedItem?.keyword ?? ''}
       />
     </>
   );

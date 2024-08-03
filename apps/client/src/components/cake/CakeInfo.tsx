@@ -119,6 +119,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           nickname={selectedItem?.nickname ?? ''}
           contents={selectedItem?.contents ?? ''}
           candleImageUrl={selectedItem?.candleImageUrl ?? ''}
+          keyword={selectedItem?.keyword ?? ''}
         />
       )}
     </CakeContainer>
