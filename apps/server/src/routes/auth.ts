@@ -11,7 +11,6 @@ import {
   getKakaoAccessToken,
   getSocialUid,
   authorize,
-  createHashedPassword,
 } from '../service/auth';
 import { getUserFromId } from '../models/user';
 
@@ -20,11 +19,6 @@ const router: Router = Router();
 /* 회원가입 API */
 router.post('/auth/signup', async (req, res) => {
   const { id, password, email, nickname, birthday, loginType } = req.body;
-  let Pwd = null;
-
-  if (loginType === 'default') {
-    Pwd = createHashedPassword(password);
-  }
 
   try {
     const isExist = await checkUser(loginType, id);
@@ -36,7 +30,7 @@ router.post('/auth/signup', async (req, res) => {
     const user = await prisma.user.create({
       data: {
         id,
-        password: Pwd,
+        password,
         email,
         nickname,
         birthday,
@@ -61,7 +55,6 @@ router.post('/auth/signup', async (req, res) => {
 /* 로그인 API */
 router.post('/auth/login', async (req, res) => {
   const { id, password } = req.body;
-  const Pwd = createHashedPassword(password);
 
   try {
     const user = await getUserFromId(id);
@@ -75,7 +68,7 @@ router.post('/auth/login', async (req, res) => {
       });
     }
 
-    if (user.password !== Pwd) {
+    if (user.password !== password) {
       return res.status(200).json({
         success: false,
         message: '비밀번호가 일치하지 않습니다.',
