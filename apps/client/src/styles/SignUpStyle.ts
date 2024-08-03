@@ -42,6 +42,40 @@ const Warning = styled.p`
   font-weight: 500;
 `;
 
+const InputInnerWrapper = styled.section`
+  display: flex;  
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ResendButton = styled.button`
+  width: 12rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--orange-500);
+  color: var(--white);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: Pretendard, sans-serif;
+  font-size: 1.06rem;
+  font-weight: 700;
+
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  &:disabled {
+    background-color: var(--orange-400);
+    cursor: not-allowed;
+  }
+`
+
 export {
   InputWrapper,
   WarningWrapper,
@@ -49,4 +83,6 @@ export {
   TitleWrapper,
   Title,
   SubTitle,
+  InputInnerWrapper,
+  ResendButton,
 }

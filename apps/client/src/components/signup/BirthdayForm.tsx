@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 
 import Input from '#components/common/Input.tsx';
 import Button from '#components/common/Button.tsx';
-import {
-  TitleWrapper,
-  Title,
-  SubTitle,
-  InputWrapper,
-  Warning,
-  WarningWrapper
-} from '#components/signup/common.tsx';
+import * as S from '#styles/SignUpStyle.ts';
 
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { getFcmToken } from '#firebase';
-
-type ButtonType = 'disabled' | 'default' | 'loading';
+import { ButtonType } from '@isttp/types/all';
+import { handleButtonClick, hashPassword } from '#utils';
 
 const BirthdayForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const submitButton = useRef<HTMLButtonElement>(null);
   const { id, password, email, nickname, loginType } = location.state;
-
-  console.log(password);
 
   const [birthday, setBirthday] = useState('');
   const [isBirthdayValid, setIsBirthdayValid] = useState(true);
   const [buttonType, setButtonType] = useState<ButtonType>('disabled');
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleEnterKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleEnterKeyDown);
+    }
+  }, [buttonType])
+
+  function handleEnterKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      handleButtonClick({ buttonType, submitButton: submitButton.current });
+    }
+  }
 
   function handleValidBirthday(birthday: string) {
     if (birthday) {
@@ -42,11 +47,12 @@ const BirthdayForm = () => {
     setButtonType('loading');
 
     try {
+      const hashedPassword = hashPassword(password);
       const response = await axiosInstance.post(
         '/auth/signup',
         {
           id,
-          password,
+          password: hashedPassword,
           email,
           nickname: nickname,
           birthday: `${birthday}T00:00:00.000Z`, // ISO 8601
@@ -71,13 +77,14 @@ const BirthdayForm = () => {
 
   return (
     <>
-      <TitleWrapper>
-        <Title>생년월일 입력하기</Title>
-        <SubTitle>생년월일을 입력해주세요.</SubTitle>
-      </TitleWrapper>
+      <S.TitleWrapper>
+        <S.Title>생년월일 입력하기</S.Title>
+        <S.SubTitle>생년월일을 입력해주세요.</S.SubTitle>
+      </S.TitleWrapper>
 
-      <InputWrapper>
+      <S.InputWrapper>
         <Input
+          autoFocus
           $isValid={true}
           type="date"
           value={birthday}
@@ -86,13 +93,14 @@ const BirthdayForm = () => {
             handleValidBirthday(e.target.value);
           }}
         />
-      </InputWrapper>
+      </S.InputWrapper>
 
-      <WarningWrapper>
-        {!isBirthdayValid && <Warning>올바른 생년월일을 입력해주세요.</Warning>}
-      </WarningWrapper>
+      <S.WarningWrapper>
+        {!isBirthdayValid && <S.Warning>올바른 생년월일을 입력해주세요.</S.Warning>}
+      </S.WarningWrapper>
 
       <Button
+        ref={submitButton}
         type={buttonType}
         onClick={handleSubmit}
       >
