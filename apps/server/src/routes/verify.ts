@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { Router } from 'express';
 import { checkUser } from '../service/auth';
+import { getUserFromEmail } from '../models/user';
 import { createVerifyInfo, getVerifyInfo } from '../models/verify';
 import axios from 'axios';
 
@@ -21,6 +22,13 @@ router.post('/verify/id', async (req, res) => {
 /* 이메일 인증 코드 전송, DB 저장 */
 router.post('/verify/email', async (req, res) => {
   const { email } = req.body;
+
+  // 이메일 중복 확인
+  const user = await getUserFromEmail(email);
+  if (user) {
+    res.status(400).json({ message: '이미 가입된 이메일' });
+    return;
+  }
 
   const code = Math.floor(Math.random() * 1000000)
   const data = {
