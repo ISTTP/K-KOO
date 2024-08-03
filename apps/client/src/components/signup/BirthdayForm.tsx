@@ -9,7 +9,7 @@ import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { getFcmToken } from '#firebase';
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from '#utils/handleButtonClick.ts';
+import { handleButtonClick, hashPassword } from '#utils';
 
 const BirthdayForm = () => {
   const navigate = useNavigate();
@@ -47,11 +47,12 @@ const BirthdayForm = () => {
     setButtonType('loading');
 
     try {
+      const hashedPassword = hashPassword(password);
       const response = await axiosInstance.post(
         '/auth/signup',
         {
           id,
-          password,
+          password: hashedPassword,
           email,
           nickname: nickname,
           birthday: `${birthday}T00:00:00.000Z`, // ISO 8601

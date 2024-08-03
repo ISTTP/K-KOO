@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import StyledLink from '#components/common/StyledLink.tsx';
 import Wrapper from '#components/layout/Wrapper.tsx';
 import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import Button from '#components/common/Button.tsx';
 import Input from '#components/common/Input.tsx';
-import styled from 'styled-components';
+import * as S from '#styles/SignUpStyle.ts'
+
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { ButtonType } from '@isttp/types/all';
-import * as S from '#styles/SignUpStyle.ts'
+import { hashPassword } from '#utils';
+
 
 async function handleKakaoLogin() {
   const res = await axiosInstance.get('/auth/kakao/url');
@@ -31,10 +35,12 @@ const Login = () => {
 
   async function handleLogin(id: string, password: string) {
     setButtonType('loading');
+
     try {
+      const hashedPassword = hashPassword(password);
       const res = await axiosInstance.post('/auth/login', {
         id,
-        password,
+        password: hashedPassword,
       });
 
       if (res.status === 200) {
