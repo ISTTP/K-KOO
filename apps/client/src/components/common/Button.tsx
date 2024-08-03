@@ -1,14 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GoogleIcon, KakaoIcon } from '#icons';
-
-type ButtonType =
-  | 'google'
-  | 'kakao'
-  | 'default'
-  | 'gray'
-  | 'disabled'
-  | 'loading';
+import { ButtonType } from '@isttp/types/all';
 
 const StyledButton = styled.button<{
   $type: ButtonType;
@@ -40,7 +33,7 @@ const StyledButton = styled.button<{
   }
 `;
 
-const ButtonLoading = styled.div`
+export const ButtonLoading = styled.div`
   margin-left: 1rem;
   width: 1rem;
   height: 1rem;
@@ -99,7 +92,7 @@ const buttonStyles = {
   },
 };
 
-const Button: React.FC<ButtonProps> = ({ children, ref, type, onClick }) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ children, type, onClick }, ref) => {
   const { bgColor, textColor, icon } = buttonStyles[type];
 
   return (
@@ -116,6 +109,6 @@ const Button: React.FC<ButtonProps> = ({ children, ref, type, onClick }) => {
       {type === 'loading' && <ButtonLoading />}
     </StyledButton>
   );
-};
+});
 
 export default Button;
