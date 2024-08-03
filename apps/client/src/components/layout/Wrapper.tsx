@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 1rem;
-  box-sizing: border-box;
 `;
 
 export default Wrapper;

@@ -30,7 +30,10 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
 
   return (
     <DropdownContainer>
-      <DropdownButton onClick={() => setIsOpen(!isOpen)}>{year}</DropdownButton>
+      <DropdownButton
+        onClick={() => setIsOpen(!isOpen)}>
+        {year}년
+      </DropdownButton>
       {isOpen && (
         <DropdownList>
           {years.map((list) => (
@@ -41,7 +44,7 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
                 setIsOpen(false);
               }}
             >
-              {list}
+              {list}년
             </DropdownItem>
           ))}
         </DropdownList>
@@ -55,35 +58,44 @@ export default YearDropdown;
 const DropdownContainer = styled.div`
   position: relative;
   display: flex;
-  width: 300px;
+  width: 100%;
+  margin: 24px 0;
 `;
 
 const DropdownButton = styled.button`
   background: var(--white);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--orange-500);
   border-radius: 8px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
-  width: 300px;
+  width: 100%;
   display: flex;
   align-items: flex-start;
-  box-sizing: border-box;
+  overflow: hidden;
+  color: #828282;
+  text-overflow: ellipsis;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 `;
 
 const DropdownList = styled.div`
   position: absolute;
-  top: 32px;
+  top: 40px;
   left: 0;
   background: var(--white);
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  width: 300px;
+  border-left: 1px solid var(--orange-500);
+  border-right: 1px solid var(--orange-500);
+  border-bottom: 1px solid var(--orange-500);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 100%;
   z-index: 1;
   max-height: 150px;
   overflow-y: auto;
-  box-sizing: border-box;
 `;
 
 const DropdownItem = styled.div`

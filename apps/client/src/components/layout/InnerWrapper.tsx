@@ -8,7 +8,6 @@ const InnerWrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 1rem;
-  box-sizing: border-box;
   margin: 0 35px;
   
   @media (min-width: 801px) {
