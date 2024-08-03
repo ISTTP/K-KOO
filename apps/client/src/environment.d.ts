@@ -12,6 +12,7 @@ export declare global {
       MESSAGING_SENDER_ID: string;
       APP_ID: string;
       MEASUREMENT_ID: string;
+      PASSWORD_SALT: string;
     }
   }
 }
