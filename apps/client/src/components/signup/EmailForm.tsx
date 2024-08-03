@@ -205,7 +205,7 @@ const EmailForm = () => {
                 disabled={resendBtnClicked}
                 onClick={handleSubmit}
               >
-                재인증 요청
+                재인증
                 {resendBtnClicked && <ButtonLoading />}
               </S.ResendButton>
             }
