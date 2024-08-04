@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { PersonIcon } from '#icons';
+import useIsPC from '#hooks/useIsPc.tsx';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -62,6 +63,7 @@ const CakeHeader = ({
   isMyCake: boolean;
 }) => {
   const navigate = useNavigate();
+  const isPC = useIsPC(1024);
   return (
     <HeaderContainer>
       <TitleContainer>
@@ -75,7 +77,7 @@ const CakeHeader = ({
               navigate('/mypage');
             }}
           >
-            <PersonIcon width={'100%'} height={'100%'} />
+            {!isPC && (<PersonIcon width={'100%'} height={'100%'} viewBox="0 0 31 38" />)}
           </MyPageButton>
         )}
       </TitleContainer>
