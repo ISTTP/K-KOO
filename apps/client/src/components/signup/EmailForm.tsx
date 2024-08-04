@@ -14,6 +14,7 @@ async function sendVerifyCode(email: string) {
   try {
     const res = await axiosInstance.post('/verify/email', {
       email,
+      checkDuplicate: true,
     });
 
     if (res.status === 200) {
