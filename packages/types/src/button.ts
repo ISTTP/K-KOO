@@ -4,6 +4,7 @@ type ButtonType =
   | 'default'
   | 'gray'
   | 'disabled'
-  | 'loading';
+  | 'loading'
+  | 'white';
 
 export type { ButtonType };
