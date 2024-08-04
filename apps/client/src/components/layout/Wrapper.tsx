@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   padding: 1rem;
 
   @media (min-width: 1025px) {
-    max-width: 800px;
     margin: 0;
     padding: 52px 35px;
   }
