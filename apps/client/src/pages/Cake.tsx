@@ -71,7 +71,7 @@ const Cake = () => {
 
   return (
     <S.SideWrapper>
-      <Sidebar />
+      <Sidebar isMyCake={isMyCake} />
       <S.Wrapper>
         {isMyCake ? (
           <MyCake ownerId={ownerId} data={cakeUserData} />

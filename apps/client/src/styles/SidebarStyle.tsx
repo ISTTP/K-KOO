@@ -44,10 +44,11 @@ export const Container = styled.aside`
     display: flex;
     align-items: center;
     gap: 13px;
+    margin-bottom: 47px;
   }
 
   .menu{
-    margin: 47px 0;
+    margin-bottom: 47px;
     gap: 20px;
     display: flex;
     flex-direction: column;
