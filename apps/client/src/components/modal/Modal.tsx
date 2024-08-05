@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ModalPortal } from '../../ModalPortal';
 
 const Overlay = styled.div<{ open: boolean }>`
   display: ${(props) => (props.open ? 'flex' : 'none')};
@@ -38,9 +39,11 @@ const Modal = ({
   children: React.ReactNode;
 }) => {
   return (
-    <Overlay open={open}>
-      <ModalContainer>{children}</ModalContainer>
-    </Overlay>
+    <ModalPortal>
+      <Overlay open={open}>
+        <ModalContainer>{children}</ModalContainer>
+      </Overlay>
+    </ModalPortal>
   );
 };
 
