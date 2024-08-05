@@ -75,6 +75,7 @@ const EnterEmail = () => {
         <Input
           autoFocus
           $isValid={isEmailValid && isExistEmail}
+          disabled={buttonType === 'loading'}
           type="text"
           placeholder="ex) email@gmail.com"
           value={email}

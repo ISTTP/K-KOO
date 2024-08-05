@@ -86,6 +86,7 @@ const BirthdayForm = () => {
         <Input
           autoFocus
           $isValid={true}
+          disabled={buttonType === 'loading'}
           type="date"
           value={birthday}
           onChange={(e) => {

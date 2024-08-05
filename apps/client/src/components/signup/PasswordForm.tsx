@@ -73,6 +73,7 @@ const PasswordForm = () => {
         <Input
           autoFocus
           $isValid={isPasswordValid && isPasswordLengthValid}
+          disabled={buttonType === 'loading'}
           type="password"
           placeholder="6~20자 이내 영문 대소문자, 숫자, 특수문자 포함"
           maxLength={20}
@@ -85,6 +86,7 @@ const PasswordForm = () => {
         />
         <Input
           $isValid={isPasswordCheckValid}
+          disabled={buttonType === 'loading'}
           type="password"
           placeholder="비밀번호 확인"
           value={passwordCheck}
