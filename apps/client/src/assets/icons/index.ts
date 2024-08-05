@@ -10,6 +10,9 @@ import PenIcon from './PenIcon';
 import CakeIcon from './CakeIcon';
 import GridIcon from './GridIcon';
 import ArrowBackIcon from './ArrowBackIcon';
+import DropDownIcon from './DropDownIcon';
+import CakeLogo from './CakeLogo';
+import ShareIcon from './ShareIcon';
 
 export {
   FacebookLogoIcon,
@@ -23,5 +26,8 @@ export {
   PenIcon,
   CakeIcon,
   GridIcon,
-  ArrowBackIcon
+  ArrowBackIcon,
+  DropDownIcon,
+  CakeLogo,
+  ShareIcon
 };

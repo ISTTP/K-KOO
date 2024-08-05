@@ -36,15 +36,19 @@ export const Nickname = styled.p`
   font-weight: 700;
   line-height: normal;
   margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
 `;
 
-export const Keyword = styled.p`
+export const Keyword = styled.p<{ isPC: boolean }>`
   font-size: 14px;
   padding: 4px 12px;
   color: var(--black);
   position: absolute;
   top: 72px;
-  left: 15px;
+  left: ${props => (props.isPC ? '27.5px' : '15px')};
   border-radius: 10px;
   background: var(--orange-500);
   color: var(--white, #FFF);

@@ -8,6 +8,11 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 1rem;
+
+  @media (min-width: 1025px) {
+    margin: 0;
+    padding: 52px 35px;
+  }
 `;
 
 export default Wrapper;

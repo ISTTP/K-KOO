@@ -28,7 +28,7 @@ const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
         <Circle $istoggle={toggle} onClick={onClick}>
           <CircleIconWrapper>
             {toggle ? (
-              <GridIcon width={20} height={20} fill="#FFF" />
+              <GridIcon width={20} height={20} fill="#FFF" viewBox='0 0 20 20' />
             ) : (
               <CakeIcon width={32} height={32} fill="#FFF" stroke="#FFF" />
             )}
@@ -37,7 +37,7 @@ const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
       </ToggleBtn>
       <ChangeBtn onClick={() => navigate(`/cake/create/${ownerId}`)}>
         케이크 수정
-        <PenIcon width='16px' height='16px' />
+        <PenIcon width='16px' height='16px' fill={'#FFF'} viewBox="0 0 16 16" />
       </ChangeBtn>
     </Container>
   );
@@ -50,6 +50,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media (min-width: 1025px) {
+    display: none;
+  }
 `;
 
 const ToggleBtn = styled.button<Proptype>`

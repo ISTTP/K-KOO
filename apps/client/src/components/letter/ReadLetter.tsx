@@ -8,6 +8,7 @@ interface LetterProps {
   nickname: string;
   contents: string;
   candleImageUrl: string;
+  keyword: string;
 }
 
 const ReadLetter: React.FC<LetterProps> = ({
@@ -16,6 +17,7 @@ const ReadLetter: React.FC<LetterProps> = ({
   nickname,
   contents,
   candleImageUrl,
+  keyword
 }) => {
   if (!isOpen) return null;
 
@@ -24,6 +26,7 @@ const ReadLetter: React.FC<LetterProps> = ({
       <Content>
         <CandleImg src={candleImageUrl} alt="장식초" />
         <p className='nickname'>From. {nickname}</p>
+        <p className='keyword'>#{keyword}</p>
         <p className='contents'>{contents}</p>
         <Button
           type="default"
@@ -78,11 +81,26 @@ const Content = styled.div`
     font-weight: 400;
   }
 
+  .keyword {
+    font-size: 14px;
+    padding: 4px 12px;
+    color: var(--black);
+    border-radius: 10px;
+    background: var(--orange-500);
+    color: var(--white, #FFF);
+    text-align: center;
+    font-family: 'Pretendard';
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
   .contents {
     color: var(--black, #000);
     font-family: Pretendard;
     font-weight: 500;
-    margin: 20px 0;
+    margin: 16px 0;
     max-height: 254px;
     overflow-y: auto;
   }

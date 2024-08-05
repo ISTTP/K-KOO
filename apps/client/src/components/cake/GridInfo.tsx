@@ -15,9 +15,10 @@ import { useGetLetters } from '#apis/cake/useGetGridLetters.tsx';
 import { useGetLetter, useGetAllLetter } from '#apis/letter/useGetLetter.tsx';
 import { useGetMyLetters } from '#apis/letter/useGetMyLetters.tsx';
 import { useQueryClient } from '@tanstack/react-query';
+import useIsPc from '#hooks/useIsPc.tsx';
 
 const GRID_PAGE = 24;
-const COLUMN_NUM = 3;
+
 
 const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => void }> = ({ year: init, handleTotalChange }) => {
   const [year, setYear] = useState(init);
@@ -30,6 +31,10 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
   const queryClient = useQueryClient();
+  const isPC = useIsPc(800);
+  const COLUMN_NUM = isPC ? 5 : 3;
+  const COL_WIDTH = isPC ? 155 : 130;
+  const WIDTH = isPC ? 155 * 5 : 390;
 
   const { data, isFetching } = year === 'all'
     ? useGetMyLetters(page)
@@ -125,7 +130,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         onClick={() => openLetter(index)}
       >
         <G.CandleImage src={item.candleImageUrl} alt="장식초" />
-        <G.Keyword>#{item.keyword}</G.Keyword>
+        <G.Keyword isPC={isPC}>#{item.keyword}</G.Keyword>
         <G.Nickname>{item.nickname}</G.Nickname>
       </div>
     );
@@ -171,11 +176,11 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
               <Grid
                 style={{ scrollbarWidth: 'none' }}
                 columnCount={COLUMN_NUM}
-                columnWidth={130}
+                columnWidth={COL_WIDTH}
                 height={590}
                 rowCount={Math.ceil(cakeData.length / COLUMN_NUM)}
                 rowHeight={150}
-                width={390}
+                width={WIDTH}
                 onItemsRendered={newItemsRendered}
                 ref={ref}
               >
@@ -192,6 +197,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         nickname={selectedItem?.nickname ?? ''}
         contents={selectedItem?.contents ?? ''}
         candleImageUrl={selectedItem?.candleImageUrl ?? ''}
+        keyword={selectedItem?.keyword ?? ''}
       />
     </>
   );

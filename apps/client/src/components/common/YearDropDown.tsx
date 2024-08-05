@@ -3,6 +3,7 @@ import axiosInstance from '#apis/axios.ts';
 import styled from 'styled-components';
 import { getUserYearRes } from '@isttp/schemas/all';
 import { useGetYear } from '#apis/cake/useGetYear.tsx';
+import { DropDownIcon } from '#icons';
 
 interface YearDropdownProps {
   year: string;
@@ -33,6 +34,7 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
       <DropdownButton
         onClick={() => setIsOpen(!isOpen)}>
         {year}년
+        <DropDownIcon width={24} height={24} />
       </DropdownButton>
       {isOpen && (
         <DropdownList>
@@ -80,6 +82,8 @@ const DropdownButton = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const DropdownList = styled.div`

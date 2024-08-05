@@ -8,6 +8,7 @@ import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
 import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import { CakeUserTypeResponse } from '@isttp/types/all';
+import useToggleStore from '../../store/useToggleStore';
 
 type MyCakeProps = {
   ownerId: string;
@@ -17,10 +18,11 @@ type MyCakeProps = {
 const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [toggle, setToggle] = useState(false);
+  const toggle = useToggleStore((state) => state.toggle);
+  const setToggle = useToggleStore((state) => state.setToggle);
 
   const clickedToggle = () => {
-    setToggle((prev) => !prev);
+    setToggle(!toggle);
   };
 
   function handleOpen() {

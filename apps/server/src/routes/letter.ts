@@ -114,6 +114,7 @@ router.get('/letter/:letterId', authorize, async (req, res) => {
         contents: letter.contents,
         nickname: letter.nickname,
         candleImageUrl: letter.candle.imageUrl,
+        keyword: letter.keyword
       });
     }
 
@@ -129,6 +130,7 @@ router.get('/letter/:letterId', authorize, async (req, res) => {
         contents: letter.contents,
         nickname: letter.nickname,
         candleImageUrl: letter.candle.imageUrl,
+        keyword: letter.keyword
       });
     } else if (thisYearBday < createdAt) {
       return res.status(200).json({

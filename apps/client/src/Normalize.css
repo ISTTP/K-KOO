@@ -17,7 +17,8 @@ table, tbody, thead, tfoot, tr, th, td
 }
 
 ul[role='list'],
-ol[role='list'] {
+ol[role='list'],
+li {
   list-style: none;
 }
 

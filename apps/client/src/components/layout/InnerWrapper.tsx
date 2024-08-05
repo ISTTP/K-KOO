@@ -13,6 +13,12 @@ const InnerWrapper = styled.div`
   @media (min-width: 801px) {
     width: 800px;
   }
+
+  @media (min-width: 1025px) {
+    margin: 0;
+    padding: 0;
+  }
+
 `;
 
 export default InnerWrapper;

@@ -5,6 +5,7 @@ export const getLetterRes = z.object({
   nickname: z.string().optional(),
   candleImageUrl: z.string().optional(),
   contents: z.string().optional(),
+  keyword: z.string().optional()
 });
 
 export type getLetterRes = z.infer<typeof getLetterRes>;

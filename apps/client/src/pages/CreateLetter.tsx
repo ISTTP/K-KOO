@@ -12,7 +12,7 @@ import {
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 
-async function fetchUserInfo() {
+export async function fetchUserInfo() {
   try {
     const res = await axiosInstance.get<user>('/user/me');
     if (res.status === 200) {
