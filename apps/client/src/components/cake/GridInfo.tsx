@@ -16,6 +16,8 @@ import { useGetLetter, useGetAllLetter } from '#apis/letter/useGetLetter.tsx';
 import { useGetMyLetters } from '#apis/letter/useGetMyLetters.tsx';
 import { useQueryClient } from '@tanstack/react-query';
 import useIsPc from '#hooks/useIsPc.tsx';
+import Button from '#components/common/Button.tsx';
+import Modal from '#components/modal/Modal.tsx';
 
 const GRID_PAGE = 24;
 
@@ -28,6 +30,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
   const [hasMore, setHasMore] = useState(true);
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
   const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
   const loaderRef = useRef<InfiniteLoader>(null);
   const { ownerId } = useParams();
   const queryClient = useQueryClient();
@@ -75,7 +78,7 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
       if (result.isOpen) {
         setSelectedItem(result);
       } else {
-        alert('편지는 생일 이후에 확인할 수 있어요.');
+        setOpen(true);
         setSelectedLetterId(null);
       }
     }
@@ -199,6 +202,17 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         candleImageUrl={selectedItem?.candleImageUrl ?? ''}
         keyword={selectedItem?.keyword ?? ''}
       />
+      <Modal open={open}>
+        <span>편지 내용은 생일 이후에 확인할 수 있어요!</span>
+        <Button
+          type="default"
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          확인
+        </Button>
+      </Modal>
     </>
   );
 };

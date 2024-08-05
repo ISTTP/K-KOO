@@ -15,6 +15,8 @@ import ReadLetter from '#components/letter/ReadLetter.tsx';
 import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
 import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
 import { useQueryClient } from '@tanstack/react-query';
+import Modal from '#components/modal/Modal.tsx';
+import Button from '#components/common/Button.tsx';
 
 interface CakeInfoProps {
   year: string;
@@ -33,6 +35,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [selectedItem, setSelectedItem] = useState<getLetterRes | null>(null);
   const [selectedLetterId, setSelectedLetterId] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
   const [pageData, setPageData] = useState<getPageRes>({
     currentPage: 1,
     totalPage: 1,
@@ -67,7 +70,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
       if (result.isOpen) {
         setSelectedItem(result);
       } else {
-        alert('편지는 생일 이후에 확인할 수 있어요.');
+        setOpen(true);
         setSelectedLetterId(null);
       }
     }
@@ -122,6 +125,17 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           keyword={selectedItem?.keyword ?? ''}
         />
       )}
+      <Modal open={open}>
+        <span>편지 내용은 생일 이후에 확인할 수 있어요!{'\n'}두근두근...👉👈</span>
+        <Button
+          type="default"
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          확인
+        </Button>
+      </Modal>
     </CakeContainer>
   );
 };
