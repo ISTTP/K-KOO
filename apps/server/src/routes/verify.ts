@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import { Router } from 'express';
 import { checkUser } from '../service/auth';
-import { getUserFromEmail, setUser } from '../models/user';
+import { getUserFromEmail, setUser, getUser } from '../models/user';
 import { createVerifyInfo, getVerifyInfo } from '../models/verify';
 import { hashPassword } from '../service/verify';
+import { authorize } from '../service/auth';
 import crypto from 'crypto';
 
 const router: Router = Router();
@@ -146,6 +147,32 @@ router.post('/verify/userinfo', async (req, res) => {
         res.status(500).json({ message: `임시 비밀번호 전송 실패 : ${error}` });
       }
     );
+  } catch (error) {
+    res.status(500).json({ message: `서버 오류 : ${error}` });
+  }
+});
+
+/* 비밀번호 재설정 - 기존 비밀번호 확인 */
+router.post('/verify/password', authorize, async (req, res) => {
+  const userId = req.userId;
+  const { password } = req.body;
+
+  try {
+    const user = await getUser(userId);
+
+    if (!user) {
+      res.status(400).json({ message: '사용자 정보 없음' });
+      return;
+    }
+
+    const isPasswordValid = user.password === password;
+
+    if (!isPasswordValid) {
+      res.status(400).json({ message: '비밀번호 불일치' });
+      return;
+    }
+
+    res.status(200).json({ message: '비밀번호 일치' });
   } catch (error) {
     res.status(500).json({ message: `서버 오류 : ${error}` });
   }
