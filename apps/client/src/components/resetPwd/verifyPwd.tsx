@@ -8,16 +8,17 @@ import * as S from '#styles/SignUpStyle.ts';
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from "#utils";
+import { handleButtonClick, hashPassword } from "#utils";
 
-const EnterEmail = () => {
+
+const VerifyPwd = () => {
   const navigate = useNavigate();
   const submitButton = useRef<HTMLButtonElement>(null);
-  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  const [email, setEmail] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isExistEmail, setIsExistEmail] = useState(true);
+
+  const [password, setPassword] = useState('');
+  const [isValid, setIsValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [buttonType, setButtonType] = useState<ButtonType>('disabled');
 
   useEffect(() => {
@@ -34,11 +35,11 @@ const EnterEmail = () => {
     }
   }
 
-  function handleValidEmail(email: string) {
-    if (email) {
-      const isEmailValid = pattern.test(email);
-      setIsEmailValid(isEmailValid);
-      setButtonType(isEmailValid ? 'default' : 'disabled');
+  function handleValidPassword(password: string) {
+    if (password) {
+      const isPasswordValid = password.length >= 6 && password.length <= 20;
+      setIsPasswordValid(isPasswordValid);
+      setButtonType(isPasswordValid ? 'default' : 'disabled');
     }
   }
 
@@ -46,19 +47,31 @@ const EnterEmail = () => {
     setButtonType('loading');
 
     try {
-      const res = await axiosInstance.post('/verify/email', {
-        email,
-        checkDuplicate: false,
+      const res = await axiosInstance.post('/verify/password', {
+        password: hashPassword(password),
       });
 
       if (res.status === 200) {
-        navigate('/find/id/verify', { state: { email } });
+        navigate('/reset/pwd/new');
       }
     } catch (error) {
       if (error instanceof AxiosError) {
+        // 비밀번호 불일치
         if (error.response?.status === 400) {
-          setIsExistEmail(false);
+          setIsValid(false);
           setButtonType('disabled');
+        }
+
+        // 권한 없음
+        if (error.response?.status === 401) {
+          setButtonType('disabled');
+          // 모달 처리
+        }
+
+        // 서버 에러
+        if (error.response?.status === 500) {
+          setButtonType('disabled');
+          // 모달 처리
         }
       }
     }
@@ -67,28 +80,28 @@ const EnterEmail = () => {
   return (
     <>
       <S.TitleWrapper>
-        <S.Title>아이디 찾기</S.Title>
-        <S.SubTitle>회원가입하시 사용했던 이메일을 입력해주세요.</S.SubTitle>
+        <S.Title>기존 비밀번호 입력</S.Title>
+        <S.SubTitle>보안을 위해 기존 비밀번호를 입력해주세요.</S.SubTitle>
       </S.TitleWrapper>
 
       <S.InputWrapper>
         <Input
           autoFocus
-          $isValid={isEmailValid && isExistEmail}
+          $isValid={isValid && isPasswordValid}
           disabled={buttonType === 'loading'}
-          type="text"
-          placeholder="ex) email@gmail.com"
-          value={email}
+          type="password"
+          placeholder="6~20자 이내 기존 비밀번호 입력"
+          maxLength={20}
+          value={password}
           onChange={(e) => {
-            setEmail(e.target.value);
-            setIsExistEmail(true);
-            handleValidEmail(e.target.value);
+            setPassword(e.target.value);
+            setIsValid(true);
+            handleValidPassword(e.target.value);
           }}
         />
       </S.InputWrapper>
       <S.WarningWrapper>
-        {!isEmailValid && <S.Warning>올바르지 않은 형식입니다.</S.Warning>}
-        {!isExistEmail && <S.Warning>회원 정보가 존재하지 않습니다. </S.Warning>}
+        {!isValid && <S.Warning>비밀번호가 일치하지 않습니다.</S.Warning>}
       </S.WarningWrapper>
 
       <Button
@@ -96,10 +109,10 @@ const EnterEmail = () => {
         type={buttonType}
         onClick={handleSubmit}
       >
-        이메일 인증
+        확인
       </Button>
     </>
   );
-}
+};
 
-export default EnterEmail;
+export default VerifyPwd;

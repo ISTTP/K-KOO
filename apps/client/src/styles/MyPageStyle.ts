@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const MyPageHeader = styled.div`
   display: flex;
@@ -115,6 +116,28 @@ export const AccountButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+`;
+
+export const StyledLink = styled(Link)`
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  color: var(--black);
+  cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     opacity: 0.8;

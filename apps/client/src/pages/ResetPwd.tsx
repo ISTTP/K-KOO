@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Wrapper from '#components/layout/Wrapper.tsx';
 import InnerWrapper from '#components/layout/InnerWrapper.tsx';
+import VerifyPwd from '#components/resetPwd/verifyPwd.tsx';
+import SetNewPwd from '#components/resetPwd/setNewPwd.tsx';
+
 import ArrowBackIcon from '../assets/icons/ArrowBackIcon';
 
 const ResetPwd = () => {
@@ -16,6 +19,8 @@ const ResetPwd = () => {
           <ArrowBackIcon onClick={() => navigate(-1)} />
         </NavWrapper>
 
+        {step === 'verify' && <VerifyPwd />}
+        {step === 'new' && <SetNewPwd />}
 
       </InnerWrapper>
     </Wrapper >

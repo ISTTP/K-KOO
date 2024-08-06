@@ -169,6 +169,7 @@ const EmailForm = () => {
           <Input
             autoFocus
             $isValid={isEmailValid}
+            disabled={buttonType === 'loading'}
             type="email"
             placeholder="ex) email@gmail.com"
             value={email}
@@ -184,6 +185,7 @@ const EmailForm = () => {
             <Input
               autoFocus
               $isValid={isCodeValid}
+              disabled={buttonType === 'loading'}
               type="text"
               maxLength={6}
               placeholder="인증번호 6자리를 입력해주세요"
