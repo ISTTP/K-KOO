@@ -199,6 +199,16 @@ const MyPage = () => {
 
         <S.Hr />
 
+        {userInfo?.loginType === 'default' &&
+          <S.LinkWrapper>
+            <S.StyledLink to={'/reset/pwd/verify'}>
+              비밀번호 재설정
+            </S.StyledLink>
+          </S.LinkWrapper>
+        }
+
+        {userInfo?.loginType === 'default' && <S.Hr />}
+
         <S.AccountSettingWrapper>
           <S.AccountButton onClick={logout}>로그아웃</S.AccountButton>
           <S.AccountButton onClick={signOut}>회원탈퇴</S.AccountButton>
