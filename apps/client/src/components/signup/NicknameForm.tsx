@@ -63,6 +63,7 @@ const NicknameForm = () => {
         <Input
           autoFocus
           $isValid={isNicknameLengthValid}
+          disabled={buttonType === 'loading'}
           type="text"
           placeholder="2~20자 이내 닉네임 입력"
           value={nickname}

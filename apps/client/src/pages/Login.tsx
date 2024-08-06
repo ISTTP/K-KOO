@@ -132,8 +132,12 @@ const Login = () => {
             회원가입
           </StyledLink>
           <LinkAside>
-            <StyledLink to="/signup">아이디 찾기</StyledLink>
-            <StyledLink to="/signup">비밀번호 찾기</StyledLink>
+            <StyledLink to="/find/id/enter">
+              아이디 찾기
+            </StyledLink>
+            <StyledLink to="/find/pwd">
+              비밀번호 찾기
+            </StyledLink>
           </LinkAside>
         </LinkContainer>
 

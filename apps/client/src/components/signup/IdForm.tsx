@@ -93,6 +93,7 @@ const IdForm = () => {
         <Input
           autoFocus
           $isValid={isIdValid && isIdLengthValid && !isDuplicate}
+          disabled={buttonType === 'loading'}
           type="text"
           placeholder="6~20자 이내 영문 대소문자, 숫자 포함"
           value={id}

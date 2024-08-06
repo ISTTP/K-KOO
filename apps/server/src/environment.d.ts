@@ -14,6 +14,7 @@ export declare global {
       EMAILJS_SERVICE_ID: string;
       EMAILJS_TEMPLATE_ID: string;
       EMAILJS_PRIVATE_KEY: string;
+      EMAILJS_PWD_TEMPLATE_ID: string;
       PASSWORD_SALT: string;
       ENVIRONMENT: 'development' | 'production';
     }

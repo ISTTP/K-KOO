@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Input from "#components/common/Input.tsx";
 import Button from "#components/common/Button.tsx";
 import * as S from '#styles/SignUpStyle.ts';
 
+import axiosInstance from '#apis/axios.ts';
+import { AxiosError } from 'axios';
 import { ButtonType } from '@isttp/types/all';
-import { handleButtonClick } from "#utils";
+import { handleButtonClick, hashPassword } from "#utils";
 
-const PasswordForm = () => {
+
+const SetNewPwd = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const submitButton = useRef<HTMLButtonElement>(null);
-  const { id, loginType } = location.state;
   const pattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).*$/
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -52,21 +54,40 @@ const PasswordForm = () => {
     }
   }
 
-  function handleSubmit() {
-    navigate('/signup/email', {
-      state: {
-        id,
-        loginType,
-        password,
+  async function handleSubmit() {
+    setButtonType('loading');
+
+    try {
+      const res = await axiosInstance.put('/user/me', {
+        password: hashPassword(password),
+      });
+
+      if (res.status === 200) {
+        // 비밀번호 변경 성공 모달
+        navigate('/mypage');
       }
-    })
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        // 권한 없음
+        if (error.response?.status === 401) {
+          // 모달 처리
+          setButtonType('disabled');
+        }
+
+        // 서버 에러
+        if (error.response?.status === 500) {
+          // 모달 처리
+          setButtonType('disabled');
+        }
+      }
+    }
   }
 
   return (
     <>
       <S.TitleWrapper>
-        <S.Title>비밀번호 입력하기</S.Title>
-        <S.SubTitle>사용하실 비밀번호를 입력해주세요.</S.SubTitle>
+        <S.Title>새로운 비밀번호 입력</S.Title>
+        <S.SubTitle>사용하실 새로운 비밀번호를 입력해주세요.</S.SubTitle>
       </S.TitleWrapper>
 
       <S.InputWrapper>
@@ -114,10 +135,10 @@ const PasswordForm = () => {
         type={buttonType}
         onClick={handleSubmit}
       >
-        계속하기
+        확인
       </Button>
     </>
   );
-}
+};
 
-export default PasswordForm;
+export default SetNewPwd;

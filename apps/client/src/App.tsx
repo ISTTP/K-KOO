@@ -47,11 +47,21 @@ const MyLetter = lazy(() =>
     default: module.MyLetter,
   })),
 );
+const FindId = lazy(() =>
+  import('#pages/FindId.tsx').then((module) => ({ default: module.FindId })),
+);
+const FindPwd = lazy(() =>
+  import('#pages/FindPwd.tsx').then((module) => ({ default: module.FindPwd })),
+);
+const ResetPwd = lazy(() =>
+  import('#pages/ResetPwd.tsx').then((module) => ({ default: module.ResetPwd })),
+);
 
 const App = () => {
   useEffect(() => {
     requestPermission();
   }, []);
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
@@ -65,6 +75,9 @@ const App = () => {
         <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
         <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
         <Route path="/myletter" element={<MyLetter />} />
+        <Route path="/find/id/:step" element={<FindId />} />
+        <Route path="/find/pwd" element={<FindPwd />} />
+        <Route path="/reset/pwd/:step" element={<ResetPwd />} />
       </Routes>
     </Suspense>
   );

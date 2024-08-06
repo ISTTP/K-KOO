@@ -16,7 +16,8 @@ const StyledButton = styled.button<{
   background-color: ${(props) => `var(${props.$bgColor})`};
   color: ${(props) => `var(${props.$textColor})`};
   border: ${(props) =>
-    props.$type === 'google' ? '1px solid var(--gray-400)' : 'none'};
+    props.$type === 'google' ? '1px solid var(--gray-400)' :
+      props.$type === 'white' ? '1px solid var(--orange-500)' : 'none'};
   border-radius: 0.25rem;
   cursor: ${(props) => (props.$type !== 'disabled' && props.$type !== 'loading' ? 'pointer' : 'not-allowed')};
   font-family: Pretendard, sans-serif;
@@ -88,6 +89,11 @@ const buttonStyles = {
   loading: {
     bgColor: '--orange-400',
     textColor: '--white',
+    icon: null,
+  },
+  white: {
+    bgColor: '--white',
+    textColor: '--orange-500',
     icon: null,
   },
 };
