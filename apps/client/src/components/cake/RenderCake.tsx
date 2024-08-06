@@ -48,7 +48,7 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 export default RenderCake;
 
 const SvgContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 3rem;
   width: 300px;
   height: 300px;
   position: relative;
