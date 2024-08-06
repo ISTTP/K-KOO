@@ -13,7 +13,7 @@ type RenderedCakeProps = {
   handleClick?: (index: number) => void;
 };
 
-const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/';
+const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/cakes/';
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
@@ -23,8 +23,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
   creamColor = creamColor ?? 'white';
-  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.svg';
-  const creamSrc = baseUrl + 'cream_' + creamColor + '.svg';
+  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.png';
+  const creamSrc = baseUrl + 'cream_' + creamColor + '.png';
 
   return (
     <SvgContainer>
