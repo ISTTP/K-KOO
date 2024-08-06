@@ -126,7 +126,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         </Button>
       </Modal>
       <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
-      <Modal open={open}>
+      <Modal open={openWarning}>
         {/* todo: 메시지 변경 필요 ~ 0000년 00월 00일부터 작성할 수 있습니다. */}
         <span>아직 편지를 작성할 수 없습니다.</span>
         <Button
