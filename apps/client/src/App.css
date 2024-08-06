@@ -12,12 +12,17 @@
   --gray-200: #DEDEDE;
   --white: #FFFFFF;
   --magenta: #FF6C6C;
-  --strawberry: #F3A7A7;
   --yellow: #FEE500;
-  --banana: #F1F3A7;
-  --mint: #BBF0A8;
-  --blueberry: #C4A7F3;
-  --chocolate: #7B4B23;
+  --strawberry-200: #f08787;
+  --strawberry-100: #F3A7A7;
+  --banana-200: #e2e673;
+  --banana-100: #F1F3A7;
+  --mint-200: #82d664;
+  --mint-100: #BBF0A8;
+  --blueberry-200: #9d72e2;
+  --blueberry-100: #C4A7F3;
+  --chocolate-200: #5f320d;
+  --chocolate-100: #7B4B23;
 }
 
 @font-face {
