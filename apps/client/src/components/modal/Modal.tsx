@@ -23,12 +23,23 @@ const ModalContainer = styled.div`
   padding: 1rem;
   border-radius: 10px;
   z-index: 101;
-  width: auto;
+  width: 360px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+
+  span {
+    color: var(--black, #000);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 29px 18px;
+  }
 `;
 
 const Modal = ({

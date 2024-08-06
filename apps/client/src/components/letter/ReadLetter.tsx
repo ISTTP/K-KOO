@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '#components/common/Button.tsx';
+import { ModalPortal } from '../../ModalPortal';
 
 interface LetterProps {
   isOpen: boolean;
@@ -22,20 +23,22 @@ const ReadLetter: React.FC<LetterProps> = ({
   if (!isOpen) return null;
 
   return (
-    <Container>
-      <Content>
-        <CandleImg src={candleImageUrl} alt="장식초" />
-        <p className='nickname'>From. {nickname}</p>
-        <p className='keyword'>#{keyword}</p>
-        <p className='contents'>{contents}</p>
-        <Button
-          type="default"
-          onClick={handleClose}
-        >
-          닫기
-        </Button>
-      </Content>
-    </Container>
+    <ModalPortal>
+      <Container>
+        <Content>
+          <CandleImg src={candleImageUrl} alt="장식초" />
+          <p className='nickname'>From. {nickname}</p>
+          <p className='keyword'>#{keyword}</p>
+          <p className='contents'>{contents}</p>
+          <Button
+            type="default"
+            onClick={handleClose}
+          >
+            닫기
+          </Button>
+        </Content>
+      </Container>
+    </ModalPortal>
   );
 };
 

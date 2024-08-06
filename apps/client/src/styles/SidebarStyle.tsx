@@ -53,25 +53,38 @@ export const Container = styled.aside`
     display: flex;
     flex-direction: column;
 
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    line-height: normal;
+
     li{
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-
       color: var(--black, #000);
-      text-align: center;
-      font-family: Pretendard;
-      font-size: 17px;
-      font-style: normal;
       font-weight: 500;
-      line-height: normal;
 
       &:hover{
         font-weight: 700;
       }
+    }
 
-      
+    li svg {
+      fill: #FFC57C;
+      stroke: #FFC57C;
+    }
+
+    li.selected {
+      color: var(--orange-500, #FFA83C);
+      font-weight: 700;
+    }
+
+    li.selected svg {
+      fill: var(--orange-500, #FFA83C);
+      stroke: var(--orange-500, #FFA83C);
     }
   }
 `;

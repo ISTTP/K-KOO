@@ -12,6 +12,7 @@ const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
   const navigate = useNavigate();
   const setToggle = useToggleStore((state) => state.setToggle);
   const [user, setUser] = useState('');
+  const [selectedMenu, setSelectedMenu] = useState('cake');
 
   useEffect(() => {
     fetchUserInfo().then((data) => {
@@ -22,6 +23,7 @@ const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
   }, []);
 
   const handleMenuClick = (menu: string) => {
+    setSelectedMenu(menu);
     if (isMyCake) {
       if (menu === 'cake') {
         setToggle(false);
@@ -59,24 +61,28 @@ const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
       {user ? (
         <>
           <section className='menu'>
-            <li onClick={() => handleMenuClick('cake')}>
-              <CakeIcon fill={'#FFC57C'} stroke={'#FFC57C'} width={37} height={37} />
+            <li
+              className={isMyCake && selectedMenu === 'cake' ? 'selected' : ''}
+              onClick={() => handleMenuClick('cake')}>
+              <CakeIcon width={37} height={37} />
               케이크
             </li>
-            <li onClick={() => handleMenuClick('list')}>
-              <GridIcon fill={'#FFC57C'} stroke={'#FFC57C'} width={37} height={37} viewBox="-10 -10 40 40" />
+            <li
+              className={isMyCake && selectedMenu === 'list' ? 'selected' : ''}
+              onClick={() => handleMenuClick('list')}>
+              <GridIcon width={37} height={37} viewBox="-10 -10 40 40" />
               리스트
             </li>
             <li onClick={() => navigate('/mypage')}>
-              <PersonIcon fill={'#FFC57C'} stroke={'#FFC57C'} width={37} height={37} viewBox="-10 -10 54 54" />
+              <PersonIcon width={37} height={37} viewBox="-10 -10 54 54" />
               마이페이지
             </li>
             <li onClick={() => navigate(`/cake/create/${user}`)}>
-              <PenIcon fill={'#FFC57C'} stroke={'#FFC57C'} width={37} height={37} viewBox="-6 -6 30 30" />
+              <PenIcon width={37} height={37} viewBox="-6 -6 30 30" />
               케이크 수정
             </li>
             <li>
-              <ShareIcon fill={'#FFC57C'} />
+              <ShareIcon />
               링크 공유
             </li>
           </section>
