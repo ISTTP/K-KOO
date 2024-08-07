@@ -13,7 +13,7 @@ type RenderedCakeProps = {
   handleClick?: (index: number) => void;
 };
 
-const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/';
+const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/cakes/';
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
@@ -23,8 +23,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
   creamColor = creamColor ?? 'white';
-  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.svg';
-  const creamSrc = baseUrl + 'cream_' + creamColor + '.svg';
+  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.png';
+  const creamSrc = baseUrl + 'cream_' + creamColor + '.png';
 
   return (
     <SvgContainer>
@@ -38,7 +38,7 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
           onClick={handleClick ? () => handleClick(index) : undefined}
         >
           <CandleImage src={candle.candleImageUrl} alt="장식초" />
-          <Nickname $sheetColor={sheetColor}>{candle.nickname}</Nickname>
+          <Nickname $creamColor={creamColor}>{candle.nickname}</Nickname>
         </Candle>
       ))}
     </SvgContainer>
@@ -48,7 +48,7 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 export default RenderCake;
 
 const SvgContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 3rem;
   width: 300px;
   height: 300px;
   position: relative;
@@ -76,7 +76,7 @@ const CandleImage = styled.img`
   height: 80px;
 `;
 
-const Nickname = styled.p<{ $sheetColor: CakeColorType }>`
+const Nickname = styled.p<{ $creamColor: CakeColorType }>`
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -2px;
@@ -85,8 +85,8 @@ const Nickname = styled.p<{ $sheetColor: CakeColorType }>`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100px;
-  color: ${({ $sheetColor }) =>
-    $sheetColor === 'white' || $sheetColor === 'banana'
+  color: ${({ $creamColor }) =>
+    $creamColor === 'white' || $creamColor === 'banana'
       ? 'var(--black)'
       : 'var(--white)'};
 `;

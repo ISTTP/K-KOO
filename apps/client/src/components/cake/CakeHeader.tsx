@@ -22,17 +22,20 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.5rem;
   font-weight: bold;
 `;
 
-const SubTitle = styled.span`
-  font-size: 1.2rem;
-  margin: 0rem;
+const SubTitle = styled.h2`
+  margin-top: 0.5rem;
 `;
 
-const Nickname = styled.span`
+const Nickname = styled.h1`
   color: var(--orange-500);
+  display: inline;
+`;
+
+const Phrase = styled.h1`
+  display: inline;
 `;
 
 const MyPageButton = styled.button`
@@ -69,7 +72,7 @@ const CakeHeader = ({
       <TitleContainer>
         <Title>
           <Nickname>{nickname}</Nickname>
-          <span>님의 케이크</span>
+          <Phrase>님의 케이크</Phrase>
         </Title>
         {isMyCake && (
           <MyPageButton
@@ -81,8 +84,8 @@ const CakeHeader = ({
           </MyPageButton>
         )}
       </TitleContainer>
-      {isMyCake && <SubTitle>장식초를 눌러 편지를 확인해보세요!</SubTitle>}
-      {!isMyCake && <SubTitle>친구의 케이크를 꾸며보세요!</SubTitle>}
+      {isMyCake && <SubTitle>장식초를 눌러 편지를 확인해보세요✉️</SubTitle>}
+      {!isMyCake && <SubTitle>친구의 케이크를 꾸며보세요❤️</SubTitle>}
     </HeaderContainer>
   );
 };

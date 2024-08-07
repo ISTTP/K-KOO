@@ -85,13 +85,13 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   };
 
   const candlePositions = [
-    { top: 5, left: 35 },
-    { top: 5, left: 65 },
-    { top: 35, left: 30 },
-    { top: 35, left: 70 },
-    { top: 65, left: 15 },
-    { top: 65, left: 50 },
-    { top: 65, left: 85 },
+    { top: 2, left: 30 },
+    { top: 6, left: 50 },
+    { top: 2, left: 70 },
+    { top: 40, left: 20 },
+    { top: 47, left: 40 },
+    { top: 47, left: 60 },
+    { top: 40, left: 80 },
   ];
 
   const candles = cakeData.map((cake, index) => ({
