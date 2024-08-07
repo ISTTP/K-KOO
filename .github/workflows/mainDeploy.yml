@@ -42,6 +42,7 @@ jobs:
           echo "MESSAGING_SENDER_ID=$MESSAGING_SENDER_ID" >> .env
           echo "APP_ID=$APP_ID" >> .env
           echo "MEASUREMENT_ID=$MEASUREMENT_ID" >> .env
+          echo "PASSWORD_SALT=$PASSWORD_SALT" >> .env
         working-directory: ./apps/client
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
@@ -54,6 +55,7 @@ jobs:
           MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
           APP_ID: ${{ secrets.APP_ID }}
           MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
+          PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
 
       - name: Create JSON file
         env:
