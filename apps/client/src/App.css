@@ -1,14 +1,74 @@
+@import './Normalize.css';
+
 :root {
-  --white-color: #FFFFFF;
-  --black-color: #000000;
-  --orange-color: #FFA83C;
-  --light-orange-color: #FFF1DF;
-  --yellow-color: #FEE500;
-  --light-gray-color: #E9E9E9;
-  --dark-gray-color: #AAAAAA;
-  --strawberry-color: #F3A7A7;
-  --banana-color: #F1F3A7;
-  --mint-color: #BBF0A8;
-  --blueberry-color: #C4A7F3;
-  --chocolate-color: #7B4B23;
+  --orange-500: #FFA83C;
+  --orange-400: #FFC57C;
+  --orange-200: #FFF2E1;
+  --orange-100: #FFF7ED;
+  --black: #000000;
+  --gray-500: #8D8D8D;
+  --gray-400: #AEAEAE;
+  --gray-300: #ECECEC;
+  --gray-200: #DEDEDE;
+  --white: #FFFFFF;
+  --magenta: #FF6C6C;
+  --yellow: #FEE500;
+  --strawberry-200: #f08787;
+  --strawberry-100: #F3A7A7;
+  --banana-200: #e2e673;
+  --banana-100: #F1F3A7;
+  --mint-200: #82d664;
+  --mint-100: #BBF0A8;
+  --blueberry-200: #9d72e2;
+  --blueberry-100: #C4A7F3;
+  --chocolate-200: #5f320d;
+  --chocolate-100: #7B4B23;
+}
+
+@font-face {
+  font-family: "OneMobilePop";
+  font-weight: normal;
+  src: url("./assets/fonts/OneMobilePop.TTF") format("truetype");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  src: url("./assets/fonts/Pretendard-1.3.9/web/static/woff/Pretendard-Medium.woff") format("woff"),
+    url("./assets/fonts/Pretendard-1.3.9/web/static/woff2/Pretendard-Medium.woff2") format("woff2"),
+    url("./assets/fonts/Pretendard-1.3.9/public/static/alternative/Pretendard-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  src: url("./assets/fonts/Pretendard-1.3.9/web/static/woff/Pretendard-Bold.woff") format("woff"),
+    url("./assets/fonts/Pretendard-1.3.9/web/static/woff2/Pretendard-Bold.woff2") format("woff2"),
+    url("./assets/fonts/Pretendard-1.3.9/public/static/alternative/Pretendard-Bold.ttf") format("truetype");
+}
+
+body {
+  font-family: "Pretendard", sans-serif;
+  background-color: var(--orange-100);
+}
+
+h1 {
+  font-family: "OneMobilePop", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 1.06rem;
+  font-weight: 500;
+}
+
+@media (min-width: 801px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }

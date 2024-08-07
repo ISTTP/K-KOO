@@ -1,0 +1,32 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body,
+h1, h2, h3, h4, h5,
+p, div, form, label,
+caption, article, aside, canvas,
+header, nav, section, summary, button
+ul, li, i, u,
+table, tbody, thead, tfoot, tr, th, td
+ {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'],
+li {
+  list-style: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+

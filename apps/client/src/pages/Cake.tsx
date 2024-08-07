@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Wrapper from '#components/layout/Wrapper.tsx';
 import axiosInstance from '#apis/axios.ts';
 import MyCake from '#components/cake/MyCake.tsx';
 import SharedCake from '#components/cake/SharedCake.tsx';
 import Loading from '#components/common/Loading.tsx';
+import Sidebar from '#components/cake/Sidebar.tsx';
 import { AxiosError } from 'axios';
 import { getCakeRes, getUserMeRes } from '@isttp/schemas/all';
 import { useParams } from 'react-router-dom';
+import * as S from '#styles/SidebarStyle.tsx';
+
 
 const Cake = () => {
   const { ownerId } = useParams();
   const navigate = useNavigate();
   const [isMyCake, setIsMyCake] = useState(false);
   const [cakeUserData, setCakeUserData] = useState<getCakeRes>();
+
+  if (!ownerId) { return ('에러') }
 
   async function checkIsMyCake(ownerId: string) {
     try {
@@ -66,13 +70,16 @@ const Cake = () => {
   }
 
   return (
-    <Wrapper>
-      {isMyCake ? (
-        <MyCake ownerId={ownerId} data={cakeUserData} />
-      ) : (
-        <SharedCake ownerId={ownerId} data={cakeUserData} />
-      )}
-    </Wrapper>
+    <S.SideWrapper>
+      <Sidebar isMyCake={isMyCake} />
+      <S.Wrapper>
+        {isMyCake ? (
+          <MyCake ownerId={ownerId} data={cakeUserData} />
+        ) : (
+          <SharedCake ownerId={ownerId} data={cakeUserData} />
+        )}
+      </S.Wrapper>
+    </S.SideWrapper>
   );
 };
 

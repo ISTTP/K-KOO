@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  userId          String   @id @default(dbgenerated("nanoid(10)")) @db.VarChar(10) // 유저 아이디 (기본키) 
-  id              String // 아이디
+  userId          String   @id @default(dbgenerated("nanoid(10)")) @db.VarChar(10) // 유저 아이디 (기본키)
+  id              String   @unique // 아이디
   password        String? // 비밀번호 (선택적)
   nickname        String // 닉네임
   birthday        DateTime // 생일
+  email           String?  @unique // 이메일 (선택적, 있을 경우 고유값)
   point           Int      @default(0) // 포인트, 기본값으로 0 설정
   loginType       String // 로그인 타입
   sheetColor      String? // 시트 색깔 (선택적)
@@ -48,4 +49,11 @@ model Candle {
   imageUrl String // 이미지 주소
   point    Int // 포인트
   letters  Letter[] @relation("CandleLetters") // 편지들과의 관계
+}
+
+model Verify {
+  verifyId  Int      @id @default(autoincrement()) // 인증 아이디 (기본키)
+  email     String // 이메일
+  code      Int // 코드
+  createdAt DateTime @default(now()) // 생성 날짜
 }

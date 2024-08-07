@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import crypto from 'crypto';
 import prisma from '@isttp/db/all';
 import { reissueToken, verifyToken, decodeToken } from '@isttp/utils/all';
 import { GoogleTokenType, KakaoTokenType } from '@isttp/types/all';
@@ -11,9 +12,14 @@ export function setAuthCookies(
   accessToken: string,
   refreshToken: string,
 ) {
+  const environment = process.env.ENVIRONMENT;
+  const attributes = {
+    ACT: environment === 'production' ? `Secure; Max-Age: ${60 * 30}` : '',
+    RFT: environment === 'production' ? `Secure; Max-Age: ${60 * 60 * 24 * 14}` : '',
+  }
   res.setHeader('Set-Cookie', [
-    `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax;`,
-    `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax;`,
+    `ACT=${accessToken}; HttpOnly; Path=/; SameSite=Lax; ${attributes['ACT']}`,
+    `RFT=${refreshToken}; HttpOnly; Path=/; SameSite=Lax; ${attributes['RFT']}`,
   ]);
 }
 

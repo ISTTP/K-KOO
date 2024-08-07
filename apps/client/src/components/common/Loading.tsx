@@ -7,7 +7,7 @@ const LoadingWrapper = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: var(--white-color);
+  background-color: var(--white);
   opacity: 0.9;
   position: fixed;
   top: 0;
@@ -17,7 +17,7 @@ const LoadingWrapper = styled.div`
 
 const Spinner = styled.div`
   border: 8px solid rgba(0, 0, 0, 0.1);
-  border-left: 8px solid var(--orange-color);
+  border-left: 8px solid var(--orange-500);
   border-radius: 50%;
   width: 50px;
   height: 50px;

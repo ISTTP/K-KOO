@@ -103,11 +103,12 @@ const MyPage = () => {
           <span>님</span>
         </S.NameWrapper>
 
-        {/* 내가 작성한 편지함 페이지 필요 */}
         <S.InfoWrapper>
           <S.MyLetterButton>
             <MessengerIcon width={'1.5rem'} height={'1.5rem'} />
-            <span>내가 작성한 편지함</span>
+            <span onClick={() => {
+              navigate(`/myletter`);
+            }}>내가 작성한 편지함</span>
           </S.MyLetterButton>
 
           <S.PointWrapper>
@@ -197,6 +198,16 @@ const MyPage = () => {
         />
 
         <S.Hr />
+
+        {userInfo?.loginType === 'default' &&
+          <S.LinkWrapper>
+            <S.StyledLink to={'/reset/pwd/verify'}>
+              비밀번호 재설정
+            </S.StyledLink>
+          </S.LinkWrapper>
+        }
+
+        {userInfo?.loginType === 'default' && <S.Hr />}
 
         <S.AccountSettingWrapper>
           <S.AccountButton onClick={logout}>로그아웃</S.AccountButton>

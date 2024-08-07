@@ -6,8 +6,10 @@ import Button from '#components/common/Button.tsx';
 import Wrapper from '#components/layout/Wrapper.tsx';
 import RenderCake from '#components/cake/RenderCake.tsx';
 import ColorSelector from '#components/cake/ColorSelector.tsx';
+import styled from 'styled-components';
 
-import { CakeColorType } from '@isttp/types/all';
+import { ButtonType, CakeColorType } from '@isttp/types/all';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 
 async function getColors(userId: string) {
   try {
@@ -27,10 +29,13 @@ async function getColors(userId: string) {
 const CreateCake = () => {
   const navigate = useNavigate();
   const { ownerId } = useParams();
+  const [nickname, setNickname] = useState('');
   const [sheetColor, setSheetColor] = useState<CakeColorType>('white');
   const [creamColor, setCreamColor] = useState<CakeColorType>('chocolate');
+  const [buttonType, setButtonType] = useState<ButtonType>('default');
 
   async function handleCreateCake() {
+    setButtonType('loading');
     try {
       axiosInstance
         .put('/cake/color', {
@@ -42,6 +47,7 @@ const CreateCake = () => {
             alert('케이크 만들기에 성공했습니다.');
             navigate(`/cake/${ownerId}`);
           } else {
+            setButtonType('default');
             throw new Error('케이크 만들기에 실패했습니다.');
           }
         });
@@ -66,6 +72,8 @@ const CreateCake = () => {
             navigate(`/cake/${ownerId}`);
             return;
           }
+
+          setNickname(res.data.nickname);
         })
         .catch((error) => {
           if (error instanceof AxiosError) {
@@ -95,21 +103,60 @@ const CreateCake = () => {
 
   return (
     <Wrapper>
-      <h1>케이크 만들기</h1>
-      <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
-      <h3>시트</h3>
-      <ColorSelector
-        selectedColor={sheetColor}
-        setSelectedColor={setSheetColor}
-      />
-      <h3>크림</h3>
-      <ColorSelector
-        selectedColor={creamColor}
-        setSelectedColor={setCreamColor}
-      />
-      <Button type="default" label="케이크 만들기" onClick={handleCreateCake} />
+      <InnerWrapper>
+        <TitleWrapper>
+          <h1><Nickname>{nickname}</Nickname>님의</h1>
+          <h1>케이크를 꾸며보세요!</h1>
+        </TitleWrapper>
+        <RenderCake sheetColor={sheetColor} creamColor={creamColor} />
+        <SelectorWrapper>
+          <Label>시트 색상</Label>
+          <ColorSelector
+            selectedColor={sheetColor}
+            setSelectedColor={setSheetColor}
+          />
+          <Label>크림 색상</Label>
+          <ColorSelector
+            selectedColor={creamColor}
+            setSelectedColor={setCreamColor}
+          />
+        </SelectorWrapper>
+        <Button type={buttonType} onClick={handleCreateCake}>
+          케이크 만들기
+        </Button>
+      </InnerWrapper>
     </Wrapper>
   );
 };
 
 export { CreateCake };
+
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin-bottom: 1rem;
+`;
+
+const Nickname = styled.h1`
+  color: var(--orange-500);
+  display: inline;
+`;
+
+const SelectorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 2rem;
+`;
+
+const Label = styled.h3`
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+

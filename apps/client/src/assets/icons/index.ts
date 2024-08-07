@@ -6,6 +6,13 @@ import LinkIcon from './LinkIcon';
 import HomeIcon from './HomeIcon';
 import MessengerIcon from './MessengerIcon';
 import PersonIcon from './PersonIcon';
+import PenIcon from './PenIcon';
+import CakeIcon from './CakeIcon';
+import GridIcon from './GridIcon';
+import ArrowBackIcon from './ArrowBackIcon';
+import DropDownIcon from './DropDownIcon';
+import CakeLogo from './CakeLogo';
+import ShareIcon from './ShareIcon';
 
 export {
   FacebookLogoIcon,
@@ -16,4 +23,11 @@ export {
   HomeIcon,
   MessengerIcon,
   PersonIcon,
+  PenIcon,
+  CakeIcon,
+  GridIcon,
+  ArrowBackIcon,
+  DropDownIcon,
+  CakeLogo,
+  ShareIcon
 };

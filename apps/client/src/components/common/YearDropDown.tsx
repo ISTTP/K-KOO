@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '#apis/axios.ts';
 import styled from 'styled-components';
 import { getUserYearRes } from '@isttp/schemas/all';
+import { useGetYear } from '#apis/cake/useGetYear.tsx';
+import { DropDownIcon } from '#icons';
 
 interface YearDropdownProps {
   year: string;
@@ -12,29 +14,28 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
   const [years, setYears] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const getYears = async () => {
-    try {
-      const res = await axiosInstance.get<getUserYearRes>('/user/year');
-      const firstYear = res.data.year;
-
-      const maxYear = Number(year);
-      const Options = [];
-      for (let list = firstYear; list <= maxYear; list++) {
-        Options.push(list.toString());
-      }
-      setYears(Options);
-    } catch (error) {
-      alert('회원가입 연도 정보를 받아오지 못했습니다' + String(error));
-    }
-  };
+  const { data, isError } = useGetYear();
 
   useEffect(() => {
-    getYears();
-  }, []);
+    if (isError) {
+      alert('회원가입 연도 정보를 받아오지 못했습니다');
+    }
+    const firstYear = data.year;
+    const maxYear = Number(year);
+    const Options = [];
+    for (let list = firstYear; list <= maxYear; list++) {
+      Options.push(list.toString());
+    }
+    setYears(Options);
+  }, [data]);
 
   return (
     <DropdownContainer>
-      <DropdownButton onClick={() => setIsOpen(!isOpen)}>{year}</DropdownButton>
+      <DropdownButton
+        onClick={() => setIsOpen(!isOpen)}>
+        {year}년
+        <DropDownIcon width={24} height={24} />
+      </DropdownButton>
       {isOpen && (
         <DropdownList>
           {years.map((list) => (
@@ -45,7 +46,7 @@ const YearDropdown: React.FC<YearDropdownProps> = ({ year, handleYear }) => {
                 setIsOpen(false);
               }}
             >
-              {list}
+              {list}년
             </DropdownItem>
           ))}
         </DropdownList>
@@ -59,35 +60,46 @@ export default YearDropdown;
 const DropdownContainer = styled.div`
   position: relative;
   display: flex;
-  width: 300px;
+  width: 100%;
+  margin: 24px 0;
 `;
 
 const DropdownButton = styled.button`
-  background: var(--white-color);
-  border: 1px solid #e0e0e0;
+  background: var(--white);
+  border: 1px solid var(--orange-500);
   border-radius: 8px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
-  width: 300px;
+  width: 100%;
   display: flex;
   align-items: flex-start;
-  box-sizing: border-box;
+  overflow: hidden;
+  color: #828282;
+  text-overflow: ellipsis;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const DropdownList = styled.div`
   position: absolute;
-  top: 32px;
+  top: 40px;
   left: 0;
-  background: var(--white-color);
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  width: 300px;
+  background: var(--white);
+  border-left: 1px solid var(--orange-500);
+  border-right: 1px solid var(--orange-500);
+  border-bottom: 1px solid var(--orange-500);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 100%;
   z-index: 1;
   max-height: 150px;
   overflow-y: auto;
-  box-sizing: border-box;
 `;
 
 const DropdownItem = styled.div`

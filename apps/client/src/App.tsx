@@ -1,7 +1,9 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import { requestPermission } from '#firebase';
+import Loading from '#components/common/Loading.tsx';
+import './App.css';
+
 
 const MyPage = lazy(() =>
   import('#pages/MyPage.tsx').then((module) => ({ default: module.MyPage })),
@@ -40,17 +42,31 @@ const CreateLetter = lazy(() =>
     default: module.CreateLetter,
   })),
 );
+const MyLetter = lazy(() =>
+  import('#pages/MyLetter.tsx').then((module) => ({
+    default: module.MyLetter,
+  })),
+);
+const FindId = lazy(() =>
+  import('#pages/FindId.tsx').then((module) => ({ default: module.FindId })),
+);
+const FindPwd = lazy(() =>
+  import('#pages/FindPwd.tsx').then((module) => ({ default: module.FindPwd })),
+);
+const ResetPwd = lazy(() =>
+  import('#pages/ResetPwd.tsx').then((module) => ({ default: module.ResetPwd })),
+);
 
 const App = () => {
   useEffect(() => {
     requestPermission();
   }, []);
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
 
+  return (
+    <Suspense fallback={<Loading />}>
+      <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup/:step" element={<SignUp />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/auth/kakao" element={<KakaoLogin />} />
         <Route path="/auth/google" element={<GoogleLogin />} />
@@ -58,7 +74,10 @@ const App = () => {
         <Route path="/cake/create/:ownerId" element={<CreateCake />} />
         <Route path="/letter/choose/:ownerId" element={<ChooseCandle />} />
         <Route path="/letter/create/:ownerId" element={<CreateLetter />} />
-
+        <Route path="/myletter" element={<MyLetter />} />
+        <Route path="/find/id/:step" element={<FindId />} />
+        <Route path="/find/pwd" element={<FindPwd />} />
+        <Route path="/reset/pwd/:step" element={<ResetPwd />} />
       </Routes>
     </Suspense>
   );

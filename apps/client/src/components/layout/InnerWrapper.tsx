@@ -8,11 +8,17 @@ const InnerWrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 1rem;
-  box-sizing: border-box;
-
-  @media (min-width: 450px) {
-    width: 450px;
+  margin: 0 35px;
+  
+  @media (min-width: 801px) {
+    width: 800px;
   }
+
+  @media (min-width: 1025px) {
+    margin: 0;
+    padding: 0;
+  }
+
 `;
 
 export default InnerWrapper;

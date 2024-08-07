@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { PersonIcon } from '#icons';
+import useIsPC from '#hooks/useIsPc.tsx';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -21,17 +22,20 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.5rem;
   font-weight: bold;
 `;
 
-const SubTitle = styled.span`
-  font-size: 1.2rem;
-  margin: 0rem;
+const SubTitle = styled.h2`
+  margin-top: 0.5rem;
 `;
 
-const Nickname = styled.span`
-  color: var(--orange-color);
+const Nickname = styled.h1`
+  color: var(--orange-500);
+  display: inline;
+`;
+
+const Phrase = styled.h1`
+  display: inline;
 `;
 
 const MyPageButton = styled.button`
@@ -62,12 +66,13 @@ const CakeHeader = ({
   isMyCake: boolean;
 }) => {
   const navigate = useNavigate();
+  const isPC = useIsPC(1024);
   return (
     <HeaderContainer>
       <TitleContainer>
         <Title>
           <Nickname>{nickname}</Nickname>
-          <span>님의 케이크</span>
+          <Phrase>님의 케이크</Phrase>
         </Title>
         {isMyCake && (
           <MyPageButton
@@ -75,12 +80,12 @@ const CakeHeader = ({
               navigate('/mypage');
             }}
           >
-            <PersonIcon width={'100%'} height={'100%'} />
+            {!isPC && (<PersonIcon width={'100%'} height={'100%'} viewBox="0 0 31 38" />)}
           </MyPageButton>
         )}
       </TitleContainer>
-      {isMyCake && <SubTitle>장식초를 눌러 편지를 확인해보세요!</SubTitle>}
-      {!isMyCake && <SubTitle>친구의 케이크를 꾸며보세요!</SubTitle>}
+      {isMyCake && <SubTitle>장식초를 눌러 편지를 확인해보세요✉️</SubTitle>}
+      {!isMyCake && <SubTitle>친구의 케이크를 꾸며보세요❤️</SubTitle>}
     </HeaderContainer>
   );
 };
