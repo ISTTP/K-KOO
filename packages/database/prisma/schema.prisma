@@ -45,10 +45,11 @@ model Letter {
 }
 
 model Candle {
-  candleId Int      @id @default(autoincrement()) // 촛불 아이디 (기본키)
-  imageUrl String // 이미지 주소
-  point    Int // 포인트
-  letters  Letter[] @relation("CandleLetters") // 편지들과의 관계
+  candleId   Int      @id @default(autoincrement()) // 촛불 아이디 (기본키)
+  candleName String // 촛불 이름
+  imageUrl   String // 이미지 주소
+  point      Int // 포인트(가격)
+  letters    Letter[] @relation("CandleLetters") // 편지들과의 관계
 }
 
 model Verify {
