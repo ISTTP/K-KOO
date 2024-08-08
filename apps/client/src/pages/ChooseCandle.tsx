@@ -8,45 +8,8 @@ import { AxiosError } from 'axios';
 import { CandleType, CandleResponseType, user } from '@isttp/schemas/all';
 import Modal from '#components/modal/Modal.tsx';
 import Button from '#components/common/Button.tsx';
-
-const CandleContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  justify-items: center;
-  align-items: center;
-  margin-top: 2rem;
-`;
-
-const CandleButton = styled.button`
-  position: relative;
-  width: 5rem;
-  height: 5rem;
-  border-radius: 0.5rem;
-  border-width: 0;
-  display: relative;
-  overflow: hidden;
-  cursor: pointer;
-
-  &:hover {
-    border: 2px solid var(--orange-500);
-  }
-`;
-
-const CandleImage = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
-const CandleBadge = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: var(--orange-500);
-  color: var(--white);
-  padding: 0.2rem 0.5rem;
-  border-radius: 0 0 0 1rem;
-`;
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
+import ArrowBackIcon from '../assets/icons/ArrowBackIcon';
 
 async function getCandles() {
   try {
@@ -137,91 +100,171 @@ const ChooseCandle = () => {
 
   return (
     <Wrapper>
-      <h1>장식초 고르기</h1>
-      <CandleContainer>
-        {candles?.map((candle, i) => (
-          <CandleButton
-            key={i}
-            onClick={() => {
-              if (candle.point === 0) {
-                // 무료 장식초: 편지 페이지로 이동
-                navigate(
-                  `/letter/create/${ownerId}?candleId=${candle.candleId}`,
-                );
-              } else {
-                // 유료 장식초: 결제 혹은 로그인 유도 모달 띄우기
-                openModal(candle.candleId);
-              }
+      <InnerWrapper>
+        <NavWrapper>
+          <ArrowBackIcon onClick={() => navigate(-1)} />
+        </NavWrapper>
+
+        <TitleWrapper>
+          <h1>장식초 고르기</h1>
+          <h2>케이크를 꾸밀 장식초를 골라주세요❤️</h2>
+        </TitleWrapper>
+
+        <CandleContainer>
+          {candles?.map((candle, i) => (
+            <CandleButton
+              key={i}
+              onClick={() => {
+                if (candle.point === 0) {
+                  // 무료 장식초: 편지 페이지로 이동
+                  navigate(
+                    `/letter/create/${ownerId}?candleId=${candle.candleId}`,
+                  );
+                } else {
+                  // 유료 장식초: 결제 혹은 로그인 유도 모달 띄우기
+                  openModal(candle.candleId);
+                }
+              }}
+            >
+              {candle.point === 0 && <CandleBadge>FREE</CandleBadge>}
+              {candle.point !== 0 && <CandleBadge>{candle.point}P</CandleBadge>}
+              <CandleImage
+                src={candle.imageUrl}
+                alt={candle.candleId.toString()}
+              />
+            </CandleButton>
+          ))}
+        </CandleContainer>
+        <Modal open={openBuy}>
+          <img
+            style={{ width: '5rem', height: '5rem' }}
+            src={candle?.imageUrl}
+            alt={candle?.candleId.toString()}
+          />
+          <h3>해당 장식초를 구매하시겠습니까?</h3>
+          <span>남은 포인트: {userPoint}P</span>
+          <span>결제 포인트: {candle?.point}P</span>
+          {!isEnoughPoint && (
+            <span style={{ color: 'red' }}>포인트가 부족합니다.</span>
+          )}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              gap: '1rem',
             }}
           >
-            {candle.point === 0 && <CandleBadge>free</CandleBadge>}
-            {candle.point !== 0 && <CandleBadge>{candle.point}p</CandleBadge>}
-            <CandleImage
-              src={candle.imageUrl}
-              alt={candle.candleId.toString()}
-            />
-          </CandleButton>
-        ))}
-      </CandleContainer>
-      <Modal open={openBuy}>
-        <img
-          style={{ width: '5rem', height: '5rem' }}
-          src={candle?.imageUrl}
-          alt={candle?.candleId.toString()}
-        />
-        <h3>해당 장식초를 구매하시겠습니까?</h3>
-        <span>남은 포인트: {userPoint}P</span>
-        <span>결제 포인트: {candle?.point}P</span>
-        {!isEnoughPoint && (
-          <span style={{ color: 'red' }}>포인트가 부족합니다.</span>
-        )}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '100%',
-            gap: '1rem',
-          }}
-        >
+            <Button
+              type="gray"
+              size="large"
+              onClick={handleOpenBuy}
+            >
+              취소
+            </Button>
+            <Button
+              type={isEnoughPoint ? 'default' : 'disabled'}
+              size="large"
+              onClick={() => {
+                setOpenBuy(false);
+                handleBuyCandle(candle?.point ? candle.point : 0);
+              }}
+            >
+              구매하기
+            </Button>
+          </div>
+        </Modal>
+        <Modal open={openSuccess}>
+          <img
+            style={{ width: '5rem', height: '5rem' }}
+            src={candle?.imageUrl}
+            alt={candle?.candleId.toString()}
+          />
+          <h3>장식초 구매가 완료되었습니다.</h3>
+          <span>남은 포인트: {userPoint}P</span>
           <Button
-            type="gray"
-            size="large"
-            onClick={handleOpenBuy}
-          >
-            취소
-          </Button>
-          <Button
-            type={isEnoughPoint ? 'default' : 'disabled'}
-            size="large"
+            type="default"
             onClick={() => {
-              setOpenBuy(false);
-              handleBuyCandle(candle?.point ? candle.point : 0);
+              navigate(`/letter/create/${ownerId}?candleId=${candle?.candleId}`);
             }}
           >
-            구매하기
+            확인
           </Button>
-        </div>
-      </Modal>
-      <Modal open={openSuccess}>
-        <img
-          style={{ width: '5rem', height: '5rem' }}
-          src={candle?.imageUrl}
-          alt={candle?.candleId.toString()}
-        />
-        <h3>장식초 구매가 완료되었습니다.</h3>
-        <span>남은 포인트: {userPoint}P</span>
-        <Button
-          type="default"
-          onClick={() => {
-            navigate(`/letter/create/${ownerId}?candleId=${candle?.candleId}`);
-          }}
-        >
-          확인
-        </Button>
-      </Modal>
-      <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
+        </Modal>
+        <LoginModal open={openLogin} handleOpen={handleOpenLogin} />
+      </InnerWrapper>
     </Wrapper>
   );
 };
 
 export { ChooseCandle };
+
+const NavWrapper = styled.nav`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const CandleContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
+  margin-top: 2rem;
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+`;
+
+const CandleButton = styled.button`
+  position: relative;
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 0.5rem;
+  display: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--white);
+  border: 1px solid var(--orange-500);
+  overflow: hidden;
+
+  &:hover {
+    border: 2px solid var(--orange-500);
+  }
+
+  @media (max-width: 800px) {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+`;
+
+const CandleImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const CandleBadge = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: var(--orange-500);
+  color: var(--white);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+`;
+
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  gap: 0.75rem;
+`;
