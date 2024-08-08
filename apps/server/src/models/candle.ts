@@ -1,7 +1,11 @@
 import prisma from '@isttp/db/all';
 
 export async function getCandles() {
-  return await prisma.candle.findMany();
+  return await prisma.candle.findMany({
+    orderBy: {
+      point: 'asc',
+    },
+  });
 }
 
 export async function getCandle(candleId: number) {
