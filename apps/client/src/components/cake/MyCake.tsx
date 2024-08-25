@@ -6,7 +6,6 @@ import CakeInfo from '#components/cake/CakeInfo.tsx';
 import Button from '#components/common/Button.tsx';
 import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 import CakeHeader from '#components/cake/CakeHeader.tsx';
-import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import { CakeUserTypeResponse } from '@isttp/types/all';
 import useToggleStore from '../../store/useToggleStore';
 
@@ -36,7 +35,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   }, [data.sheetColor, data.creamColor]);
 
   return (
-    <InnerWrapper>
+    <>
       <CakeHeader nickname={data.nickname} isMyCake={true} />
       <Toggle ownerId={ownerId} toggle={toggle} onClick={clickedToggle} />
       {toggle ? (
@@ -61,7 +60,7 @@ const MyCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
           />
         </>
       )}
-    </InnerWrapper>
+    </>
   );
 };
 
