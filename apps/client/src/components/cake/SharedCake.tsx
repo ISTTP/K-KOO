@@ -63,6 +63,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
   return (
     <>
       <CakeHeader nickname={data.nickname} isMyCake={false} />
+      {data.isBirthday && <H1>happy birthday!</H1>}
       <CakeInfo
         year={data.year}
         sheetColor={data.sheetColor}
@@ -124,4 +125,18 @@ const Buttons = styled.div`
   gap: 26px;
   width: 100%;
 `
+const H1 = styled.h1`
+  background: linear-gradient(90deg, #FF3E3E 0%, #582599 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: "sansita";
+  font-size: 2.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-top: 2rem;
+`;
 
