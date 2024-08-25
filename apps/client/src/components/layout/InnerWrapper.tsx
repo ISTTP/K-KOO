@@ -9,6 +9,7 @@ const InnerWrapper = styled.div`
   width: 100%;
   padding: 1rem;
   margin: 0 35px;
+  position: relative;
   
   @media (min-width: 801px) {
     width: 800px;

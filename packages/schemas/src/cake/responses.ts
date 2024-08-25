@@ -14,6 +14,7 @@ export const getCakeRes = z.object({
   year: z.string(),
   sheetColor: CakeColorType.nullable(),
   creamColor: CakeColorType.nullable(),
+  isBirthday: z.boolean(),
 });
 
 export type getCakeRes = z.infer<typeof getCakeRes>;
