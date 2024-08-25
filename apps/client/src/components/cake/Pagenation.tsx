@@ -43,7 +43,11 @@ const PageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 62px;
+  margin-bottom: 40px;
+
+  @media (min-width: 801px) {
+    margin-bottom: 62px;
+  }
 
   button{
     width: 29px;
