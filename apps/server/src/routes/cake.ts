@@ -96,11 +96,17 @@ router.get('/cake/:ownerId', async (req, res) => {
         ? today.getFullYear() + 1
         : today.getFullYear();
 
+
+    const todayToStr = today.toDateString().slice(4, 10);
+    const birthdayToStr = birthday.toDateString().slice(4, 10);
+    const isBirthday = todayToStr === birthdayToStr;
+
     res.status(200).json({
       nickname: cakeUserData.nickname,
       year: String(year),
       sheetColor: cakeUserData.sheetColor,
       creamColor: cakeUserData.creamColor,
+      isBirthday,
     });
   } catch (error) {
     res.status(500).json({ message: '케이크 소유자 정보 조회 실패: ', error });

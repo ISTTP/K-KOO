@@ -23,4 +23,5 @@ export type CakeUserTypeResponse = {
   year: string;
   sheetColor: CakeColorType | null;
   creamColor: CakeColorType | null;
+  isBirthday: boolean;
 };
