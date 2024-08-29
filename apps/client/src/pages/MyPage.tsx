@@ -87,8 +87,13 @@ const MyPage = () => {
   return (
     <Wrapper>
       <InnerWrapper>
+
         <S.MyPageHeader>
-          <h1>마이페이지</h1>
+          <S.TitleWrapper>
+            <h1><S.Nickname>{userInfo?.nickname}</S.Nickname>님</h1>
+            <h2>케이꾸에 오신 것을 환영합니다🧡</h2>
+          </S.TitleWrapper>
+
           <S.HomeButton
             onClick={() => {
               navigate(`/cake/${userInfo?.userId}`);
@@ -97,11 +102,6 @@ const MyPage = () => {
             <HomeIcon width={'2rem'} height={'2rem'} />
           </S.HomeButton>
         </S.MyPageHeader>
-
-        <S.NameWrapper>
-          <S.Nickname>{userInfo?.nickname}</S.Nickname>
-          <span>님</span>
-        </S.NameWrapper>
 
         <S.InfoWrapper>
           <S.MyLetterButton>
@@ -119,83 +119,89 @@ const MyPage = () => {
 
         <S.Hr />
 
-        <S.InfoWrapper>
-          <S.SubTitle>닉네임</S.SubTitle>
-          {disableNickname && (
-            <button
-              onClick={() => {
-                setDisableNickname(false);
-              }}
-            >
-              변경
-            </button>
-          )}
-          {!disableNickname && (
-            <div>
-              <button
-                onClick={async () => {
-                  await changeNickname(nickname);
-                  setDisableNickname(true);
-                }}
-              >
-                확인
-              </button>
-              <button
-                onClick={() => {
-                  setDisableNickname(true);
-                  setNickname(String(userInfo?.nickname));
-                }}
-              >
-                취소
-              </button>
-            </div>
-          )}
-        </S.InfoWrapper>
-        <S.Input
-          type="text"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          disabled={disableNickname}
-        />
+        <S.EditContainer>
+          <S.EditWrapper>
+            <S.LabelWrapper>
+              <S.SubTitle>닉네임</S.SubTitle>
+              {disableNickname && (
+                <S.OrangeButton
+                  onClick={() => {
+                    setDisableNickname(false);
+                  }}
+                >
+                  변경
+                </S.OrangeButton>
+              )}
+              {!disableNickname && (
+                <S.ButtonWrapper>
+                  <S.WhiteButton
+                    onClick={() => {
+                      setDisableNickname(true);
+                      setNickname(String(userInfo?.nickname));
+                    }}
+                  >
+                    취소
+                  </S.WhiteButton>
+                  <S.OrangeButton
+                    onClick={async () => {
+                      await changeNickname(nickname);
+                      setDisableNickname(true);
+                    }}
+                  >
+                    확인
+                  </S.OrangeButton>
+                </S.ButtonWrapper>
+              )}
+            </S.LabelWrapper>
+            <S.Input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              disabled={disableNickname}
+            />
+          </S.EditWrapper>
 
-        <S.InfoWrapper>
-          <S.SubTitle>생일</S.SubTitle>
-          {disableBirthday && (
-            <button
-              onClick={() => {
-                setDisableBirthday(false);
-              }}
-            >
-              변경
-            </button>
-          )}
-          {!disableBirthday && (
-            <div>
-              <button
-                onClick={async () => {
-                  await changeBirthday(birthday);
-                  setDisableBirthday(true);
-                }}
-              >
-                확인
-              </button>
-              <button
-                onClick={() => {
-                  setDisableBirthday(true);
-                  setBirthday(String(userInfo?.birthday).split('T')[0]);
-                }}
-              >
-                취소
-              </button>
-            </div>
-          )}
-        </S.InfoWrapper>
-        <S.Input
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          disabled={disableBirthday}
-        />
+          <S.EditWrapper>
+            <S.LabelWrapper>
+              <S.SubTitle>생일</S.SubTitle>
+              {disableBirthday && (
+                <S.OrangeButton
+                  onClick={() => {
+                    setDisableBirthday(false);
+                  }}
+                >
+                  변경
+                </S.OrangeButton>
+              )}
+              {!disableBirthday && (
+                <S.ButtonWrapper>
+                  <S.WhiteButton
+                    onClick={() => {
+                      setDisableBirthday(true);
+                      setBirthday(String(userInfo?.birthday).split('T')[0]);
+                    }}
+                  >
+                    취소
+                  </S.WhiteButton>
+                  <S.OrangeButton
+                    onClick={async () => {
+                      await changeBirthday(birthday);
+                      setDisableBirthday(true);
+                    }}
+                  >
+                    확인
+                  </S.OrangeButton>
+                </S.ButtonWrapper>
+              )}
+            </S.LabelWrapper>
+            <S.Input
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              disabled={disableBirthday}
+            />
+          </S.EditWrapper>
+        </S.EditContainer>
 
         <S.Hr />
 

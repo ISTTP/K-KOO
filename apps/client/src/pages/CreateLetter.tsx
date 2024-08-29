@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+
 import Wrapper from '#components/layout/Wrapper.tsx';
+import InnerWrapper from '#components/layout/InnerWrapper.tsx';
 import Button from '#components/common/Button.tsx';
+import Input from '#components/common/Input.tsx';
+import ArrowBackIcon from '../assets/icons/ArrowBackIcon';
+
 import axiosInstance from '#apis/axios.ts';
 import { AxiosError } from 'axios';
 import {
@@ -9,8 +15,7 @@ import {
   LetterRequestType,
   LetterResponseType,
 } from '@isttp/schemas/all';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import InnerWrapper from '#components/layout/InnerWrapper.tsx';
+import { ButtonType } from '@isttp/types/all';
 
 export async function fetchUserInfo() {
   try {
@@ -67,7 +72,7 @@ const CreateLetter = () => {
   const [senderId, setSenderId] = useState('');
   const [nickname, setNickname] = useState('');
   const [contents, setContents] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [buttonType, setButtonType] = useState<ButtonType>('disabled');
 
   useEffect(() => {
     fetchUserInfo().then((data) => {
@@ -78,52 +83,68 @@ const CreateLetter = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (nickname && contents) {
+      setButtonType('default');
+    } else {
+      setButtonType('disabled');
+    }
+  }, [nickname, contents]);
+
   return (
     <Wrapper>
       <InnerWrapper>
-        <h1>편지 작성</h1>
-        <Input
-          type="text"
-          value={nickname}
-          placeholder="닉네임을 입력하세요 (10자 이하)"
-          maxLength={10}
-          onChange={(e) => setNickname(e.target.value)}
-        />
-        <TextArea
-          value={contents}
-          rows={10}
-          placeholder="편지 내용을 작성해주세요"
-          onChange={(e) => setContents(e.target.value)}
-        />
-        <Button
-          type={loading ? 'loading' : 'default'}
-          onClick={async () => {
-            setLoading(true);
 
-            if (!nickname || !contents) {
-              alert('닉네임과 내용을 작성해주세요.');
-              setLoading(false);
-              return;
-            }
+        <NavWrapper>
+          <ArrowBackIcon onClick={() => navigate(-1)} />
+        </NavWrapper>
 
-            const result = await handleCreateLetter({
-              senderId,
-              recipientId: ownerId,
-              candleId: Number(candleId),
-              nickname,
-              contents,
-            });
+        <TitleWrapper>
+          <h1>생일 편지를 남겨주세요</h1>
+          <h2>친구의 생일을 축하해주세요❤️</h2>
+        </TitleWrapper>
 
-            if (result) {
-              alert('편지 보내기에 성공했습니다.');
-              navigate(`/cake/${ownerId}`);
-            } else {
-              alert('편지 보내기에 실패했습니다.');
-            }
-          }}
-        >
-          편지 보내기
-        </Button>
+        <FormWrapper>
+          <Input
+            type="text"
+            $isValid={!!nickname}
+            value={nickname}
+            placeholder="닉네임을 작성해주세요."
+            maxLength={20}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+          <TextArea
+            value={contents}
+            rows={10}
+            placeholder="편지 내용을 작성해주세요. (1000자 이하)"
+            maxLength={1000}
+            onChange={(e) => setContents(e.target.value)}
+          />
+          <Button
+            type={buttonType}
+            onClick={async () => {
+              setButtonType('loading');
+
+              const result = await handleCreateLetter({
+                senderId,
+                recipientId: ownerId,
+                candleId: Number(candleId),
+                nickname,
+                contents,
+              });
+
+              if (result) {
+                alert('편지 보내기에 성공했습니다.');
+                navigate(`/cake/${ownerId}`);
+              } else {
+                alert('편지 보내기에 실패했습니다.');
+              }
+            }}
+          >
+            편지 보내기
+          </Button>
+        </FormWrapper>
+
       </InnerWrapper>
     </Wrapper>
   );
@@ -131,16 +152,37 @@ const CreateLetter = () => {
 
 export { CreateLetter };
 
-const Input = styled.input`
-  width: 100%;
-  height: 2rem;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-`;
-
 const TextArea = styled.textarea`
   width: 100%;
+  height: 22.5rem;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
+  font-size: 1.05rem;
+  border: 1px solid var(--orange-500); 
+  border-radius: 0.25rem;
+  resize: none;
+`;
+
+const NavWrapper = styled.nav`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const TitleWrapper = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  margin-top: 2rem;
+  gap: 0.5rem;
+`;
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  margin: 1.75rem 0;
 `;

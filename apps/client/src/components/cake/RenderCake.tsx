@@ -49,9 +49,14 @@ export default RenderCake;
 
 const SvgContainer = styled.div`
   margin-top: 3rem;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   position: relative;
+
+  @media (min-width: 801px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 const SvgElement = styled.img`
@@ -77,7 +82,7 @@ const CandleImage = styled.img`
 `;
 
 const Nickname = styled.p<{ $creamColor: CakeColorType }>`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -2px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -89,4 +94,8 @@ const Nickname = styled.p<{ $creamColor: CakeColorType }>`
     $creamColor === 'white' || $creamColor === 'banana'
       ? 'var(--black)'
       : 'var(--white)'};
+
+  @media (min-width: 801px) {
+    font-size: 18px;
+  }
 `;
