@@ -13,7 +13,7 @@ type RenderedCakeProps = {
   handleClick?: (index: number) => void;
 };
 
-const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/cakes/avif';
+const baseUrl = 'https://kkoo.s3.ap-northeast-2.amazonaws.com/images/cakes/avif/';
 
 const RenderCake: React.FC<RenderedCakeProps> = ({
   sheetColor,
