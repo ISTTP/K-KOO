@@ -68,7 +68,7 @@ const EnterEmail = () => {
     <>
       <S.TitleWrapper>
         <S.Title>아이디 찾기</S.Title>
-        <S.SubTitle>회원가입하시 사용했던 이메일을 입력해주세요.</S.SubTitle>
+        <S.SubTitle>회원가입시 사용했던 이메일을 입력해주세요.</S.SubTitle>
       </S.TitleWrapper>
 
       <S.InputWrapper>
