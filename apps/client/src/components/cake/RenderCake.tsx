@@ -23,8 +23,8 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
   creamColor = creamColor ?? 'white';
-  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.png';
-  const creamSrc = baseUrl + 'cream_' + creamColor + '.png';
+  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.webp';
+  const creamSrc = baseUrl + 'cream_' + creamColor + '.webp';
 
   return (
     <SvgContainer>
