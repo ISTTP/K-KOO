@@ -1,4 +1,3 @@
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
@@ -9,7 +8,6 @@ module.exports = {
   mode: 'production',
   entry: {
     main: path.resolve(__dirname, 'src', 'index.tsx'),
-    firebase: path.resolve(__dirname, 'src', 'firebase-messaging-sw.ts'),
   },
   output: {
     filename: '[name].js',
@@ -22,6 +20,8 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
+      chunks: 'all',
+      maxSize: 244_000,
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/](sentry|react-dom)[\\/]/,
@@ -31,13 +31,6 @@ module.exports = {
       },
     },
   },
-  /*
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      maxSize: 250000
-    },
-  },*/
   module: {
     rules: [
       {
@@ -50,7 +43,7 @@ module.exports = {
               [
                 '@babel/preset-env',
                 {
-                  targets: '> 0.25%, not dead',
+                  targets: '> 0.9%, not dead',
                 },
               ],
               '@babel/preset-react',
@@ -63,7 +56,7 @@ module.exports = {
                   corejs: 3,
                   regenerator: true,
                 },
-              ],
+              ]
             ],
           },
         },
