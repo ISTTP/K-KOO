@@ -23,13 +23,23 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
 }) => {
   sheetColor = sheetColor ?? 'chocolate';
   creamColor = creamColor ?? 'white';
-  const sheetSrc = baseUrl + 'sheet_' + sheetColor + '.webp';
-  const creamSrc = baseUrl + 'cream_' + creamColor + '.webp';
+  const sheetSrc300 = baseUrl + '300/sheet_' + sheetColor + '.webp';
+  const sheetSrc250 = baseUrl + '250/sheet_' + sheetColor + '.webp';
+  const creamSrc300 = baseUrl + '300/cream_' + creamColor + '.webp';
+  const creamSrc250 = baseUrl + '250/cream_' + creamColor + '.webp';
 
   return (
     <SvgContainer>
-      <SvgElement src={sheetSrc} alt="시트 이미지" />
-      <SvgElement src={creamSrc} alt="크림 이미지" />
+      <SvgElement
+        srcSet={`${sheetSrc250} 250w, ${sheetSrc300} 300w`}
+        sizes="(max-width: 800px) 250px, 300px"
+        src={sheetSrc300} alt="시트 이미지"
+      />
+      <SvgElement
+        srcSet={`${creamSrc250} 250w, ${creamSrc300} 300w`}
+        sizes="(max-width: 800px) 250px, 300px"
+        src={creamSrc300} alt="크림 이미지"
+      />
       {candles?.map((candle, index) => (
         <Candle
           key={index}
@@ -37,7 +47,7 @@ const RenderCake: React.FC<RenderedCakeProps> = ({
           left={candle.position.left}
           onClick={handleClick ? () => handleClick(index) : undefined}
         >
-          <CandleImage src={candle.candleImageUrl} alt="장식초" />
+          <CandleImage width={80} height={80} src={candle.candleImageUrl} alt="장식초" />
           <Nickname $creamColor={creamColor}>{candle.nickname}</Nickname>
         </Candle>
       ))}
