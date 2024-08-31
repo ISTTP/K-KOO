@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'production',
@@ -18,6 +18,19 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.jsx'],
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 244_000,
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/](sentry|react-dom)[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   module: {
     rules: [
       {
@@ -30,7 +43,7 @@ module.exports = {
               [
                 '@babel/preset-env',
                 {
-                  targets: '> 0.25%, not dead',
+                  targets: '> 0.9%, not dead',
                 },
               ],
               '@babel/preset-react',
@@ -43,7 +56,7 @@ module.exports = {
                   corejs: 3,
                   regenerator: true,
                 },
-              ],
+              ]
             ],
           },
         },
@@ -74,5 +87,7 @@ module.exports = {
         },
       ],
     }),
+    new BundleAnalyzerPlugin(),
+
   ],
 };
