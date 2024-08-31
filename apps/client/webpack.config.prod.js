@@ -1,13 +1,15 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'production',
   entry: {
     main: path.resolve(__dirname, 'src', 'index.tsx'),
+    firebase: path.resolve(__dirname, 'src', 'firebase-messaging-sw.ts'),
   },
   output: {
     filename: '[name].js',
@@ -18,6 +20,24 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.jsx'],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/](sentry|react-dom)[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+  /*
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 250000
+    },
+  },*/
   module: {
     rules: [
       {
@@ -74,5 +94,7 @@ module.exports = {
         },
       ],
     }),
+    new BundleAnalyzerPlugin(),
+
   ],
 };
