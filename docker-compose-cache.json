@@ -1,0 +1,26 @@
+{
+  "target": {
+    "client": {
+      "cache-from": [
+        "type=gha,scope=ISTTP/K-KOO/client"
+      ],
+      "cache-to": [
+        "type=gha,mode=max,scope=ISTTP/K-KOO/client"
+      ],
+      "output": [
+        "type=docker"
+      ]
+    },
+    "server": {
+      "cache-from": [
+        "type=gha,scope=ISTTP/K-KOO/server"
+      ],
+      "cache-to": [
+        "type=gha,mode=max,scope=ISTTP/K-KOO/server"
+      ],
+      "output": [
+        "type=docker"
+      ]
+    }
+  }
+}
