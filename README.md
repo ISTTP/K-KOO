@@ -32,3 +32,57 @@
 - Front-end : React, Typescript, webpack, babel, eslint, prettier, styled-components, Zustand, React-query, jest, playwright, 
 - Back-end : Express.js, Typescript, postgreSQL, Prisma 
 - 프로젝트 관리 : Turborepo, Pnpm, Github
+
+## 2. 아키텍쳐
+```mermaid
+flowchart TB
+    subgraph Client["Client (Browser)"]
+        React["React\n(TypeScript)"]
+        Zustand["Zustand\n(State Management)"]
+        ReactQuery["React Query\n(Server State)"]
+        React --> Zustand
+        React --> ReactQuery
+    end
+
+    subgraph BuildTools["Build & Tools"]
+        Webpack["Webpack"]
+        Babel["Babel"]
+        TypeScript["TypeScript"]
+        Jest["Jest/Playwright\n(Testing)"]
+        StyleComp["styled-components"]
+    end
+
+    subgraph CICD["CI/CD Pipeline"]
+        GHA["GitHub Actions"]
+        Husky["Husky"]
+        Docker["Docker"]
+    end
+
+    subgraph Server["Server Environment"]
+        Nginx["Nginx\n(Reverse Proxy)"]
+        Express["Express.js\n(TypeScript)"]
+        Prisma["Prisma ORM"]
+    end
+
+    subgraph Cloud["AWS Cloud"]
+        EC2["AWS EC2"]
+        S3["AWS S3"]
+        RDS["PostgreSQL\n(RDS)"]
+    end
+
+    subgraph Monitoring["Monitoring"]
+        Sentry["Sentry"]
+    end
+
+    Client -->|API Requests| Nginx
+    Nginx -->|Proxy| Express
+    Express --> Prisma
+    Prisma --> RDS
+    
+    BuildTools -->|Build| Client
+    CICD -->|Deploy| EC2
+    Client -->|Error Tracking| Sentry
+    
+    EC2 --> Nginx
+    S3 -->|Static Assets| Nginx
+```
