@@ -2,7 +2,8 @@
 
 > 케이크 위에 쌓이는 우정과 사랑, 생일날 열리는 나만의 롤링페이퍼 케이꾸! 👉 https://k-koo.kro.kr/
 
-![Frame 249](https://github.com/user-attachments/assets/209e7a96-1644-44b8-bafc-1824690a7f6e)
+![image](https://github.com/user-attachments/assets/121a00b3-57a0-4733-87c1-b2f4287ef16a)
+
 
 ### Frontend
 
