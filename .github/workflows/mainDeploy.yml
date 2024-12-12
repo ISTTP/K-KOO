@@ -65,7 +65,48 @@ jobs:
           MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
           PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
 
-      - name: Create JSON file
+      - name: Generate Environment Variables File for Server
+        run: |
+          echo "SERVER_PORT=$SERVER_PORT" >> .env
+          echo "SERVER_URL=$SERVER_URL" >> .env
+          echo "KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID" >> .env
+          echo "KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI" >> .env
+          echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> .env
+          echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> .env
+          echo "GOOGLE_REDIRECT_URI=$GOOGLE_REDIRECT_URI" >> .env
+          echo "CLIENT_URL=$CLIENT_URL" >> .env
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+          echo "JWT_SECRET=$JWT_SECRET" >> .env
+          echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> .env
+          echo "EMAILJS_SERVICE_ID=$EMAILJS_SERVICE_ID" >> .env
+          echo "EMAILJS_TEMPLATE_ID=$EMAILJS_TEMPLATE_ID" >> .env
+          echo "EMAILJS_PWD_TEMPLATE_ID=$EMAILJS_PWD_TEMPLATE_ID" >> .env
+          echo "EMAILJS_PUBLIC_KEY=$EMAILJS_PUBLIC_KEY" >> .env
+          echo "EMAILJS_PRIVATE_KEY=$EMAILJS_PRIVATE_KEY" >> .env
+          echo "PASSWORD_SALT=$PASSWORD_SALT" >> .env
+          echo "ENVIRONMENT=$ENVIRONMENT" >> .env
+        working-directory: .
+        env:
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PWD_TEMPLATE_ID: ${{ secrets.EMAILJS_PWD_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
+          EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
+          PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+
+      - name: Create JSON file for FCM
         env:
           TYPE: ${{ secrets.TYPE }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
@@ -126,11 +167,6 @@ jobs:
           files: |-
             docker-compose.yml
             docker-compose-cache.json
-
-      # - name: Build and push
-      #   run: |
-      #     docker compose build
-      #     docker compose push
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master
