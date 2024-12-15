@@ -2,6 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { ModalPortal } from '../../ModalPortal';
 
+const Modal = ({
+  open,
+  children,
+}: {
+  open: boolean;
+  children: React.ReactNode;
+}) => {
+  return (
+    <ModalPortal>
+      <Overlay open={open}>
+        <ModalContainer>{children}</ModalContainer>
+      </Overlay>
+    </ModalPortal>
+  );
+};
+
+export default Modal;
+
 const Overlay = styled.div<{ open: boolean }>`
   display: ${(props) => (props.open ? 'flex' : 'none')};
   flex-direction: column;
@@ -29,6 +47,7 @@ const ModalContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  gap: 12px;
 
   span {
     color: var(--black, #000);
@@ -41,21 +60,3 @@ const ModalContainer = styled.div`
     padding: 29px 18px;
   }
 `;
-
-const Modal = ({
-  open,
-  children,
-}: {
-  open: boolean;
-  children: React.ReactNode;
-}) => {
-  return (
-    <ModalPortal>
-      <Overlay open={open}>
-        <ModalContainer>{children}</ModalContainer>
-      </Overlay>
-    </ModalPortal>
-  );
-};
-
-export default Modal;
