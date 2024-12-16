@@ -39,12 +39,10 @@ const Phrase = styled.h1`
 `;
 
 const MyPageButton = styled.button`
-  position: relative;
   width: 2.6rem;
   height: 2.6rem;
   border-radius: 50%;
   border-width: 0;
-  display: relative;
   overflow: hidden;
   cursor: pointer;
   display: flex;
