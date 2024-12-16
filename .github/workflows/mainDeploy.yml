@@ -65,7 +65,7 @@ jobs:
           MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
           PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
 
-      - name: Generate Environment Variables File for Docker
+      - name: Generate Environment Variables File for Server
         run: |
           echo "SERVER_PORT=$SERVER_PORT" >> .env
           echo "SERVER_URL=$SERVER_URL" >> .env
@@ -106,7 +106,7 @@ jobs:
           PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
 
-      - name: Create JSON file
+      - name: Create JSON file for FCM
         env:
           TYPE: ${{ secrets.TYPE }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
@@ -167,11 +167,6 @@ jobs:
           files: |-
             docker-compose.yml
             docker-compose-cache.json
-
-      # - name: Build and push
-      #   run: |
-      #     docker compose build
-      #     docker compose push
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master

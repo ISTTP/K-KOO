@@ -19,13 +19,13 @@ const Toggle: React.FC<ToggleBtnProps> = ({ ownerId, toggle, onClick }) => {
   return (
     <Container>
       <ToggleBtn $istoggle={toggle}>
-        <CakeIconWrapper $istoggle={!toggle}>
+        <CakeIconWrapper $istoggle={!toggle} onClick={onClick} >
           <CakeIcon width={32} height={32} fill={'#AEAEAE'} stroke={'#AEAEAE'} />
         </CakeIconWrapper>
-        <GridIconWrapper $istoggle={toggle}>
+        <GridIconWrapper $istoggle={toggle} onClick={onClick} >
           <GridIcon width={20} height={20} fill={'#AEAEAE'} />
         </GridIconWrapper>
-        <Circle $istoggle={toggle} onClick={onClick}>
+        <Circle $istoggle={toggle} >
           <CircleIconWrapper>
             {toggle ? (
               <GridIcon width={20} height={20} fill="#FFF" viewBox='0 0 20 20' />

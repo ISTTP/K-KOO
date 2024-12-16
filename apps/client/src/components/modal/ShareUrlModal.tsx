@@ -51,21 +51,23 @@ const ShareUrlModal = ({
 
   return (
     <Modal open={open}>
-      <h3>내 케이크 공유하기</h3>
-      <div>
-        <IconButton onClick={() => kakaoShare(nickname)}>
-          <KakaoLogoIcon width={'3rem'} height={'3rem'} />
-        </IconButton>
-        <IconButton onClick={() => facebookShare(nickname)}>
-          <FacebookLogoIcon width={'3rem'} height={'3rem'} />
-        </IconButton>
-        <IconButton onClick={pasteUrl}>
-          <LinkIcon width={'3rem'} height={'3rem'} />
-        </IconButton>
-      </div>
-      <Button type="default" onClick={handleOpen} >
-        닫기
-      </Button>
+      <ShareBox>
+        <h3>내 케이크 공유하기</h3>
+        <div>
+          <IconButton onClick={() => kakaoShare(nickname)}>
+            <KakaoLogoIcon width={'3rem'} height={'3rem'} />
+          </IconButton>
+          <IconButton onClick={() => facebookShare(nickname)}>
+            <FacebookLogoIcon width={'3rem'} height={'3rem'} />
+          </IconButton>
+          <IconButton onClick={pasteUrl}>
+            <LinkIcon width={'3rem'} height={'3rem'} />
+          </IconButton>
+        </div>
+        <Button type="default" onClick={handleOpen} >
+          닫기
+        </Button>
+      </ShareBox>
     </Modal>
   );
 };
@@ -78,3 +80,11 @@ const IconButton = styled.button`
   cursor: pointer;
   margin: 0 0.5rem;
 `;
+
+const ShareBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+`

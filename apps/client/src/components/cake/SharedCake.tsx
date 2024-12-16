@@ -85,8 +85,7 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         </Button>
       </Buttons>
       <Modal open={open}>
-        <span>편지를 작성하면 포인트를 얻을 수 있어요.</span>
-        <span>로그인 하시겠어요?</span>
+        <span>편지를 작성하면 포인트를 얻을 수 있어요.{'\n'}로그인 하시겠어요?</span>
         <Button
           type="default"
           onClick={() => {

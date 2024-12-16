@@ -7,17 +7,21 @@ import { useNavigate } from 'react-router-dom';
 import useToggleStore from '../../store/useToggleStore';
 import { fetchUserInfo } from '#pages/CreateLetter.tsx';
 import axiosInstance from '#apis/axios.ts';
+import ShareUrlModal from '#components/modal/ShareUrlModal.tsx';
 
 const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
   const navigate = useNavigate();
   const setToggle = useToggleStore((state) => state.setToggle);
   const [user, setUser] = useState('');
+  const [nickname, setNickname] = useState('');
   const [selectedMenu, setSelectedMenu] = useState('cake');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetchUserInfo().then((data) => {
       if (data) {
         setUser(data.userId);
+        setNickname(data.nickname);
       }
     });
   }, []);
@@ -52,6 +56,10 @@ const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
     }
   }
 
+  function handleOpen() {
+    setOpen(!open);
+  }
+
   return (
     <S.Container>
       <div className='logo'>
@@ -81,10 +89,15 @@ const Sidebar: React.FC<{ isMyCake: boolean }> = ({ isMyCake }) => {
               <PenIcon width={37} height={37} viewBox="-6 -6 30 30" />
               케이크 수정
             </li>
-            <li>
+            <li onClick={handleOpen}>
               <ShareIcon />
               링크 공유
             </li>
+            <ShareUrlModal
+              nickname={nickname}
+              open={open}
+              handleOpen={handleOpen}
+            />
           </section>
           <Button
             type="default"

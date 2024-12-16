@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PrevIcon from '../../assets/icons/PrevIcon';
 
 interface PageProps {
   currentPage: number;
@@ -18,7 +19,7 @@ const Pagenation: React.FC<PageProps> = ({
         onClick={() => changePage(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        &lt;
+        <PrevIcon />
       </button>
       <span>
         {' '}
@@ -27,8 +28,9 @@ const Pagenation: React.FC<PageProps> = ({
       <button
         onClick={() => changePage(currentPage + 1)}
         disabled={currentPage === totalPage}
+        className='next'
       >
-        &gt;
+        <PrevIcon />
       </button>
     </PageContainer>
   );
@@ -54,9 +56,16 @@ const PageContainer = styled.div`
     height: 29px;
     border-radius: 50%;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: var(--orange-500);
     font-family: Pretendard;
     color: var(--white);
+
+    &.next{
+      transform: rotate(180deg);
+    }
   }
 
   span{

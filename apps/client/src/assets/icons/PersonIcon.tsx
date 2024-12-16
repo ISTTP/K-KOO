@@ -4,6 +4,8 @@ const PersonIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
+      width="36px"
+      height="36px"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
