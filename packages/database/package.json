@@ -17,10 +17,10 @@
   "devDependencies": {
     "@isttp/eslint-config": "workspace:*",
     "@isttp/typescript-config": "workspace:*",
-    "prisma": "^5.17.0",
+    "prisma": "^6.1.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@prisma/client": "^5.17.0"
+    "@prisma/client": "6.1.0"
   }
 }
