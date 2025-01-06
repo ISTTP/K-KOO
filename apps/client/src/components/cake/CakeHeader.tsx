@@ -29,12 +29,12 @@ const SubTitle = styled.h2`
   margin-top: 0.5rem;
 `;
 
-const Nickname = styled.h1`
+const Nickname = styled.p`
   color: var(--orange-500);
   display: inline;
 `;
 
-const Phrase = styled.h1`
+const Phrase = styled.p`
   display: inline;
 `;
 
@@ -78,7 +78,7 @@ const CakeHeader = ({
               navigate('/mypage');
             }}
           >
-            {!isPC && (<PersonIcon width={'100%'} height={'100%'} viewBox="0 0 31 38" />)}
+            {!isPC && (<PersonIcon viewBox="0 0 31 38" />)}
           </MyPageButton>
         )}
       </TitleContainer>
