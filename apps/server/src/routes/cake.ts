@@ -85,14 +85,14 @@ router.get('/cake/:ownerId', async (req, res) => {
 
     const today = new Date();
     const birthday = cakeUserData.birthday;
-    const thisYearBdayAfter30 = new Date(
+    const thisYearBdayAfter7 = new Date(
       today.getFullYear(),
       birthday.getMonth(),
-      birthday.getDate() + 30,
+      birthday.getDate() + 7,
     );
 
     const year =
-      today > thisYearBdayAfter30
+      today > thisYearBdayAfter7
         ? today.getFullYear() + 1
         : today.getFullYear();
 

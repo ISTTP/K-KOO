@@ -6,9 +6,9 @@ interface ModalPortalProps {
 }
 
 export const ModalPortal: React.FC<ModalPortalProps> = ({ children }) => {
-  const el = document.getElementById('modal');
-  if (!el) {
+  const modalElement = document.getElementById('modal');
+  if (!modalElement) {
     return null;
   }
-  return ReactDOM.createPortal(children, el);
+  return ReactDOM.createPortal(children, modalElement);
 };
