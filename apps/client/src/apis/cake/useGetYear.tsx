@@ -10,6 +10,7 @@ async function fetchYear() {
 export const useGetYear = () => {
   return useSuspenseQuery({
     queryKey: ['get-year'],
-    queryFn: () => fetchYear()
+    queryFn: () => fetchYear(),
+    staleTime: 1000 * 60 * 5,
   })
 }
