@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
+import * as C from '#styles/CakeStyle.tsx';
+
 import { CakeColorType } from '@isttp/types/all';
 import {
   getCakeDataRes,
@@ -9,14 +10,17 @@ import {
   getLetterRes,
   getCakeNoDataRes,
 } from '@isttp/schemas/all';
+
 import Pagenation from '#components/cake/Pagenation.tsx';
 import RenderCake from '#components/cake/RenderCake.tsx';
 import ReadLetter from '#components/letter/ReadLetter.tsx';
-import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
-import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
-import { useQueryClient } from '@tanstack/react-query';
 import Modal from '#components/modal/Modal.tsx';
 import Button from '#components/common/Button.tsx';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
+import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
+
 
 interface CakeInfoProps {
   year: string;
@@ -24,6 +28,16 @@ interface CakeInfoProps {
   creamColor: CakeColorType | null;
   isMyCake?: boolean;
 }
+
+const CandlePositions = [
+  { top: 2, left: 30 },
+  { top: 6, left: 50 },
+  { top: 2, left: 70 },
+  { top: 40, left: 20 },
+  { top: 47, left: 40 },
+  { top: 47, left: 60 },
+  { top: 40, left: 80 },
+];
 
 const CakeInfo: React.FC<CakeInfoProps> = ({
   year,
@@ -42,12 +56,11 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
   });
   const queryClient = useQueryClient();
   const { data: cakeLettersData } = useGetCakeLetters(ownerId!, year, pageData.currentPage);
-
   const { data: letterData } = useGetLetter(selectedLetterId!);
 
   useEffect(() => {
-    const noDataResult = getCakeNoDataRes.safeParse(cakeLettersData);
-    if (noDataResult.success && noDataResult.data.noData) {
+    const checkNoData = getCakeNoDataRes.safeParse(cakeLettersData);
+    if (checkNoData.success && checkNoData.data.noData) {
       setCakeData([]);
       setPageData({ currentPage: 1, totalPage: 1 });
     } else {
@@ -84,32 +97,22 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     });
   };
 
-  const candlePositions = [
-    { top: 2, left: 30 },
-    { top: 6, left: 50 },
-    { top: 2, left: 70 },
-    { top: 40, left: 20 },
-    { top: 47, left: 40 },
-    { top: 47, left: 60 },
-    { top: 40, left: 80 },
-  ];
-
   const candles = cakeData.map((cake, index) => ({
     candleImageUrl: cake.candleImageUrl,
     nickname: cake.nickname,
-    position: candlePositions[index % candlePositions.length],
+    position: CandlePositions[index % CandlePositions.length],
   }));
 
   return (
-    <CakeContainer>
-      <CakeInfoWrapper isMyCake={isMyCake}>
+    <C.CakeContainer>
+      <C.CakeInfoWrapper isMyCake={isMyCake}>
         <RenderCake
           sheetColor={sheetColor}
           creamColor={creamColor}
           candles={candles}
           handleClick={openLetter}
         />
-      </CakeInfoWrapper>
+      </C.CakeInfoWrapper>
       <Pagenation
         currentPage={pageData.currentPage}
         totalPage={pageData.totalPage}
@@ -136,20 +139,8 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           확인
         </Button>
       </Modal>
-    </CakeContainer>
+    </C.CakeContainer>
   );
 };
 
 export default CakeInfo;
-
-const CakeContainer = styled.div`
-  margin-top: 50px;
-`;
-
-const CakeInfoWrapper = styled.div<{ isMyCake?: boolean }>`
-  ${({ isMyCake }) =>
-    isMyCake === false &&
-    css`
-      pointer-events: none;
-    `}
-`;
