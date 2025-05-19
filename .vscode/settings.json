@@ -14,13 +14,9 @@
   ],
   "eslint.workingDirectories": [
     {
-      "mode": "auto",
+      "mode": "auto"
     }
   ],
-  "cSpell.words": [
-    "kakao",
-    "signup",
-    "webp"
-  ],
+  "cSpell.words": ["kakao", "signup", "webp"],
   "editor.tabSize": 2
 }

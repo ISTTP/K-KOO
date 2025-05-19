@@ -2,47 +2,47 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:prettier/recommended",
-    //"plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:@typescript-eslint/strict-type-checked",
-    "plugin:sonarjs/recommended-legacy"
+    "plugin:sonarjs/recommended-legacy",
   ],
   parser: "@typescript-eslint/parser",
   rules: {
-    "quotes": ["error", "single"],
+    quotes: ["error", "single"],
     "prettier/prettier": [
       "error",
       {
         endOfLine: "auto",
-        singleQuote: true
-      }
+        singleQuote: true,
+      },
     ],
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        selector: "typeAlias",  // 타입선언
+        selector: "typeAlias", // 타입선언
         format: ["camelCase", "PascalCase"],
       },
       {
-        selector: "memberLike",  // Property 멤버
+        selector: "memberLike", // Property 멤버
         format: ["camelCase"],
       },
       {
-        selector: "function",  // function
+        selector: "function", // function
         format: ["camelCase"],
       },
       {
-        selector: "variable",  // 변수
+        selector: "variable", // 변수
         format: ["camelCase", "PascalCase", "UPPER_CASE"],
       },
       {
-        selector: "parameter",  // 파라미터
+        selector: "parameter", // 파라미터
         format: ["camelCase"],
         leadingUnderscore: "allow",
       },
       {
-        selector: "enumMember",  // enum
+        selector: "enumMember", // enum
         format: ["UPPER_CASE"],
       },
     ],

@@ -13,5 +13,6 @@ export const useGetCakeLetters = (ownerId: string, year: string, page: number) =
   return useSuspenseQuery({
     queryKey: ['cake-letters', ownerId, year, page],
     queryFn: () => fetchCakeLetters(ownerId, year, page),
+    staleTime: 1000 * 60,
   });
 }
