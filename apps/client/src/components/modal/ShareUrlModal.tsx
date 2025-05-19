@@ -30,7 +30,7 @@ function kakaoShare(nickname: string) {
 
 function facebookShare(nickname: string) {
   window.open(
-    `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&title=${nickname}님의 케이크`,
+    `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&title=${nickname}님의 케이크`
   );
 }
 
@@ -50,10 +50,10 @@ const ShareUrlModal = ({
   }, []);
 
   return (
-    <Modal open={open}>
+    <Modal open={open} onClose={handleOpen}>
       <ShareBox>
-        <h3>내 케이크 공유하기</h3>
-        <div>
+        <h3 id="modal-title">내 케이크 공유하기</h3>
+        <div id="modal-description">
           <IconButton onClick={() => kakaoShare(nickname)}>
             <KakaoLogoIcon width={'3rem'} height={'3rem'} />
           </IconButton>
@@ -64,7 +64,7 @@ const ShareUrlModal = ({
             <LinkIcon width={'3rem'} height={'3rem'} />
           </IconButton>
         </div>
-        <Button type="default" onClick={handleOpen} >
+        <Button type="default" onClick={handleOpen}>
           닫기
         </Button>
       </ShareBox>
@@ -87,4 +87,4 @@ const ShareBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 24px;
-`
+`;

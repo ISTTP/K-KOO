@@ -1,4 +1,10 @@
-import React, { useState, CSSProperties, useRef, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  CSSProperties,
+  useRef,
+  useEffect,
+  useCallback,
+} from 'react';
 import { useParams } from 'react-router-dom';
 import * as G from '#styles/GridStyle.tsx';
 import { FixedSizeGrid as Grid } from 'react-window';
@@ -21,8 +27,10 @@ import Modal from '#components/modal/Modal.tsx';
 
 const GRID_PAGE = 24;
 
-
-const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => void }> = ({ year: init, handleTotalChange }) => {
+const GridInfo: React.FC<{
+  year: string;
+  handleTotalChange?: (total: number) => void;
+}> = ({ year: init, handleTotalChange }) => {
   const [year, setYear] = useState(init);
   const [cakeData, setCakeData] = useState<getCakeDataRes[]>([]);
   const [page, setPage] = useState(1);
@@ -39,13 +47,15 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
   const COL_WIDTH = isPC ? 155 : 130;
   const WIDTH = isPC ? 155 * 5 : 390;
 
-  const { data, isFetching } = year === 'all'
-    ? useGetMyLetters(page)
-    : useGetLetters(ownerId!, year, page);
+  const { data, isFetching } =
+    year === 'all'
+      ? useGetMyLetters(page)
+      : useGetLetters(ownerId!, year, page);
 
-  const { data: letterData } = year === 'all'
-    ? useGetAllLetter(selectedLetterId!)
-    : useGetLetter(selectedLetterId!);
+  const { data: letterData } =
+    year === 'all'
+      ? useGetAllLetter(selectedLetterId!)
+      : useGetLetter(selectedLetterId!);
 
   useEffect(() => {
     if (data) {
@@ -59,7 +69,9 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         const result = getCakeLettersRes.parse(data);
         setNoData(false);
         setHasMore(result.data.length >= GRID_PAGE);
-        setCakeData((prev) => (page === 1 ? result.data : [...prev, ...result.data]));
+        setCakeData((prev) =>
+          page === 1 ? result.data : [...prev, ...result.data]
+        );
         handleTotalChange?.(result.totalPage);
       }
     }
@@ -202,8 +214,10 @@ const GridInfo: React.FC<{ year: string, handleTotalChange?: (total: number) => 
         candleImageUrl={selectedItem?.candleImageUrl ?? ''}
         keyword={selectedItem?.keyword ?? ''}
       />
-      <Modal open={open}>
-        <span>편지 내용은 생일 이후에 확인할 수 있어요!</span>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <span id="modal-description">
+          편지 내용은 생일 이후에 확인할 수 있어요!
+        </span>
         <Button
           type="default"
           onClick={() => {

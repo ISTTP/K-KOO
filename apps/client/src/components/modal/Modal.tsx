@@ -1,18 +1,46 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ModalPortal } from '../../ModalPortal';
 
 const Modal = ({
   open,
+  onClose,
   children,
 }: {
   open: boolean;
+  onClose: () => void;
   children: React.ReactNode;
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (open) {
+      document.addEventListener('keydown', handleKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [open, onClose]);
+
   return (
     <ModalPortal>
       <Overlay open={open}>
-        <ModalContainer>{children}</ModalContainer>
+        <ModalContainer
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+        >
+          {children}
+        </ModalContainer>
       </Overlay>
     </ModalPortal>
   );

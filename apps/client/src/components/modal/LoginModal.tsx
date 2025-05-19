@@ -13,8 +13,8 @@ const LoginModal = ({
   const navigate = useNavigate();
 
   return (
-    <Modal open={open}>
-      <span>로그인이 필요합니다.</span>
+    <Modal open={open} onClose={handleOpen}>
+      <span id="modal-title">로그인이 필요합니다.</span>
       <Button
         type="default"
         onClick={() => {

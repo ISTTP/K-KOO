@@ -48,7 +48,7 @@ const ChooseCandle = () => {
     try {
       // 선택한 장식초 정보 가져오기
       const candleResponse = await axiosInstance.get<CandleType>(
-        `/candle/${candleId}`,
+        `/candle/${candleId}`
       );
       if (candleResponse.status === 200) {
         const data = CandleType.parse(candleResponse.data);
@@ -118,7 +118,7 @@ const ChooseCandle = () => {
                 if (candle.point === 0) {
                   // 무료 장식초: 편지 페이지로 이동
                   navigate(
-                    `/letter/create/${ownerId}?candleId=${candle.candleId}`,
+                    `/letter/create/${ownerId}?candleId=${candle.candleId}`
                   );
                 } else {
                   // 유료 장식초: 결제 혹은 로그인 유도 모달 띄우기
@@ -135,15 +135,15 @@ const ChooseCandle = () => {
             </CandleButton>
           ))}
         </CandleContainer>
-        <Modal open={openBuy}>
+        <Modal open={openBuy} onClose={handleOpenBuy}>
           <img
             style={{ width: '5rem', height: '5rem' }}
             src={candle?.imageUrl}
             alt={candle?.candleId.toString()}
           />
-          <h3>해당 장식초를 구매하시겠습니까?</h3>
+          <h3 id="modal-title">해당 장식초를 구매하시겠습니까?</h3>
           <span>남은 포인트: {userPoint}P</span>
-          <span>결제 포인트: {candle?.point}P</span>
+          <span id="modal-description">결제 포인트: {candle?.point}P</span>
           {!isEnoughPoint && (
             <span style={{ color: 'red' }}>포인트가 부족합니다.</span>
           )}
@@ -155,11 +155,7 @@ const ChooseCandle = () => {
               gap: '1rem',
             }}
           >
-            <Button
-              type="gray"
-              size="large"
-              onClick={handleOpenBuy}
-            >
+            <Button type="gray" size="large" onClick={handleOpenBuy}>
               취소
             </Button>
             <Button
@@ -174,18 +170,20 @@ const ChooseCandle = () => {
             </Button>
           </div>
         </Modal>
-        <Modal open={openSuccess}>
+        <Modal open={openSuccess} onClose={() => setOpenSuccess(false)}>
           <img
             style={{ width: '5rem', height: '5rem' }}
             src={candle?.imageUrl}
             alt={candle?.candleId.toString()}
           />
-          <h3>장식초 구매가 완료되었습니다.</h3>
-          <span>남은 포인트: {userPoint}P</span>
+          <h3 id="modal-title">장식초 구매가 완료되었습니다.</h3>
+          <span id="modal-description">남은 포인트: {userPoint}P</span>
           <Button
             type="default"
             onClick={() => {
-              navigate(`/letter/create/${ownerId}?candleId=${candle?.candleId}`);
+              navigate(
+                `/letter/create/${ownerId}?candleId=${candle?.candleId}`
+              );
             }}
           >
             확인
