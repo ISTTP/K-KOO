@@ -25,8 +25,6 @@ RUN pnpm install
 
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-COPY apps/server/service-account.json apps/server/service-account.json
-
 
 RUN pnpm turbo run build --filter=server...
 
