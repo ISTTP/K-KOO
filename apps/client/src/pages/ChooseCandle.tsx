@@ -141,9 +141,9 @@ const ChooseCandle = () => {
             src={candle?.imageUrl}
             alt={candle?.candleId.toString()}
           />
-          <h3>해당 장식초를 구매하시겠습니까?</h3>
+          <h3 id="modal-title">해당 장식초를 구매하시겠습니까?</h3>
           <span>남은 포인트: {userPoint}P</span>
-          <span>결제 포인트: {candle?.point}P</span>
+          <span id="modal-description">결제 포인트: {candle?.point}P</span>
           {!isEnoughPoint && (
             <span style={{ color: 'red' }}>포인트가 부족합니다.</span>
           )}
@@ -176,8 +176,8 @@ const ChooseCandle = () => {
             src={candle?.imageUrl}
             alt={candle?.candleId.toString()}
           />
-          <h3>장식초 구매가 완료되었습니다.</h3>
-          <span>남은 포인트: {userPoint}P</span>
+          <h3 id="modal-title">장식초 구매가 완료되었습니다.</h3>
+          <span id="modal-description">남은 포인트: {userPoint}P</span>
           <Button
             type="default"
             onClick={() => {

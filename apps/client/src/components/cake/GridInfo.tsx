@@ -215,7 +215,9 @@ const GridInfo: React.FC<{
         keyword={selectedItem?.keyword ?? ''}
       />
       <Modal open={open} onClose={() => setOpen(false)}>
-        <span>편지 내용은 생일 이후에 확인할 수 있어요!</span>
+        <span id="modal-description">
+          편지 내용은 생일 이후에 확인할 수 있어요!
+        </span>
         <Button
           type="default"
           onClick={() => {

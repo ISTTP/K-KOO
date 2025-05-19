@@ -52,8 +52,8 @@ const ShareUrlModal = ({
   return (
     <Modal open={open} onClose={handleOpen}>
       <ShareBox>
-        <h3>내 케이크 공유하기</h3>
-        <div>
+        <h3 id="modal-title">내 케이크 공유하기</h3>
+        <div id="modal-description">
           <IconButton onClick={() => kakaoShare(nickname)}>
             <KakaoLogoIcon width={'3rem'} height={'3rem'} />
           </IconButton>

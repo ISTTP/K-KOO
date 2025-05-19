@@ -133,7 +133,7 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
         />
       )}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <span>
+        <span id="modal-description">
           편지 내용은 생일 이후에 확인할 수 있어요!{'\n'}두근두근...👉👈
         </span>
         <Button
