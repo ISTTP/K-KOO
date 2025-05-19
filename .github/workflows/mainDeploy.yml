@@ -140,6 +140,12 @@ jobs:
             "client_x509_cert_url": "'"${CLIENT_CERT_URL}"'",
             "universe_domain": "'"${UNIVERSE_DOMAIN}"'"
           }' > ./apps/server/service-account.json
+
+      - name: Check service account file
+        run: |
+          ls -al ./apps/server
+          cat ./apps/server/service-account.json
+
           
       - name: build
         run: pnpm turbo run build
