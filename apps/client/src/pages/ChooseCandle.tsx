@@ -48,7 +48,7 @@ const ChooseCandle = () => {
     try {
       // 선택한 장식초 정보 가져오기
       const candleResponse = await axiosInstance.get<CandleType>(
-        `/candle/${candleId}`,
+        `/candle/${candleId}`
       );
       if (candleResponse.status === 200) {
         const data = CandleType.parse(candleResponse.data);
@@ -118,7 +118,7 @@ const ChooseCandle = () => {
                 if (candle.point === 0) {
                   // 무료 장식초: 편지 페이지로 이동
                   navigate(
-                    `/letter/create/${ownerId}?candleId=${candle.candleId}`,
+                    `/letter/create/${ownerId}?candleId=${candle.candleId}`
                   );
                 } else {
                   // 유료 장식초: 결제 혹은 로그인 유도 모달 띄우기
@@ -135,7 +135,7 @@ const ChooseCandle = () => {
             </CandleButton>
           ))}
         </CandleContainer>
-        <Modal open={openBuy}>
+        <Modal open={openBuy} onClose={handleOpenBuy}>
           <img
             style={{ width: '5rem', height: '5rem' }}
             src={candle?.imageUrl}
@@ -155,11 +155,7 @@ const ChooseCandle = () => {
               gap: '1rem',
             }}
           >
-            <Button
-              type="gray"
-              size="large"
-              onClick={handleOpenBuy}
-            >
+            <Button type="gray" size="large" onClick={handleOpenBuy}>
               취소
             </Button>
             <Button
@@ -174,7 +170,7 @@ const ChooseCandle = () => {
             </Button>
           </div>
         </Modal>
-        <Modal open={openSuccess}>
+        <Modal open={openSuccess} onClose={() => setOpenSuccess(false)}>
           <img
             style={{ width: '5rem', height: '5rem' }}
             src={candle?.imageUrl}
@@ -185,7 +181,9 @@ const ChooseCandle = () => {
           <Button
             type="default"
             onClick={() => {
-              navigate(`/letter/create/${ownerId}?candleId=${candle?.candleId}`);
+              navigate(
+                `/letter/create/${ownerId}?candleId=${candle?.candleId}`
+              );
             }}
           >
             확인

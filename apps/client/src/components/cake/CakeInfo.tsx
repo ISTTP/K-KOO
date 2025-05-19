@@ -21,7 +21,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useGetCakeLetters } from '#apis/cake/useGetCakeLetters.tsx';
 import { useGetLetter } from '#apis/letter/useGetLetter.tsx';
 
-
 interface CakeInfoProps {
   year: string;
   sheetColor: CakeColorType | null;
@@ -55,7 +54,11 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
     totalPage: 1,
   });
   const queryClient = useQueryClient();
-  const { data: cakeLettersData } = useGetCakeLetters(ownerId!, year, pageData.currentPage);
+  const { data: cakeLettersData } = useGetCakeLetters(
+    ownerId!,
+    year,
+    pageData.currentPage
+  );
   const { data: letterData } = useGetLetter(selectedLetterId!);
 
   useEffect(() => {
@@ -68,7 +71,8 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
       setCakeData(result.data);
       setPageData({
         currentPage: result.currentPage,
-        totalPage: result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
+        totalPage:
+          result.totalPage === 0 ? result.totalPage + 1 : result.totalPage,
       });
     }
   }, [cakeLettersData]);
@@ -128,8 +132,10 @@ const CakeInfo: React.FC<CakeInfoProps> = ({
           keyword={selectedItem?.keyword ?? ''}
         />
       )}
-      <Modal open={open}>
-        <span>편지 내용은 생일 이후에 확인할 수 있어요!{'\n'}두근두근...👉👈</span>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <span>
+          편지 내용은 생일 이후에 확인할 수 있어요!{'\n'}두근두근...👉👈
+        </span>
         <Button
           type="default"
           onClick={() => {

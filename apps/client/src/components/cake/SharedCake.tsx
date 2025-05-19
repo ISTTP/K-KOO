@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as C from '#styles/CakeStyle.tsx'
+import * as C from '#styles/CakeStyle.tsx';
 
 import CakeHeader from '#components/cake/CakeHeader.tsx';
 import CakeInfo from '#components/cake/CakeInfo.tsx';
@@ -71,21 +71,17 @@ const SharedCake: React.FC<MyCakeProps> = ({ ownerId, data }) => {
         isMyCake={false}
       />
       <C.Buttons>
-        <Button
-          type="default"
-          onClick={handleCheckLogin}
-        >
+        <Button type="default" onClick={handleCheckLogin}>
           케이크 꾸며주기
         </Button>
-        <Button
-          type="default"
-          onClick={handleNavigateToMyCake}
-        >
+        <Button type="default" onClick={handleNavigateToMyCake}>
           내 케이크 보러가기
         </Button>
       </C.Buttons>
-      <Modal open={open}>
-        <span>편지를 작성하면 포인트를 얻을 수 있어요.{'\n'}로그인 하시겠어요?</span>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <span>
+          편지를 작성하면 포인트를 얻을 수 있어요.{'\n'}로그인 하시겠어요?
+        </span>
         <Button
           type="default"
           onClick={() => {
