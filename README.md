@@ -32,6 +32,12 @@
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
   <img src="https://img.shields.io/badge/Turborepo-EF4444?style=flat&logo=turborepo&logoColor=white"/>
   <img src="https://img.shields.io/badge/Pnpm-F69220?style=flat&logo=pnpm&logoColor=white"/>
+  <img src="https://img.shields.io/badge/NGINX-009639?style=flat&logo=NGINX&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Github Actions-2088FF?style=flat&logo=GithubActions&logoColor=white"/>
+  <img src="https://img.shields.io/badge/EC2-orange?style=flat&logo=EC2&logoColor=f89400"/>
+  <img src="https://img.shields.io/badge/S3-red?style=flat&logo=S3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat&logo=Zod&logoColor=white"/>
   <img src="https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white"/>
   <img src="https://img.shields.io/badge/playwright-FFF?style=flat"/>
 </div>
